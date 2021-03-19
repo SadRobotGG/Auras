@@ -8,7 +8,7 @@ function(allstates, event, ...)
                 if auraType == "HARMFUL" or auraType == "DEBUFF" then
                     
                     -- Ignore blacklisted debuffs
-                    if aura_env.blacklist[spellID] and aura_env.blacklist[spellID].enable == true then
+                    if aura_env.blacklist and aura_env.blacklist[spellID] and aura_env.blacklist[spellID].enable == true then
                         return false
                     end
                     
