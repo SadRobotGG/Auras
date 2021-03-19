@@ -1,29 +1,48 @@
+-- If we're not using ElvUI, we can use their default blacklist instead
+
+local function Defaults(priorityOverride)
+	return {
+		enable = true,
+		priority = priorityOverride or 0,
+		stackThreshold = 0
+	}
+end
+
+aura_env.blacklist = {
+    [36900]  = Defaults(), -- Soul Split: Evil!
+    [36901]  = Defaults(), -- Soul Split: Good
+    [36893]  = Defaults(), -- Transporter Malfunction
+    [97821]  = Defaults(), -- Void-Touched
+    [36032]  = Defaults(), -- Arcane Charge
+    [8733]   = Defaults(), -- Blessing of Blackfathom
+    --[25771]  = Defaults(), -- Forbearance (pally: divine shield, hand of protection, and lay on hands)
+    [57724]  = Defaults(), -- Sated (lust debuff)
+    [57723]  = Defaults(), -- Exhaustion (heroism debuff)
+    [80354]  = Defaults(), -- Temporal Displacement (timewarp debuff)
+    [95809]  = Defaults(), -- Insanity debuff (hunter pet heroism: ancient hysteria)
+    [58539]  = Defaults(), -- Watcher's Corpse
+    [26013]  = Defaults(), -- Deserter
+    [71041]  = Defaults(), -- Dungeon Deserter
+    [41425]  = Defaults(), -- Hypothermia
+    [55711]  = Defaults(), -- Weakened Heart
+    [8326]   = Defaults(), -- Ghost
+    [23445]  = Defaults(), -- Evil Twin
+    [24755]  = Defaults(), -- Tricked or Treated
+    [25163]  = Defaults(), -- Oozeling's Disgusting Aura
+    [124275] = Defaults(), -- Stagger
+    [124274] = Defaults(), -- Stagger
+    [124273] = Defaults(), -- Stagger
+    [117870] = Defaults(), -- Touch of The Titans
+    [123981] = Defaults(), -- Perdition
+    [15007]  = Defaults(), -- Ress Sickness
+    [113942] = Defaults(), -- Demonic: Gateway
+    [89140]  = Defaults(), -- Demonic Rebirth: Cooldown
+    [287825] = Defaults(), -- Lethargy debuff (fight or flight)
+};
+
+-- If we don't use ElvUI, then just stick to the defaults.
+if not ElvUI then return true end
+
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 aura_env.blacklist = ElvDB.global.unitframe.aurafilters.Blacklist.spells;
-
-aura_env.convert = {
-    ["BUFF"] = "HELPFUL",
-    ["DEBUFF"] = "HARMFUL",
-}
---to convert auraType (BUFF/DEBUFF) from CLEU payload
-
-aura_env.sound = {
-    [1] = "Interface\\AddOns\\SharedMedia_Causese\\sound\\Taunt.ogg",
-    [2] = "Interface\\AddOns\\WeakAuras\\Media\\Sounds\\Taunt.ogg",
-    [3] = "Interface\\AddOns\\WeakAuras\\Media\\Sounds\\RingingPhone.ogg",
-    [4] = "Interface\\AddOns\\WeakAuras\\Media\\Sounds\\AirHorn.ogg",
-}
--- bully rivers doesn't want to add sound option to custom options
-
-aura_env.associatedDebuff = {
-    [307476] = 307472,
-    [307478] = 307471,
-}
-
---[[
-debuff that's associated with a certain cast
-left the cast's spellID that causes the debuff
-right the spellID of opposite cast's applied debuff
-this is used for tank-combo-cast mechanics such as grong/aggramar]]
-
