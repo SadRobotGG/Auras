@@ -40,6 +40,10 @@ aura_env.blacklist = {
     [287825] = Defaults(), -- Lethargy debuff (fight or flight)
 };
 
+aura_env.whitelist = {
+    [332514] = { enable = true, priority = 0, stackThreshold = 80}, -- Bron (show at 80 stacks)
+}
+
 -- If we don't use ElvUI, then just stick to the defaults.
 if not ElvUI then return true end
 

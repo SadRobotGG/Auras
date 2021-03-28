@@ -32,9 +32,15 @@ function(allstates, event, ...)
             if UnitIsPlayer(destName) and UnitIsUnit(destName, "player") then
                 if auraType == "HELPFUL" or auraType == "BUFF" then
                     
+                    local whitelist = aura_env.whitelist[spellId]
+
                     -- Ignore blacklisted auras
                     if aura_env.blacklist[spellId] and aura_env.blacklist[spellId].enable == true then
-                        return true
+
+                        -- Whitelist can override blacklist
+                        if not whitelist or whitelist.enable == false then
+                            return true
+                        end
                     end
                     
                     -- Manually find the aura so we can get access to all properties
@@ -50,8 +56,10 @@ function(allstates, event, ...)
                             -- We ignore permanent auras that don't have  duration e.g. Timewalking buff
                             if not duration or duration == 0 or duration < 1 then
 
-                                -- TODO: support whitelisting, and whitelisting by stacks e.g. Bron arriving soon
-                                return true;
+                                -- Allow whitelisted auras without a duration
+                                if not whitelist or whitelist.enable == false then
+                                    return true
+                                end
                             end
 
                             allstates[spellId..destGUID] = {
@@ -69,10 +77,17 @@ function(allstates, event, ...)
                                 unitBuffIndex = i,
                                 auraType = auraType
                             }
-                            
+                      
                             -- If we're at 0 doses then we can remove
                             if subEvent == "SPELL_AURA_DOSE_REMOVED" and stacks < 1 then
                                 allstates[spellId..destGUID].show = false
+                                return true;
+                            end
+
+                            -- If this aura has a stack threshold, then hide if it doesn't meet that threshold
+                            if whitelist and whitelist.stackThreshold > 0 and stacks < whitelist.stackThreshold then
+                                allstates[spellId..destGUID].show = false
+                                return true;
                             end
                             
                             return true
