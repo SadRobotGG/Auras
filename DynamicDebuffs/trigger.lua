@@ -17,7 +17,7 @@ function(allstates, event, ...)
                 allstates[spellId..WeakAuras.myGUID].stacks = stacks;
                 allstates[spellId..WeakAuras.myGUID].expirationTime = expirationTime;
                 allstates[spellId..WeakAuras.myGUID].duration = duration;
-                allstates[spellId..WeakAuras.myGUID].unitBuffIndex = auraIndex;
+                allstates[spellId..WeakAuras.myGUID].unitDebuffIndex = auraIndex;
                 allstates[spellId..WeakAuras.myGUID].changed = true;
             end
 
