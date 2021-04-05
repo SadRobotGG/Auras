@@ -60,7 +60,7 @@ function(allstates, event, ...)
                                 autoHide = true,
                                 unit = "player",
                                 unitDebuffIndex = i,
-                                debuffType = debuffType
+                                debuffType = auraType
                             }
                             
                             -- If we're at 0 doses then we can remove
