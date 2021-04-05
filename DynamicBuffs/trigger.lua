@@ -28,6 +28,8 @@ function(allstates, event, ...)
     if event == "COMBAT_LOG_EVENT_UNFILTERED" then
         local _, subEvent, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, spellName, _, auraType = ...
         
+        if not UnitExists(sourceName) then return true; end
+
         if subEvent == "SPELL_AURA_APPLIED" or subEvent == "SPELL_AURA_APPLIED_DOSE" or subEvent == "SPELL_AURA_REFRESH" or subEvent == "SPELL_AURA_REMOVED_DOSE" then
             if UnitIsPlayer(destName) and UnitIsUnit(destName, "player") then
                 if auraType == "HELPFUL" or auraType == "BUFF" then
@@ -46,7 +48,7 @@ function(allstates, event, ...)
                     -- Manually find the aura so we can get access to all properties
                     local i = 1;
                     while true do
-                        local spellName, icon, stacks, auraType, duration, expirationTime, _, _, _, id = UnitAura(destName, i, "HELPFUL")
+                        local spellName, icon, stacks, auraType, duration, expirationTime, _, _, _, id, _, _, castByPlayer = UnitAura(destName, i, "HELPFUL")
                         
                         if not spellName then return true end
 
@@ -65,7 +67,7 @@ function(allstates, event, ...)
                             allstates[spellId..destGUID] = {
                                 changed = true,
                                 show = true,
-                                name = WA_ClassColorName(sourceName),
+                                casterName = WA_ClassColorName(sourceName),
                                 icon = icon,
                                 stacks = stacks,
                                 progressType = "timed",
@@ -75,7 +77,12 @@ function(allstates, event, ...)
                                 autoHide = true,
                                 unit = "player",
                                 unitBuffIndex = i,
-                                auraType = auraType
+                                auraType = auraType,
+                                isSelfCast = WeakAuras.myGUID == sourceGUID,
+                                isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true,
+                                isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true,
+                                isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true,
+                                isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true,
                             }
                       
                             -- If we're at 0 doses then we can remove

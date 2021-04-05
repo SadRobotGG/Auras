@@ -3,5 +3,11 @@
     stacks = true,
     name = "string",
     expirationTime = true,
-    auraType = "string"
+    auraType = "string",
+    isSelfCast = "bool",
+    isExternal = "bool",
+    isDefensive = "bool",
+    isRaidCd = "bool",
+    isLust = "bool",
+    casterName = "string"
 }
