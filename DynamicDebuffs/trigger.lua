@@ -60,9 +60,10 @@ function(allstates, event, ...)
                                 autoHide = true,
                                 unit = "player",
                                 unitDebuffIndex = i,
-                                debuffType = auraType
+                                debuffType = auraType,
+                                isDispellable = aura_env.canDispel(auraType);
                             }
-                            
+
                             -- If we're at 0 doses then we can remove
                             if subEvent == "SPELL_AURA_DOSE_REMOVED" and stacks == 0 then
                                 allstates[spellID..destGUID].show = false

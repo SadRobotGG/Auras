@@ -1,5 +1,53 @@
--- If we're not using ElvUI, we can use their default blacklist instead
+local dispels = {
+    
+    -- Druid
+    [102] = {magic = false, curse = true, poison = true, disease = false }, -- Balance
+    [103] = {magic = false, curse = true, poison = true, disease = false }, -- Feral
+    [104] = {magic = false, curse = true, poison = true, disease = false }, -- Guardian
+    [105] = {magic = true,  curse = true, poison = true, disease = false }, -- Restoration
 
+    -- Mage
+    [62]  = {magic = false, curse = true, poison = false, disease = false }, -- Arcane
+    [63]  = {magic = false, curse = true, poison = false, disease = false }, -- Fire
+    [64]  = {magic = false, curse = true, poison = false, disease = false }, -- Frost
+    
+    -- Monk
+    [268] = {magic = false, curse = false, poison = true, disease = true }, -- Brewmaster
+    [269] = {magic = false, curse = false, poison = true, disease = true }, -- Windwalker
+    [270] = {magic = true,  curse = false, poison = true, disease = true }, -- Mistweaver
+    
+    -- Paladin
+    [65]  = {magic = true,  curse = false, poison = true, disease = true }, -- Holy
+    [66]  = {magic = false, curse = false, poison = true, disease = true }, -- Protection
+    [70]  = {magic = false, curse = false, poison = true, disease = true }, -- Retribution
+
+    -- Priest
+    [256] = {magic = true,  curse = false, poison = false, disease = true }, -- Discipline
+    [257] = {magic = true,  curse = false, poison = false, disease = true }, -- Holy
+    [258] = {magic = true,  curse = false, poison = false, disease = true }, -- Shadow
+
+    -- Shaman
+    [262] = {magic = false, curse = true, poison = false, disease = false }, -- Elemental
+    [263] = {magic = false, curse = true, poison = false, disease = false }, -- Enhancement
+    [264] = {magic = true,  curse = true, poison = false, disease = false }, -- Restoration
+
+    -- Warlock TODO: Singe Magic
+    [265] = {magic = false, curse = false, poison = false, disease = false }, -- Affliction
+    [266] = {magic = false, curse = false, poison = false, disease = false }, -- Demonology
+    [267] = {magic = false, curse = false, poison = false, disease = false }, -- Destruction
+}
+
+local className, classFilename, classId = UnitClass("player")
+local specIndex = GetSpecialization();
+local specializationId, name, description, icon, role, primaryStat = GetSpecializationInfo(specIndex);
+
+aura_env.specializationId = specializationId;
+
+aura_env.canDispel = function(auraType)
+    return dispels and dispels[specializationId] and dispels[specializationId][ string.lower(auraType) ] == true;
+end
+
+-- If we're not using ElvUI, we can use their default blacklist instead
 local function Defaults(priorityOverride)
 	return {
 		enable = true,

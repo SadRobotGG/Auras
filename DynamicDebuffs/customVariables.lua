@@ -3,5 +3,6 @@
     stacks = true,
     name = "string",
     expirationTime = true,
-    debuffType = "string"
+    debuffType = "string",
+    isDispellable = "bool"
 }
