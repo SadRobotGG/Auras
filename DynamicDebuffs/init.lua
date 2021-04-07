@@ -44,7 +44,7 @@ local specializationId, name, description, icon, role, primaryStat = GetSpeciali
 aura_env.specializationId = specializationId;
 
 aura_env.canDispel = function(auraType)
-    return dispels and dispels[specializationId] and dispels[specializationId][ string.lower(auraType) ] == true;
+    return auraType and dispels and dispels[specializationId] and dispels[specializationId][ string.lower(auraType) ] == true;
 end
 
 -- If we're not using ElvUI, we can use their default blacklist instead
