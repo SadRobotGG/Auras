@@ -1,5 +1,7 @@
 # Dynamic Debuffs
 
+https://wago.io/QyN-tmh2w
+
 Shows your debuffs front and center.
 
 ## Features
