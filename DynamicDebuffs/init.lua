@@ -1,3 +1,12 @@
+-- Custom options
+local c = aura_env.config;
+
+local _log = function(...)
+    if aura_env and aura_env.config and aura_env.config.enableDebug == true then
+        print(...);
+    end
+end
+
 local dispels = {
     
     -- Druid
@@ -47,7 +56,6 @@ aura_env.canDispel = function(auraType)
     return auraType and dispels and dispels[specializationId] and dispels[specializationId][ string.lower(auraType) ] == true;
 end
 
--- If we're not using ElvUI, we can use their default blacklist instead
 local function Defaults(priorityOverride)
 	return {
 		enable = true,
@@ -56,6 +64,11 @@ local function Defaults(priorityOverride)
 	}
 end
 
+aura_env.whitelist = {
+    [335586] = { enable = true, priority = 0, stackThreshold = 1}, -- Immediate Extermination (Eye of the Jailer Level 5)
+}
+
+-- Default blacklist (from ElvUI)
 aura_env.blacklist = {
     [36900]  = Defaults(), -- Soul Split: Evil!
     [36901]  = Defaults(), -- Soul Split: Good
@@ -63,11 +76,6 @@ aura_env.blacklist = {
     [97821]  = Defaults(), -- Void-Touched
     [36032]  = Defaults(), -- Arcane Charge
     [8733]   = Defaults(), -- Blessing of Blackfathom
-    --[25771]  = Defaults(), -- Forbearance (pally: divine shield, hand of protection, and lay on hands)
-    [57724]  = Defaults(), -- Sated (lust debuff)
-    [57723]  = Defaults(), -- Exhaustion (heroism debuff)
-    [80354]  = Defaults(), -- Temporal Displacement (timewarp debuff)
-    [95809]  = Defaults(), -- Insanity debuff (hunter pet heroism: ancient hysteria)
     [58539]  = Defaults(), -- Watcher's Corpse
     [26013]  = Defaults(), -- Deserter
     [71041]  = Defaults(), -- Dungeon Deserter
@@ -88,9 +96,110 @@ aura_env.blacklist = {
     [287825] = Defaults(), -- Lethargy debuff (fight or flight)
 };
 
--- If we don't use ElvUI, then just stick to the defaults.
-if not ElvUI then return true end
 
-local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+-- If ElvUI enabled, use that blacklist
+local enableElvUI = not c or c.enableElvUI == true;
+if ElvUI then
+    
+    _log("ElvUI is installed");
 
-aura_env.blacklist = ElvDB.global.unitframe.aurafilters.Blacklist.spells;
+    if enableElvUI == true then
+        _log("Using the ElvUI blacklist");
+        --local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+        aura_env.blacklist = ElvDB.global.unitframe.aurafilters.Blacklist.spells;
+    end
+else
+    _log("ElvUI not installed");
+end
+
+-- Forbearance (pally: divine shield, hand of protection, and lay on hands)
+local enableForbearance = not c or c.enableForbearance < 3;
+if not ElvUI or enableElvUI == false or not aura_env.blacklist[25771] or c.enableForbearance > 1 then
+    aura_env.blacklist[25771]  = { enable = c.enableForbearance == 3, priority = 0, stackThreshold = 0};
+end
+
+_log("Forbearance=",aura_env.blacklist[25771].enable);
+
+-- Lust debuffs
+local enableLust = not c or c.enableLust < 3;
+aura_env.blacklist[57724]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Sated (lust debuff)
+aura_env.blacklist[57723]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Exhaustion (heroism debuff)
+aura_env.blacklist[80354]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Temporal Displacement (timewarp debuff)
+aura_env.blacklist[95809]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Insanity debuff (hunter pet heroism: ancient hysteria)
+
+aura_env.refreshAuras = function(states, spellID)
+
+    if not states then return false end
+
+    if not WeakAuras.myGUID then 
+        _log("Couldn't find player GUID");
+        return false 
+    end
+
+    -- If no specific spell id (aura id) was passed, we're updating all auras.
+    local updatingAllAuras = not spellID;
+
+    local currentAuras = {};
+
+    -- Manually find the debuff so we can get access to all properties
+    local i = 1;
+    while true do
+        local spellName, icon, stacks, auraType, duration, expirationTime, _, _, _, id = UnitAura("player", i, "HARMFUL")
+        
+        if not spellName then break; end
+
+        currentAuras[id] = true;
+
+        local whitelist = aura_env.whitelist[id]
+
+        -- Ignore blacklisted debuffs; Whitelist can override blacklist
+        if aura_env.blacklist and aura_env.blacklist[id] and aura_env.blacklist[id].enable == true and (not whitelist or whitelist.enable == false) then
+            _log("refreshAuras ignoring blacklisted debuff: "..spellName);
+        else
+            -- Are we refreshing all auras or a specific one?
+            if updatingAllAuras or id == spellID then
+
+                states[id..WeakAuras.myGUID] = {
+                    changed = true,
+                    show = true,
+                    name = WA_ClassColorName("player"),
+                    icon = icon,
+                    stacks = stacks,
+                    progressType = "timed",
+                    expirationTime = expirationTime,
+                    duration = duration,
+                    spellID = id,
+                    autoHide = true,
+                    unit = "player",
+                    unitDebuffIndex = i,
+                    debuffType = auraType,
+                    isDispellable = aura_env.canDispel(auraType)
+                }
+
+                -- If we're at 0 doses then we can remove
+                if subEvent == "SPELL_AURA_DOSE_REMOVED" and stacks == 0 then
+                    states[id..WeakAuras.myGUID].show = false
+                -- If this aura has a stack threshold, then hide if it doesn't meet that threshold
+                elseif whitelist and whitelist.stackThreshold > 0 and stacks < whitelist.stackThreshold then
+                    states[id..WeakAuras.myGUID].show = false
+                else                                
+                    _log("Showing debuff: "..spellName);
+                end
+            end
+        end
+        
+        i = i + 1;
+    end
+
+    -- If we're refreshing all auras, we should remove any auras that have dropped off
+    if updatingAllAuras then
+        --_log("Removing auras that have dropped off");
+        for k,v in pairs(states) do
+            if not currentAuras[v.spellID] then
+                _log("Removing: "..k);
+                v.changed = true
+                v.show = false
+            end
+        end
+    end
+end
