@@ -15,9 +15,9 @@ aura_env.spells = {
         [333729] = { 0.9, "FRONTAL" }, -- Rise Bonesoldier: Troll Guard
         
         -- Halls of Atonement
-        [322936] = { 0.91, "SLAM" }, -- Halkias: Crumbling Slam
-        [326997] = { 1.4, "FRONTAL" }, -- Stoneborn Slasher: Powerful Swipe
-        [325523] = { 1.4, "FRONTAL" }, -- Depraved Darkblade: Deadly Thrust
+        [322936] = { 0.91, "SLAM" },    -- Halkias: Crumbling Slam
+        [326997] = { 1.4,  "FRONTAL" }, -- Stoneborn Slasher: Powerful Swipe
+        [325523] = { 1.4,  "FRONTAL" }, -- Depraved Darkblade: Deadly Thrust
         
         -- Mists of Tirna Scithe
         [321968] = { 3.2, "FRONTAL" }, -- Tirnenn Villager: Bewildering Pollen
@@ -28,23 +28,33 @@ aura_env.spells = {
         [324323] = { 0.91, "FRONTAL" }, -- Skeletal Marauder: Gruesome Cleave
         
         -- Plaguefall
+        [327233] = { 3,   "FRONTAL" }, -- Plaguebelcher: Belch Plague
+        [330403] = { 2.5, "FRONTAL" }, -- Plagueroc: Wing Buffet
         [318949] = { 2.1, "FRONTAL" }, -- Blighted Spinebreaker: Festering Belch
-        [321935] = { 2.2, "SLAM" }, -- Congealed Slime: Withering Filth
+        [321935] = { 2.2, "SLAM" },    -- Congealed Slime: Withering Filth       
         
         -- Sanguine Depths
         [320991] = { 1.8, "FRONTAL" }, -- Regal Mistdancer: Echoing Thrust
         [322429] = { 1.4, "FRONTAL" }, -- Chamber Sentinel: Severing Slice
         
         -- Spires of Ascension
-        [328458] = { 1.8, "FRONTAL" }, -- Lakesis: Diminuendo
-        [317985] = { 1.8, "SHOCKWAVE" }, -- Squad Leader: Crashing Strike
-        [317943] = { 0.91, "FRONTAL" }, -- Forsworn Vanguard: Sweeping Blow
-        [324205] = { 2.7, "FRONTAL" }, -- Ventunax: Blinding Flash
-        [324608] = { 1.4, "SLAM" }, -- Oryphrion: Charged Stomp
-        
+        [328458] = { 1.8,  "FRONTAL" },   -- Lakesis: Diminuendo
+        [317985] = { 1.8,  "SHOCKWAVE" }, -- Squad Leader: Crashing Strike
+        [317943] = { 0.91, "FRONTAL" },   -- Forsworn Vanguard: Sweeping Blow
+        [324205] = { 2.7,  "FRONTAL" },   -- Ventunax: Blinding Flash
+        [324608] = { 1.4,  "SLAM" },      -- Oryphrion: Charged Stomp
+
         -- Castle Nathria
         [326455] = { 1.5, "FRONTAL"}, -- Sun King's Salvation: Fiery Strike
-        [329181] = { 3, "FRONTAL"}, -- Sire Denathrius: Wracking Pain
+        [329181] = { 3,   "FRONTAL"}, -- Sire Denathrius: Wracking Pain
+
+        -- Tazavesh
+        [356404] = { 2,   "FRONTAL"}, -- Ancient Core Hound: Lava Breath
+        [350919] = { 1,   "FRONTAL"}, -- Myza's Oasis: Crowd Control
+        [357542] = { 2.5, "FRONTAL"}, -- Myza's Oasis: Rip Cord
+        [346116] = { 2.6, "FRONTAL"}, -- Hylbrande: Shearing Swings
+        [347094] = { 2,   "FRONTAL"}, -- Hylbrande: Titanic Crash
+        [347149] = { 1.5, "FRONTAL"}, -- Timecap'n Hooktail: Infinite Breath
     },
     
     ["SPELL_CAST_SUCCESS"] = {
