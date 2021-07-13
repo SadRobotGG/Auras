@@ -6,53 +6,52 @@ Also calls out soothe and purge for several important casts.
 
 In the Custom Options tab, you can customize the announce messages, and which spells to enable / disable for announce.
 
-### De Other Side
+# Dungeons
 
-* Rise Bonesoldier: Troll Guard
-* Risen Warlord: Undying Rage
+| Dungeons |  | | |
+|----------|--|--|--|
+| **De Other Side** | | **Halls of Atonement** | |
+| Risen Bonesoldier | Troll Guard | Halkias | Crumbling Slam |
+| Risen Warlord | Undying Rage | Stoneborn Slasher | Powerful Swipe |
+|               |              | Depraved Darkblade | Deadly Thrust |
+| **Mists of Tirna Scithe** |              | **Necrotic Wake** | |
+| Tirnenn Villager | Bewildering Pollen | Skeletal Marauder: Gruesome Cleave | |
+| Droman Oulfarran | Bewildering Pollen | |
+| Mistveil Gorgegullet | Tongue Lashing | |
+| **Plaguefall** |              | **Sanguine Depths** | |
+| Blighted Spinebreaker | Festering Belch | Regal Mistdancer | Echoing Thrust |
+| Congealed Slime | Withering Filth | |
+| **Spires of Ascension** |              | **Theatre of Pain** | |
+| Lakesis | Diminuendo | Raging Bloodhorn | Raging Tantrum |
+| Squad Leader | Crashing Strike
+| Forsworn Vanguard | Sweeping Blow
+| Ventunax | Blinding Flash
+| Oryphrion | Charged Stomp
+| Forsworn Mender | Imbue Weapon
+| Forsworn Champion | Infuse Weapon
+| Forsworn Warden | Bless Weapon
 
-### Halls of Atonement
+# Mega Dungeon
 
-* Halkias: Crumbling Slam
-* Stoneborn Slasher: Powerful Swipe
-* Depraved Darkblade: Deadly Thrust
-        
-### Mists of Tirna Scithe
+| Tazavesh, the Veiled Market |                 |
+|-----------------------------|-----------------|
+| Ancient Core Hound          | Lava Breath     |
+| Myza's Oasis                | Crowd Control   |
+| Myza's Oasis                | Rip Cord        |
+| Hylbrande                   | Shearing Swings |
+| Hylbrande                   | Titanic Crash   |
+| Timecap'n Hooktail          | Infinite Breath |
 
-* Tirnenn Villager: Bewildering Pollen
-* Droman Oulfarran: Bewildering Pollen
-* Mistveil Gorgegullet: Tongue Lashing
+# Raids
 
-### Necrotic Wake
+| Castle Nathria       |               | Sanctum of Domination |                     |
+|----------------------|---------------|-----------------------|---------------------|
+| Sun King's Salvation | Fiery Strike  | Remnant of Ner'zhul   | Suffering           |
+| Sire Denathrius      | Wracking Pain | Screamspike (Trash)   | Incinerating Cleave |
 
-* Skeletal Marauder: Gruesome Cleave
-        
-### Plaguefall
+# Known Issues / FAQ
 
-* Blighted Spinebreaker: Festering Belch
-* Congealed Slime: Withering Filth
-        
-### Sanguine Depths
+Known issues I'm looking at fixing
 
-* Regal Mistdancer: Echoing Thrust
-* Chamber Sentinel: Severing Slice
-        
-### Spires of Ascension
-
-* Lakesis: Diminuendo
-* Squad Leader: Crashing Strike
-* Forsworn Vanguard: Sweeping Blow
-* Ventunax: Blinding Flash
-* Oryphrion: Charged Stomp
-* Forsworn Mender: Imbue Weapon
-* Forsworn Champion: Infuse Weapon
-* Forsworn Warden: Bless Weapon
-        
-### Theatre of Pain
-
-* Raging Bloodhorn: Raging Tantrum
-
-### Castle Nathria
-
-* Sun King's Salvation: Fiery Strike
-* Sire Denathrius: Wracking Pain
+* Plaguefall: Spinebreakers casting Festering Belch when they're not in combat with you still trigger the warning
+* Some other abilities will trigger a warning even if you're not the target
