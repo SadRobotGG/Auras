@@ -1,3 +1,5 @@
+--UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED
+
 local o = aura_env.config
 
 aura_env.captions = {
@@ -9,7 +11,7 @@ aura_env.captions = {
 }
 
 aura_env.spells = {
-    ["SPELL_CAST_START"] = {
+    ["UNIT_SPELLCAST_START"] = {
 
         -- De Other Side
         [333729] = { 0.9, "FRONTAL" }, -- Rise Bonesoldier: Troll Guard
@@ -35,7 +37,6 @@ aura_env.spells = {
         
         -- Sanguine Depths
         [320991] = { 1.8, "FRONTAL" }, -- Regal Mistdancer: Echoing Thrust
-        [322429] = { 1.4, "FRONTAL" }, -- Chamber Sentinel: Severing Slice
         
         -- Spires of Ascension
         [328458] = { 1.8,  "FRONTAL" },   -- Lakesis: Diminuendo
@@ -55,9 +56,13 @@ aura_env.spells = {
         [346116] = { 2.6, "FRONTAL"}, -- Hylbrande: Shearing Swings
         [347094] = { 2,   "FRONTAL"}, -- Hylbrande: Titanic Crash
         [347149] = { 1.5, "FRONTAL"}, -- Timecap'n Hooktail: Infinite Breath
+
+        -- Sanctum of Domination
+        [349890] = { 2.0, "FRONTAL"}, -- Remnant of Ner'zhul: Suffering
+        [358205] = { 1.5, "FRONTAL"}, -- Screamspike (Trash): Incinerating Cleave
     },
     
-    ["SPELL_CAST_SUCCESS"] = {
+    ["UNIT_SPELLCAST_SUCCEEDED"] = {
         
         -- De Other Side
         [333227] = { 0.9, "SOOTHE" }, -- Risen Warlord: Undying Rage

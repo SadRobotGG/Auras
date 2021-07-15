@@ -53,5 +53,19 @@ In the Custom Options tab, you can customize the announce messages, and which sp
 
 Known issues I'm looking at fixing
 
-* Plaguefall: Spinebreakers casting Festering Belch when they're not in combat with you still trigger the warning
-* Some other abilities will trigger a warning even if you're not the target
+- [x] ~~Plaguefall: Spinebreakers casting Festering Belch when they're not in combat with you still trigger the warning~~
+- [x] ~~Some other abilities will trigger a warning even if you're not the target~~
+
+# Changelog
+
+## Patch 9.1
+
+### 2021-07-15
+
+* Rewrite to fix some of the limitations and improve performance
+* Added Tazavesh abilities
+* Added Sanctum of Domination abilities
+* Added some missing abilities for Plaguefall:
+    * Plaguebelcher's Belch Plague
+    * Plagueroc's Wing Buffet
+* Removed Chamber Sentinel's Severing Slice (Sanguine Depths), as it's no longer a frontal
