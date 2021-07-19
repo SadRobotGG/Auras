@@ -51,14 +51,14 @@ In the Custom Options tab, you can customize the announce messages, and which sp
 
 # Known Issues / FAQ
 
-Known issues I'm looking at fixing
-
-- [x] ~~Plaguefall: Spinebreakers casting Festering Belch when they're not in combat with you still trigger the warning~~
-- [x] ~~Some other abilities will trigger a warning even if you're not the target~~
 
 # Changelog
 
 ## Patch 9.1
+
+### 2021-07-18
+
+* Fixed frontals not showing in Mists of Tirna Scithe
 
 ### 2021-07-15
 
