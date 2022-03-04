@@ -15,11 +15,6 @@ aura_env.blacklist = {
     [97821]  = Defaults(), -- Void-Touched
     [36032]  = Defaults(), -- Arcane Charge
     [8733]   = Defaults(), -- Blessing of Blackfathom
-    --[25771]  = Defaults(), -- Forbearance (pally: divine shield, hand of protection, and lay on hands)
-    [57724]  = Defaults(), -- Sated (lust debuff)
-    [57723]  = Defaults(), -- Exhaustion (heroism debuff)
-    [80354]  = Defaults(), -- Temporal Displacement (timewarp debuff)
-    [95809]  = Defaults(), -- Insanity debuff (hunter pet heroism: ancient hysteria)
     [58539]  = Defaults(), -- Watcher's Corpse
     [26013]  = Defaults(), -- Deserter
     [71041]  = Defaults(), -- Dungeon Deserter
@@ -38,10 +33,13 @@ aura_env.blacklist = {
     [113942] = Defaults(), -- Demonic: Gateway
     [89140]  = Defaults(), -- Demonic Rebirth: Cooldown
     [287825] = Defaults(), -- Lethargy debuff (fight or flight)
+	[325101] = Defaults(), -- Flattered (Kyrian steward thinks yoo-hoo are the best!)
 };
 
 aura_env.whitelist = {
-    [332514] = { enable = true, priority = 0, stackThreshold = 80}, -- Bron (show at 80 stacks)
+    [332514] = { enable = true, priority = 0, stackThreshold = 65}, -- Bron (show at 65 stacks)
+	[228050] = Defaults(), -- Guardian of the Forgotten Queen
+	[215652] = Defaults(), -- Shield of Virtue
 }
 
 aura_env.lust = {
@@ -140,8 +138,8 @@ aura_env.defense = {
 		[216857] = Defaults(), -- Guarded by the Light
 		[228050] = Defaults(), -- Guardian of the Forgotten Queen
 		[31850]  = Defaults(), -- Ardent Defender
-		[86659]  = Defaults(), -- Guardian of Ancien Kings
-		[212641] = Defaults(), -- Guardian of Ancien Kings (Glyph of the Queen)
+		[86659]  = Defaults(), -- Guardian of Ancient Kings
+		[212641] = Defaults(), -- Guardian of Ancient Kings (Glyph of the Queen)
 		[209388] = Defaults(), -- Bulwark of Order
 		[204335] = Defaults(), -- Aegis of Light
 		[152262] = Defaults(), -- Seraphim
