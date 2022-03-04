@@ -27,13 +27,13 @@ function(allstates, event, ...)
 
     if event == "COMBAT_LOG_EVENT_UNFILTERED" then
         local _, subEvent, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, spellName, _, auraType = ...
-        
+
         if not UnitExists(sourceName) then return true; end
 
         if subEvent == "SPELL_AURA_APPLIED" or subEvent == "SPELL_AURA_APPLIED_DOSE" or subEvent == "SPELL_AURA_REFRESH" or subEvent == "SPELL_AURA_REMOVED_DOSE" then
             if UnitIsPlayer(destName) and UnitIsUnit(destName, "player") then
                 if auraType == "HELPFUL" or auraType == "BUFF" then
-                    
+
                     local whitelist = aura_env.whitelist[spellId]
 
                     -- Ignore blacklisted auras
@@ -44,24 +44,50 @@ function(allstates, event, ...)
                             return true
                         end
                     end
-                    
+
+                    local isSelfCast = WeakAuras.myGUID == sourceGUID
+                    local isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true
+                    local isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true
+                    local isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true
+                    local isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true
+
+                    -- Ignore any non-personal auras unless they're externals / lust / raid CDs
+                    if not isSelfCast then
+                        if not isLust and not isExternal and not isRaidCd then
+                            if not whitelist or whitelist.enable == false then
+                                --print("Skipping non-self cast:"..spellName)
+                                return true
+                            end
+                        end
+                    else
+                        --print("Self cast:"..spellName)
+                        
+                        if not isDefensive and not isRaidCd then
+                            if not whitelist or whitelist.enable == false then
+                                -- print("Skipping self cast that is not defensive: "..spellId)
+                                return true
+                            end
+                        end
+                    end
+
                     -- Manually find the aura so we can get access to all properties
                     local i = 1;
                     while true do
                         local spellName, icon, stacks, auraType, duration, expirationTime, _, _, _, id, _, _, castByPlayer = UnitAura(destName, i, "HELPFUL")
-                        
+
                         if not spellName then return true end
 
                         -- Found our matching aura?
                         if id == spellId then
-                            
-                            -- We ignore permanent auras that don't have  duration e.g. Timewalking buff
-                            if not duration or duration == 0 or duration < 1 then
 
-                                -- Allow whitelisted auras without a duration
-                                if not whitelist or whitelist.enable == false then
-                                    return true
-                                end
+                            -- Whitelisted auras are excluded from duration logic
+                            if not whitelist or whitelist.enable == false then
+                                
+                                -- We ignore permanent auras that don't have  duration e.g. Timewalking buff
+                                if not duration or duration == 0 or duration < 1 then return true; end
+                                
+                                -- Ignore any particularly long buffs, over 2mins
+                                if duration and duration > 120 then return true; end
                             end
 
                             allstates[spellId..destGUID] = {
@@ -78,13 +104,13 @@ function(allstates, event, ...)
                                 unit = "player",
                                 unitBuffIndex = i,
                                 auraType = auraType,
-                                isSelfCast = WeakAuras.myGUID == sourceGUID,
-                                isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true,
-                                isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true,
-                                isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true,
-                                isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true,
+                                isSelfCast = isSelfCast,
+                                isLust = isLust,
+                                isExternal = isExternal,
+                                isDefensive = isDefensive,
+                                isRaidCd = isRaidCd,
                             }
-                      
+
                             -- If we're at 0 doses then we can remove
                             if subEvent == "SPELL_AURA_DOSE_REMOVED" and stacks < 1 then
                                 allstates[spellId..destGUID].show = false
@@ -96,7 +122,7 @@ function(allstates, event, ...)
                                 allstates[spellId..destGUID].show = false
                                 return true;
                             end
-                            
+
                             return true
                         end
 
