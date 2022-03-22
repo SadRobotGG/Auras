@@ -41,7 +41,7 @@ function(states, event, sourceUnit, sourceGuid, spellID)
 
             local sourceName = GetUnitName(sourceUnit)
             
-            local caption = aura_env.captions[spellInfo[2]]:format(sourceName)
+            local caption = (spellInfo.caption or aura_env.captions[spellInfo.type]):format(sourceName, spellInfo.name)
 
             states[spellID] = {
                 show = true,
@@ -49,8 +49,8 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 changed = true,
                 autoHide = true,
                 progressType = "timed",
-                duration = spellInfo[1],
-                expirationTime = GetTime() + spellInfo[1],
+                duration = spellInfo.duration,
+                expirationTime = GetTime() + spellInfo.duration,
                 icon = GetSpellTexture(spellID)
             }
         end
