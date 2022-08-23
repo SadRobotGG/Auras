@@ -18,6 +18,9 @@ function(states, event, sourceUnit, sourceGuid, spellID)
         local spellInfo = spells[event][spellID]
         if spellInfo then
 
+            -- Ignored spells
+            if spellInfo.enabled == false then return true end
+
             -- Ignore "target" as we'll get an event for the nameplate unit anyway
             if sourceUnit == "target" then return true end
 
