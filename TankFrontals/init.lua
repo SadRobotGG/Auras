@@ -40,7 +40,7 @@ aura_env.spells = {
         
         -- Iron Docks 595
         [172982] = Defaults( 172982, 1.5, "SLAM" ),      -- Siegmaster Olugar / Siegemaster Rokra: Shattering Strike
-        [164734] = Defaults( 164734, 1.5, "SHOCKWAVE" ), -- Dreadfang: Shredding Swipes
+        
         [163665] = Defaults( 163665, 1.0, "FRONTAL" ),   -- Makogg Emberblade: Flaming Slash
         [167815] = Defaults( 167815, 1.0, "FRONTAL" ),   -- Thunderlord Wrangler: Rending Cleave
         [167815] = Defaults( 173307, 1.2, "SHOCKWAVE" ), -- Thunderlord Wrangler: Serrated Spear
@@ -106,6 +106,7 @@ aura_env.spells = {
 
         -- Iron Docks
         [162350] = Defaults( 162350, 1.0, "FRONTAL" ),   -- Oshir: Primal Assault
-        [169073] = Defaults( 169073, 2.5, "SHOCKWAVE" ), -- Koramar: Shattering Blade        
+        [169073] = Defaults( 169073, 2.5, "SHOCKWAVE" ), -- Koramar: Shattering Blade
+        [164730] = Defaults( 164730, 1.5, "FRONTAL" ), -- Dreadfang: Shredding Swipes
     },
 }
