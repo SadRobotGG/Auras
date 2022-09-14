@@ -9,6 +9,7 @@ aura_env.captions = {
     ["PURGE"] = o.purge or ">> PURGE %s! <<",
     ["SOOTHE"] = o.soothe or ">> SOOTHE %s! <<",
     ["SOOTHE_SPELL"] = o.sootheSpell or ">> SOOTHE %2$s! <<",
+    ["SPELL_TARGET"] = o.spellTarget or ">> %2$s ON ME! <<"
 }
 
 local function Defaults(id, duration, type, caption)
@@ -35,19 +36,20 @@ aura_env.spells = {
         -- Grimrail Depot g225
         [161090] = Defaults( 161090, 3.0, "FRONTAL" ),   -- Borka: Mad Dash
         [166675] = Defaults( 166675, 1.0, "SHOCKWAVE" ), -- Grom'kar Gunner: Shrapnel Blast
-        [166380] = Defaults( 160943, 1.0, "SHOCKWAVE" ), -- Grom'kar Captain: Reckless Slash
+        [166380] = Defaults( 160943, 1.0, "SLAM" ), -- Grom'kar Captain: Reckless Slash
         [164163] = Defaults( 164163, 3.0, "FRONTAL"),    -- Grimrail Overseer: Hewing Swipe
         
         -- Iron Docks 595
-        [172982] = Defaults( 172982, 1.5, "SLAM" ),      -- Siegmaster Olugar / Siegemaster Rokra: Shattering Strike
-        
+        [172982] = Defaults( 172982, 1.5, "SLAM" ),      -- Siegmaster Olugar / Siegemaster Rokra: Shattering Strike        
         [163665] = Defaults( 163665, 1.0, "FRONTAL" ),   -- Makogg Emberblade: Flaming Slash
         [167815] = Defaults( 167815, 1.0, "FRONTAL" ),   -- Thunderlord Wrangler: Rending Cleave
-        [167815] = Defaults( 173307, 1.2, "SHOCKWAVE" ), -- Thunderlord Wrangler: Serrated Spear
+        --[167815] = Defaults( 173307, 1.2, "SHOCKWAVE" ), -- Thunderlord Wrangler: Serrated Spear
         [173514] = Defaults( 173514, 1.0, "SHOCKWAVE" ), -- Ironwing Flamespitter: Lava Blast
                 
         -- Operation Mechagon: Junkyard g399
-        [298940] = Defaults( 298940, 2.5, "SHOCKWAVE" ), -- Naeno: Bolt Buster
+        [298940] = Defaults( 298940, 2.5, "SHOCKWAVE" ),    -- Naeno: Bolt Buster
+        [301667] = Defaults( 301667, 1.5, "SPELL_TARGET" ), -- Mechagon Cavalry: Rapid Fire
+        [301681] = Defaults( 301681, 1.5, "SPELL_TARGET" ), -- Mechagon Cavalry: Charge
         
         -- Operation Mechagon: Workshop g399
         [294290] = Defaults( 294290, 2.5,  "FRONTAL" ), -- Waste Processing Unit: Process Waste
@@ -107,6 +109,8 @@ aura_env.spells = {
         -- Iron Docks
         [162350] = Defaults( 162350, 1.0, "FRONTAL" ),   -- Oshir: Primal Assault
         [169073] = Defaults( 169073, 2.5, "SHOCKWAVE" ), -- Koramar: Shattering Blade
-        [164730] = Defaults( 164730, 1.5, "FRONTAL" ), -- Dreadfang: Shredding Swipes
+        [164730] = Defaults( 164730, 1.5, "FRONTAL" ),   -- Dreadfang: Shredding Swipes
+        [164426] = Defaults( 164426, 1.5, "SOOTHE" ),    -- Fleshrender Nok'gar: Reckless Provocation
+        [158337] = Defaults( 158337, 30, "SOOTHE" ),     -- Rampaging Clefthoof: Frenzy
     },
 }
