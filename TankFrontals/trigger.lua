@@ -43,8 +43,9 @@ function(states, event, sourceUnit, sourceGuid, spellID)
             end
 
             local sourceName = GetUnitName(sourceUnit)
+            local destinationName = GetUnitName(sourceUnit.."target")
             
-            local caption = (spellInfo.caption or aura_env.captions[spellInfo.type]):format(sourceName, spellInfo.name)
+            local caption = (spellInfo.caption or aura_env.captions[spellInfo.type]):format(sourceName, spellInfo.name, destinationName)
 
             states[spellID] = {
                 show = true,

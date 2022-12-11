@@ -1,86 +1,27 @@
 # Tank Frontals
 
-Announces in `/say` for tank frontals, slams and shockwaves that the group must look out for.
-
-Also calls out soothe and purge for several important casts.
+Announces in `/say` for tank frontals that the group must look out for, as well as important dispels / purges / soothes.
 
 This helps group members avoid damage and potential deaths when it may be unclear where the tank is standing and pointing the mobs, amongst nameplates, visual effects and markers.
 
 In the Custom Options tab, you can customize the announce messages, and which spells to enable / disable for announce.
 
-## Shadowlands Season 4 Dungeons
+In the Actions tab, you can toggle enabling or disabling the chat message, and customize the Sound (defaults 'Front' from the [WA Soundpack](https://www.curseforge.com/wow/addons/sharedmedia_causese))
 
-### Grimrail Depot
+## Supported:
 
-- Borka: Mad Dash
-- Grom'kar Gunner: Shrapnel Blast
-- Grom'kar Captain: Reckless Slash
-
-### Iron Docks
-
-- Siegmaster Olugar / Siegemaster Rokra: Shattering Strike
-- Dreadfang: Shredding Swipes
-- Makogg Emberblade: Flaming Slash
-- Thunderlord Wrangler: Rending Cleave
-- Ironwing Flamespitter: Lava Blast
-- Oshir: Primal Assault
-- Koramar: Shattering Blade
-
-### Operation Mechagon: Junkyard
-
-- Naeno: Bolt Buster
-
-### Operation Mechagon: Workshop
-
-- Waste Processing Unit: Process Waste
-
-### Return to Karazhan: Lower
-
-- Phantom Guardsman: Shield Smash
-- Spectral Journeyman: Smash
-- Attumen: Mortal Strike
-- Attumen: Shared Suffering
-- Ghostly Chef: Cleave
-
-### Return to Karazhan: Upper
-
-- Fel Bat: Fel Breath
-- Wrathguard Flamebringer: Cleave
-- Erudite Slayer: Mighty Swing
-- Erudite Slayer: Heavy Smash
-
-### Tazavesh: Streets
-
-- Ancient Core Hound: Lava Breath
-- Myza's Oasis: Rip Cord
-- Commerce Enforcer: Force Multiplier
-- Menagerie: Flagellation Protocol
-- Support Officer: Refraction Shield
-
-### Sanctum of Domination
-
-- Remnant of Ner'zhul: Suffering
-- Screamspike: Incinerating Cleave
-
-### Sepulcher of the First Ones
-
-- Prototype of Absolution: Wracking Pain
-
-### Castle Nathria
-
-- Sun King's Salvation: Fiery Strike
-- Sire Denathrius: Wracking Pain
-
-### Court of Stars
-
-- Jazshariu: Shockwave
-- Gerenth the Vile (Suspicious Noble): Carrion Swarm
+- Dragonflight Season 1 dungeons
+- Timewalking Mythic+ dungeons
 
 ## Known Issues / FAQ
 
 - You'll get announcements for SOOTHE and PURGE even if there might be people in your group that can do none of these things. I might look into fixing this, but not at the cost of performance.
 
 ## Changelog
+
+### Patch 10.0.2
+
+- Dragonflight Season 1
 
 ### Patch 9.2.5
 
