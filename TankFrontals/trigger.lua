@@ -1,7 +1,5 @@
 function(states, event, sourceUnit, sourceGuid, spellID)
 
-    local debug = false
-
     -- When we leave combat, clear states
     if event == "PLAYER_REGEN_ENABLED" then
         for _,state in pairs(states) do
@@ -26,26 +24,27 @@ function(states, event, sourceUnit, sourceGuid, spellID)
 
             -- We're not interested in units that don't exist, or we're not in combat with
             if not sourceUnit or not UnitExists(sourceUnit) or not UnitAffectingCombat(sourceUnit) then
-                if debug then print("Not in combat with "..sourceUnit) end
+                DebugPrint("Not in combat with "..sourceUnit)
                 return true
             end
 
             -- Only units hostile to us
             if not UnitIsEnemy(sourceUnit, "player") then
-                if debug then print("Not hostile to "..sourceUnit) end
+                DebugPrint("Not hostile to "..sourceUnit)
                 return true
             end
 
             -- Only if we're the target
-            if not UnitIsUnit("player", sourceUnit.."target") then
-                if debug then print("Not a target of "..sourceUnit) end
+            if not spellInfo.ignoreTarget and not UnitIsUnit("player", sourceUnit.."target") then
+                DebugPrint("Not a target of "..sourceUnit)
                 return true
             end
 
+            local type = spellInfo.type or "FRONTAL"
             local sourceName = GetUnitName(sourceUnit)
             local destinationName = GetUnitName(sourceUnit.."target")
 
-            local caption = (spellInfo.caption or aura_env.captions[spellInfo.type]):format(sourceName, spellInfo.name, destinationName)
+            local caption = aura_env.captions[type]:format(sourceName, spellInfo.name, destinationName)
 
             states[spellID] = {
                 show = true,
@@ -55,7 +54,8 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 progressType = "timed",
                 duration = spellInfo.duration,
                 expirationTime = GetTime() + spellInfo.duration,
-                icon = GetSpellTexture(spellID)
+                icon = GetSpellTexture(spellID),
+                type = type
             }
         end
     end
