@@ -12,9 +12,9 @@ function(states, event, sourceUnit, sourceGuid, spellID)
     end
 
     local spells = aura_env.spells
-    
+
     if spells[event] then
-        
+
         local spellInfo = spells[event][spellID]
         if spellInfo then
 
@@ -29,7 +29,7 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 if debug then print("Not in combat with "..sourceUnit) end
                 return true
             end
-            
+
             -- Only units hostile to us
             if not UnitIsEnemy(sourceUnit, "player") then
                 if debug then print("Not hostile to "..sourceUnit) end
@@ -44,7 +44,7 @@ function(states, event, sourceUnit, sourceGuid, spellID)
 
             local sourceName = GetUnitName(sourceUnit)
             local destinationName = GetUnitName(sourceUnit.."target")
-            
+
             local caption = (spellInfo.caption or aura_env.captions[spellInfo.type]):format(sourceName, spellInfo.name, destinationName)
 
             states[spellID] = {
@@ -59,6 +59,6 @@ function(states, event, sourceUnit, sourceGuid, spellID)
             }
         end
     end
- 
+
     return true
 end
