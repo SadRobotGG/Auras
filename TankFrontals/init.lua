@@ -55,9 +55,10 @@ aura_env.spells = {
         [207979] = Defaults(207979, "SHOCKWAVE"), -- Jazshariu: Shockwave
 
         -- Halls of Valor g240
-        [198888] = Defaults(198888, "SHOCKWAVE"),        -- Storm Drake: Lightning Breath
-        [199050] = Defaults(199050),                     -- Valarjar Shieldmaiden: Mortal Hew
-        [191508] = Defaults(191508, "SHOCKWAVE", true),  -- Valarjar Aspirant: Blast of Light
+        [198888] = Defaults(198888, "SHOCKWAVE"),       -- Storm Drake: Lightning Breath
+        [199050] = Defaults(199050),                    -- Valarjar Shieldmaiden: Mortal Hew
+        [191508] = Defaults(191508, "SHOCKWAVE", true), -- Valarjar Aspirant: Blast of Light
+        [192018] = Defaults(192018, "FRONTAL", true),   -- Hyrja: Shield of Light
 
         -- The Nokhud Offensive 2093
         --[384510] = Defaults(384510),               -- Nokhud Lancemaster: Cleaving Strikes; this is a buff, not a spell unfortunately.
