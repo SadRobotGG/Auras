@@ -50,18 +50,17 @@ aura_env.spells = {
         --[384699] = Defaults( 384699),               -- Umbrelskul: Crystalline Roar
 
         -- Court of Stars g252
-        [209027] = Defaults(209027), -- Duskwatch Guard: Quelling Strike
-        [209495] = Defaults(209495), -- Guardian Construct: Charged Smash
+        [209027] = Defaults(209027),              -- Duskwatch Guard: Quelling Strike
+        [209495] = Defaults(209495),              -- Guardian Construct: Charged Smash
         [207979] = Defaults(207979, "SHOCKWAVE"), -- Jazshariu: Shockwave
 
         -- Halls of Valor g240
-        [198888] = Defaults(198888),               -- Storm Drake: Lightning Breath
-        [193083] = Defaults(193083),               -- Hymdall: Bloodletting Sweep
-        [199050] = Defaults(199050),               -- Valarjar Shieldmaiden: Mortal Hew
-        [191508] = Defaults(191508, "SHOCKWAVE"),  -- Valarjar Aspirant: Blast of Light
+        [198888] = Defaults(198888, "SHOCKWAVE"),        -- Storm Drake: Lightning Breath
+        [199050] = Defaults(199050),                     -- Valarjar Shieldmaiden: Mortal Hew
+        [191508] = Defaults(191508, "SHOCKWAVE", true),  -- Valarjar Aspirant: Blast of Light
 
         -- The Nokhud Offensive 2093
-        [384510] = Defaults(384510),               -- Nokhud Lancemaster: Cleaving Strikes
+        --[384510] = Defaults(384510),               -- Nokhud Lancemaster: Cleaving Strikes; this is a buff, not a spell unfortunately.
         [387135] = Defaults(387135),               -- Primalist Arcblade: Arcing Strike
         [387629] = Defaults(387629, "SHOCKWAVE"),  -- Desecrated Ohuna: Rotting Wind
         [382233] = Defaults(382233, "SHOCKWAVE"),  -- Batak: Broad Stomp
