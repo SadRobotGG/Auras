@@ -93,6 +93,7 @@ aura_env.spells = {
         -- Vault of the Incarnates g437
 
         --[370615] = Defaults(370615) -- Eranog: Molten Cleave; Random
+        [376279] = Defaults(376279), -- Terros: Concussive Slam
         [374112] = Defaults(374112), -- Sennarth's Frostbreath Arachnid: Freezing Breath
         [390548] = Defaults(390548), -- Kurog Grimtotem: Sundering Strike
         [386410] = Defaults(386410), -- Raszageth: Thunderous Blast
