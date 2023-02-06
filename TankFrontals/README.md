@@ -8,7 +8,14 @@ In the Custom Options tab, you can customize the announce messages, and which sp
 
 In the Actions tab, you can toggle enabling or disabling the chat message, and customize the Sound (defaults 'Front' from the [WA Soundpack](https://www.curseforge.com/wow/addons/sharedmedia_causese))
 
-## Supported:
+- **FRONTAL** - This is a cleave and the tank must take the hit and not point at the group.
+- **SHOCKWAVE** - This is a frontal or projectile that is aimed at the tank, but the tank can also dodge it once it has been baited.
+- **KNOCKBACK** - This frontal will also knock back anyone it hits.
+- **SLAM** - This is an AoE targeted on the tank, even if they're moving away.
+- **SOOTHE** - An enrage effect that should be dispelled by a soothe / purge ability.
+- **PURGE** - Another beneficial magic effect that should be purged.
+
+## Supported encounters
 
 - Dragonflight Season 1 dungeons
 - Timewalking Mythic+ dungeons

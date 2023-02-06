@@ -18,7 +18,7 @@ local function Defaults(id, type, ignoreTarget)
     local options = o["spell"..id]
 
     local enabled = options == nil or options == true;
-
+    
     local name = GetSpellInfo(id)
 
     return {
@@ -36,10 +36,10 @@ aura_env.spells = {
     {
         -- Algeth'ar Academy g433
         [388976] = Defaults(388976, "SHOCKWAVE", true), -- Arcane Ravager: Riftbreath
-        [385958] = Defaults(385958),               -- Vexamus: Arcane Explusion
-        --[377383] = Defaults(377383, "SHOCKWAVE"),  -- Alpha Eagle: Gust; Random
-        --[377034] = Defaults(377034, "SHOCKWAVE"),  -- Crawth: Overpowering Gust; Random
-        --[374361] = Defaults(374361, "SHOCKWAVE"),  -- Echo of Doragosa: Astral Breath; Random
+        [385958] = Defaults(385958),                    -- Vexamus: Arcane Explusion
+        --[377383] = Defaults(377383, "SHOCKWAVE"),     -- Alpha Eagle: Gust; Random
+        --[377034] = Defaults(377034, "SHOCKWAVE"),     -- Crawth: Overpowering Gust; Random
+        --[374361] = Defaults(374361, "SHOCKWAVE"),     -- Echo of Doragosa: Astral Breath; Random
 
         -- The Azure Vault g428
         [386660] = Defaults(386660, "SHOCKWAVE"),  -- Leymor: Erupting Fissure
@@ -47,21 +47,20 @@ aura_env.spells = {
         [387067] = Defaults(387067, "KNOCKBACK"),  -- Arcane Construct: Arcane Bash
         [391118] = Defaults(391118),               -- Scalebane Lieutenant: Spellfrost Breath
         [372222] = Defaults(372222),               -- Azureblade: Arcane Cleave
-        --[384699] = Defaults( 384699),               -- Umbrelskul: Crystalline Roar
+        --[384699] = Defaults( 384699),            -- Umbrelskul: Crystalline Roar
 
         -- Court of Stars g252
-        [209027] = Defaults(209027),              -- Duskwatch Guard: Quelling Strike
-        [209495] = Defaults(209495),              -- Guardian Construct: Charged Smash
+        [209027] = Defaults(209027, "SHOCKWAVE"), -- Duskwatch Guard: Quelling Strike
+        [209495] = Defaults(209495, "SLAM"),      -- Guardian Construct: Charged Smash
         [207979] = Defaults(207979, "SHOCKWAVE"), -- Jazshariu: Shockwave
 
         -- Halls of Valor g240
-        [198888] = Defaults(198888, "SHOCKWAVE"),       -- Storm Drake: Lightning Breath
+        [198888] = Defaults(198888),                    -- Storm Drake: Lightning Breath
         [199050] = Defaults(199050),                    -- Valarjar Shieldmaiden: Mortal Hew
         [191508] = Defaults(191508, "SHOCKWAVE", true), -- Valarjar Aspirant: Blast of Light
         [192018] = Defaults(192018, "FRONTAL", true),   -- Hyrja: Shield of Light
 
         -- The Nokhud Offensive 2093
-        --[384510] = Defaults(384510),               -- Nokhud Lancemaster: Cleaving Strikes; this is a buff, not a spell unfortunately.
         [387135] = Defaults(387135),               -- Primalist Arcblade: Arcing Strike
         [387629] = Defaults(387629, "SHOCKWAVE"),  -- Desecrated Ohuna: Rotting Wind
         [382233] = Defaults(382233, "SHOCKWAVE"),  -- Batak: Broad Stomp
@@ -107,6 +106,9 @@ aura_env.spells = {
         [387955] = Defaults(387955, "PURGE", true), -- Ethereal Restorer: Celestial Shield
         [377389] = Defaults(377389, "SOOTHE_SPELL", true), -- Alpha Eagle: Call of the Flock
 
+        -- Azure Vault
+        [389686] = Defaults(389686, "SOOTHE", true), -- Crystal Fury: Arcane Fury
+        
         -- Court of Stars
         [209033] = Defaults(209033, "PURGE", true), -- Duskwatch Guard: Fortification
         --[225100] = Defaults(225100, "PURGE", true), -- Guardian Construct: Charging Station; Can't be dispelled?
@@ -119,7 +121,9 @@ aura_env.spells = {
 
         -- Ruby Life Pools
         [372749] = Defaults(372749, "PURGE", true), -- Flashfrost Chillweaver: Ice Shield
+        [373972] = Defaults(373972, "PURGE", true), -- Primalist Flamedancer: Blaze of Glory
         [392454] = Defaults(392454, "PURGE", true), -- Flame Channeler: Burning Veins; might not want to purge as it damages themselves
+        [385063] = Defaults(385063, "PURGE", true), -- Primalist Cinderweaver: Burning Ambition; increases damage taken so don't purge
 
         -- Shadowmoon Burial Grounds
         [398151] = Defaults(398151, "PURGE", true), -- Shadowmoon Loyalist: Sinister Focus

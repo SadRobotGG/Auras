@@ -34,12 +34,9 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 return true
             end
 
-            -- Only if we're the target
-            if not spellInfo.ignoreTarget and not UnitIsUnit("player", sourceUnit.."target") then
-                DebugPrint("Not a target of "..sourceUnit)
-                return true
-            end
-
+            local ignoreTarget = spellInfo.ignoreTarget == true or type == "PURGE" or type == "SOOTHE" or type == "SOOTHE_SPELL";
+            local isTarget = UnitIsUnit("player", sourceUnit.."target");
+            local isTank = select(5, GetSpecializationInfo(GetSpecialization())) == "TANK";
             local type = spellInfo.type or "FRONTAL"
             local sourceName = GetUnitName(sourceUnit)
             local destinationName = GetUnitName(sourceUnit.."target")
@@ -55,7 +52,10 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 duration = spellInfo.duration,
                 expirationTime = GetTime() + spellInfo.duration,
                 icon = GetSpellTexture(spellID),
-                type = type
+                type = type,
+                isTarget = isTarget,
+                isTank = isTank,
+                ignoreTarget = ignoreTarget
             }
         end
     end
