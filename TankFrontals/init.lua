@@ -1,5 +1,5 @@
 --Events: UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED
--- Zone filters: g433,g430,g428,2093,g252,g240,g223,g201,g437,731,g245
+-- Zone filters: g429,g430,g431,g432,g433,g434,428,2093,g252,g240,g223,g201,g437,731,g245,936,g438,g282,325
 local o = aura_env.config
 
 aura_env.captions = {
@@ -10,6 +10,7 @@ aura_env.captions = {
     ["PURGE"] = o.purge or ">> PURGE %s! <<",
     ["SOOTHE"] = o.soothe or ">> SOOTHE %s! <<",
     ["SOOTHE_SPELL"] = o.sootheSpell or ">> SOOTHE %2$s! <<",
+    ["PURGE_SPELL"] = o.purgeSpell or ">> PURGE %2$s! <<",
     ["SPELL_TARGET"] = o.spellTarget or ">> %2$s on %3$s <<"
 }
 
@@ -34,6 +35,48 @@ end
 aura_env.spells = {
     ["UNIT_SPELLCAST_START"] =
     {
+        -- SEASON TWO
+
+        -- Brackenhide Hollow g432
+        [382712] = Defaults(382712),              -- Wilted Oak: Necrotic Breath
+        [376231] = Defaults(376231, "SHOCKWAVE"), -- Treemouth: Decay Spray
+        [377559] = Defaults(377559, "KNOCKBACK"), -- Treemouth: Vine Whip
+        [376170] = Defaults(376170, "SHOCKWAVE"), -- Decatriarch Wratheye: Choking Rotcloud
+
+        -- Freehold 936
+        [257426] = Defaults(257426, "SHOCKWAVE"), -- Irontide Enforcer: Brutal Backhand
+
+        -- Halls of Infusion g434
+        [384524] = Defaults(384524, "SHOCKWAVE"), -- Watcher Irideus: Titanic Fist
+        [374563] = Defaults(374563, "SHOCKWAVE"), -- Dazzling Dragonfly: Dazzle
+        [375351] = Defaults(375348), -- Gusting Proto-Dragon: Gusting Breath
+        [375351] = Defaults(375351), -- Glacial Proto-Dragon: Oceanic Breath
+        [375327] = Defaults(375327), -- Subterranean Proto-Dragon: Tectonic Breath
+        [393432] = Defaults(393432), -- Refti Defender: Spear Flurry
+
+        -- Neltharion's Lair 731
+        [188169] = Defaults(188169), -- Rokmora: Razor Shards
+        [226296] = Defaults(226296), -- Vileshard Hulk: Razor Shards
+
+        -- Neltharus g431
+        [397010] = Defaults(397010, "SHOCKWAVE"), --  Qalashi Warden: Volcanic Guard
+        [372311] = Defaults(372311), -- Qalashi Trainee: Magma Fist
+        [395184] = Defaults(395184), -- Qalashi Irontorch: Scorching Breath
+
+        -- Uldaman g429
+        [369409] = Defaults(369409), -- Earthen Custodian: Cleave
+        [369563] = Defaults(369563), -- Baelog: Wild Cleave
+        [369061] = Defaults(369061), -- Emberon: Searing Clap
+        [375727] = Defaults(375727), -- Chrono-Lord Deios: Sand Breath
+
+        -- The Underrot g282
+        [260793] = Defaults(260793, "SHOCKWAVE"), -- Cragmaw the Infested: Indigestion
+
+        -- The Vortex Pinnacle 325
+        [88308] = Defaults(88308), -- Altairus: Chilling Breath
+        
+        -- SEASON ONE
+
         -- Algeth'ar Academy g433
         [388976] = Defaults(388976, "SHOCKWAVE", true), -- Arcane Ravager: Riftbreath
         [385958] = Defaults(385958),                    -- Vexamus: Arcane Explusion
@@ -79,10 +122,9 @@ aura_env.spells = {
         [114646] = Defaults(114646),               -- Haunting Sha: Haunting Gaze
         [396907] = Defaults(396907, "SHOCKWAVE"),  -- Yu'lon: Jade Fire Breath
 
-        -- TIMEWALKING
+        -- Aberrus g438
 
-        -- Neltharion's Lair 731
-        [188169] = Defaults(188169), -- Rokmora: Razor Shards
+        -- TIMEWALKING
 
         -- Black Rook Hold g245
         [200261] = Defaults(200261, "SHOCKWAVE"), -- Soul-Torn Champion: Bonebreaking Strike
@@ -99,7 +141,17 @@ aura_env.spells = {
     },
 
     ["UNIT_SPELLCAST_SUCCEEDED"] = {
-        [188169] = Defaults(188169, "FRONTAL"), -- Rokmora: Razor Shards
+
+        -- SEASON TWO
+
+        -- Neltharion's Lair
+        
+
+        -- Freehold
+        [257397] = Defaults(257397, "PURGE_SPELL", true), -- Healing Balm
+        [257899] = Defaults(257899, "SOOTHE_SPELL", true), -- Irontide Ravager: Painful Motivation
+
+        -- SEASON ONE
 
         -- Algethar Academy
         [390938] = Defaults(390938, "SOOTHE", true), -- Aggravated Skitterfly: Agitation

@@ -34,7 +34,7 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 return true
             end
 
-            local ignoreTarget = spellInfo.ignoreTarget == true or type == "PURGE" or type == "SOOTHE" or type == "SOOTHE_SPELL";
+            local ignoreTarget = spellInfo.ignoreTarget == true or type == "PURGE" or type == "SOOTHE" or type == "SOOTHE_SPELL" or type == "PURGE_SPELL";
             local isTarget = UnitIsUnit("player", sourceUnit.."target");
             local isTank = select(5, GetSpecializationInfo(GetSpecialization())) == "TANK";
             local type = spellInfo.type or "FRONTAL"
