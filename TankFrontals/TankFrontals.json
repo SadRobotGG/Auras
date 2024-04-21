@@ -1,0 +1,938 @@
+{
+  "c": [
+    {
+      "actions": {
+        "finish": [],
+        "init": {
+          "custom": "--Events: UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED\n-- Zone filters: g182,g236,g245,g275,g279,g440,733\nlocal o = aura_env.config\n\naura_env.captions = {\n    [\"FRONTAL\"] = o.frontal or \">> FRONTAL ON ME <<\",\n    [\"SLAM\"] = o.slam or \">> SLAM ON ME <<\",\n    [\"SHOCKWAVE\"] = o.shockwave or \">> SHOCKWAVE ON ME <<\",\n    [\"KNOCKBACK\"] = o.knockback or \">> KNOCKBACK ON ME <<\",\n    [\"PURGE\"] = o.purge or \">> PURGE %s! <<\",\n    [\"SOOTHE\"] = o.soothe or \">> SOOTHE %s! <<\",\n    [\"SOOTHE_SPELL\"] = o.sootheSpell or \">> SOOTHE %2$s! <<\",\n    [\"PURGE_SPELL\"] = o.purgeSpell or \">> PURGE %2$s! <<\",\n    [\"SPELL_TARGET\"] = o.spellTarget or \">> %2$s on %3$s <<\",\n    [\"STACK\"] = o.stack or \">> STACK FOR %2$s <<\",\n}\n\nlocal function Defaults(id, type, ignoreTarget)\n    \n    local options = o[\"spell\"..id]\n    \n    local enabled = options == nil or options == true;\n    \n    local name = GetSpellInfo(id)\n    \n    return {\n        id = id,\n        duration = 2,\n        type = type,\n        enabled = enabled,\n        name = name,\n        ignoreTarget = ignoreTarget\n    }\nend\n\naura_env.spells = {\n    [\"UNIT_SPELLCAST_START\"] =\n    {\n        -- SEASON THREE\n        \n        -- g182,g236,g245,g275,g279,g440,733\n        \n        -- Atal'Dazar (Battle for Azeroth) g275 Icon: 2011105\n        [255567] = Defaults(255567), -- -- T'lonja 128455 Frenzied Charge\n        \n        -- Black Rook Hold (Legion) g245 Icon: 1417423\n        [200261] = Defaults(200261, \"SHOCKWAVE\"), -- Soul-Torn Champion 98243, Commander Shemdah'sohn 98706: Bonebreaking Strike\n        [197974] = Defaults(197974, \"SHOCKWAVE\"), -- Soul-torn Vanguard 100485: 197974 Bonecrushing Strike\n        [225732] = Defaults(225732, \"FRONTAL\"), -- Lady Velandras Ravencrest 98538: 225732 Strike Down\n        -- Risen Archer 98275\n        -- Wyrmtongue Scavenger 98792\n        \n        -- Darkheart Thicket (Legion) 733, Icon: 1417425\n        [200768] = Defaults(200768, \"SHOCKWAVE\"), -- Crazed Razorbeak 95766: Propelling Charge\n        [201226] = Defaults(201226, \"SHOCKWAVE\"), -- Bloodtainted Fury 100531: Blood Assault\n        [204667] = Defaults(204667), -- Oakheart 103344: Nightmare Breath\n        [191326] = Defaults(191326, \"SHOCKWAVE\"), -- Dresaron 99200: Breath of Corruption\n        \n        -- Dawn of the Infinites g440, Icon: 5247561\n        [413529] = Defaults(413529), -- Timestream Anomaly 199749: Untwist\n        [407159] = Defaults(407159), -- Blight of Galakrond 198997 Blight Reclamation 407159\n        [412129] = Defaults(412129, \"SHOCKWAVE\"), -- Lerai, Timesworn Maiden 205152 Orb of Contemplation\n        [408141] = Defaults(408141), -- Dazhak 201788 Incinerating Blightbreath\n        --[401482] = Defaults(401482), -- Tyr, the Infinite Keeper 198998: Infinite Annihilation\n        [401248] = Defaults(401248, \"KNOCKBACK\"), -- Tyr, the Infinite Keeper 198998 Titanic Blow 401248\n        [400641] = Defaults(400641, \"STACK\"), -- Tyr, the Infinite Keeper 198998 Dividing Strike 400641\n        [404916] = Defaults(404916), -- Morchie: Sand Blast\n        [412505] = Defaults(412505), -- Tyr's Vanguard 205151 Rending Cleave 412505\n        [419351] = Defaults(419351), -- Infinite Saboteur 208438: Bronze Exhalation 419351\n        [416139] = Defaults(416139), -- Chrono-Lord Deios 199000: Temporal Breath 416139\n        [418056] = Defaults(418056, \"SHOCKWAVE\"), -- Anduin Lothar 203679 Shockwave 418056\n        \n        -- Everbloom (Warlords of Draenor) g236, Icon: 967517\n        [169714] = Defaults(169714), -- Gnarlroot 81984: Gasp 169714\n        [164357] = Defaults(164357), -- Witherbark 81522: Parched Gasp 164357\n        [427510] = Defaults(427510, \"SLAM\"), -- Dulhu 83894: Noxious Charge 427510\n        [427512] = Defaults(427512, \"SLAM\"), -- Dulhu 83894: Noxious Charge 427512\n        [169179] = Defaults(169179, \"SHOCKWAVE\"), -- Yalnu: Colossal Blow 169179\n        [169929] = Defaults(169929, \"SHOCKWAVE\"), -- Gnarled Ancient 84400: Lumbering Swipe 169929\n        \n        -- Throne of the Tides (Cataclysm) g182, Icon: 409600\n        [426645] = Defaults(426645), -- Naz'jar Ravager 212673: Acid Barrage 426645\n        [428293] = Defaults(428293, \"SHOCKWAVE\"), -- Naz'jar Honor Guard 40633: Trident Flurry 428293\n        [428530] = Defaults(428530), -- Ink of Ozumat 213770: Murk Spew 428530\n        \n        -- Waycrest Manor (Battle for Azeroth) g279, Icon: 2011154\n        [271174] = Defaults(271174, \"SHOCKWAVE\"), -- Pallid Gorger 137830: Retch\n        [265372] = Defaults(265372, \"SHOCKWAVE\"), -- Bewitched Captain 131587: Shadow Cleave\n    },\n    \n    [\"UNIT_SPELLCAST_SUCCEEDED\"] = {\n        \n        -- Atal'Dazar\n        [255579] = Defaults(255579, \"PURGE\", true),  -- Priestess Alun'za 122967: Gilded Claws\n        \n        -- Throne of the Tides\n        [426618] = Defaults(426618, \"SOOTHE\", true), -- Naz'jar Invader 40584: Slithering Assault\n        [428329] = Defaults(428329, \"PURGE\", true),  -- Naz'jar Frost Witch 44404: Icy Veins\n        \n        -- Waycrest Manor\n        [265368] = Defaults(265368, \"PURGE\", true), -- Bewitched Captain 131587: Spirited Defense 265368\n    },\n}",
+          "do_custom": true
+        },
+        "start": {
+          "do_message": false,
+          "do_sound": false,
+          "message": "",
+          "message_format_caster_format": "none",
+          "message_format_dest_format": "none",
+          "message_format_n_format": "none",
+          "message_type": "SAY",
+          "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\Front.ogg",
+          "sound_channel": "Dialog"
+        }
+      },
+      "anchorFrameType": "SCREEN",
+      "anchorPoint": "CENTER",
+      "animation": {
+        "finish": {
+          "duration_type": "seconds",
+          "easeStrength": 3,
+          "easeType": "none",
+          "type": "none"
+        },
+        "main": {
+          "duration_type": "seconds",
+          "easeStrength": 3,
+          "easeType": "none",
+          "type": "none"
+        },
+        "start": {
+          "duration_type": "seconds",
+          "easeStrength": 3,
+          "easeType": "none",
+          "type": "none"
+        }
+      },
+      "authorOptions": [
+        {
+          "noMerge": false,
+          "text": "Message Texts",
+          "type": "header",
+          "useName": true,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "Configure sounds in the Conditions tab. Uses sounds from WA Soundpack (SharedMedia_Causese) by default.\n\nMessage replacement texts:\n\n%s = The unit that cast the spell\n%2$s = The spell name\n%3$s = The target of the spell\n\nIf you get stuck, at the bottom of these options click Reset to Defaults",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": ">> FRONTAL ON ME <<",
+          "key": "frontal",
+          "length": 10,
+          "multiline": false,
+          "name": "Frontal Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "default": ">> SLAM ON ME <<",
+          "key": "slam",
+          "length": 10,
+          "multiline": false,
+          "name": "Slam Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "default": ">> SHOCKWAVE ON ME <<",
+          "key": "shockwave",
+          "length": 10,
+          "multiline": false,
+          "name": "Shockwave Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "default": ">> KNOCKBACK ON ME <<",
+          "key": "knockback",
+          "length": 10,
+          "multiline": false,
+          "name": "Knockback Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "default": ">> PURGE %s <<",
+          "key": "purge",
+          "length": 10,
+          "multiline": false,
+          "name": "Purge Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "default": ">> SOOTHE %s <<",
+          "key": "soothe",
+          "length": 10,
+          "multiline": false,
+          "name": "Soothe Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "default": ">> SOOTHE %2$s! <<",
+          "key": "sootheSpell",
+          "length": 10,
+          "multiline": false,
+          "name": "Soothe Spell Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "default": ">> STACK FOR %2$s <<",
+          "key": "stack",
+          "length": 10,
+          "multiline": false,
+          "name": "Stack Message",
+          "type": "input",
+          "useDesc": false,
+          "useLength": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "large",
+          "text": "|T4622499:32:32:0|t |cFFFFCC00Dragonflight Season Three|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T2011105:32:32:0|t |cFFFFCC00Atal'Dazar|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell255567",
+          "name": "T'lonja: Frenzied Charge",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell255579",
+          "name": "Priestess Alun'za: Gilded Claws",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578412:32:32:0|t |cFFFFCC00Black Rook Hold|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell200261",
+          "name": "Soul-Torn Champion: Bonebreaking Strike",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell197974",
+          "name": "Soul-torn Vanguard: Bonecrushing Strike",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell225732",
+          "name": "Lady Velandras: Strike Down",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578412:32:32:0|t |cFFFFCC00Darkheart Thicket|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell200768",
+          "name": "Crazed Razorbeak: Propelling Charge",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell201226",
+          "name": "Bloodtainted Fury: Blood Assault",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell204667",
+          "name": "Oakheart: Nightmare Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell191326",
+          "name": "Dresaron: Breath of Corruption",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578412:32:32:0|t |cFFFFCC00Dawn of the Infinites|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell413529",
+          "name": "Timestream Anomaly: Untwist",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell407159",
+          "name": "Blight of Galakrond: Blight Reclamation",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell412129",
+          "name": "Lerai, Timesworn Maiden: Orb of Contemplation",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell408141",
+          "name": "Dazhak: Incinerating Blightbreath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell419351",
+          "name": "Infinite Saboteur: Bronze Exhalation",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell412505",
+          "name": "Tyr's Vanguard: Rending Cleave",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell401248",
+          "name": "Tyr, the Infinite Keeper: Titanic Blow",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell400641",
+          "name": "Tyr, the Infinite Keeper: Dividing Strike",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell404916",
+          "name": "Morchie: Sand Blast",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell418056",
+          "name": "Battlefield: Shockwave",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell416139",
+          "name": "Chrono-Lord Deios: Temporal Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578412:32:32:0|t |cFFFFCC00The Everbloom|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell169714",
+          "name": "Gnarlroot: Gasp",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell164357",
+          "name": "Witherbark: Parched Gasp",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell427510",
+          "name": "Dulhu: Noxious Charge",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell169179",
+          "name": "Yalnu: Colossal Blow",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell169929",
+          "name": "Gnarled Ancient: Lumbering Swipe",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578412:32:32:0|t |cFFFFCC00Throne of the Tides|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell426645",
+          "name": "Naz'jar Ravager: Acid Barrage",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell428293",
+          "name": "Naz'jar Honor Guard: Trident Flurry",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell428530",
+          "name": "Ink of Ozumat: Murk Spew",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell426618",
+          "name": "Naz'jar Invader: Slithering Assault",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell428329",
+          "name": "Naz'jar Frost Witch: Icy Veins",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578412:32:32:0|t |cFFFFCC00Waycrest Manor|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell271174",
+          "name": "Pallid Gorger: Retch",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell265372",
+          "name": "Bewitched Captain: Shadow Cleave",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell265368",
+          "name": "Bewitched Captain: Spirited Defense",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        }
+      ],
+      "automaticWidth": "Auto",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "conditions": [
+        {
+          "changes": [
+            {
+              "property": "sound",
+              "value": {
+                "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\Front.ogg",
+                "sound_channel": "Dialog",
+                "sound_type": "Play"
+              }
+            }
+          ],
+          "check": {
+            "op": "==",
+            "trigger": 1,
+            "value": "FRONTAL",
+            "variable": "type"
+          }
+        },
+        {
+          "changes": [
+            {
+              "property": "sound",
+              "value": {
+                "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\Dodge.ogg",
+                "sound_channel": "Dialog",
+                "sound_type": "Play"
+              }
+            }
+          ],
+          "check": {
+            "op": "==",
+            "trigger": 1,
+            "value": "SHOCKWAVE",
+            "variable": "type"
+          }
+        },
+        {
+          "changes": [
+            {
+              "property": "sound",
+              "value": {
+                "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\AoE.ogg",
+                "sound_channel": "Dialog",
+                "sound_type": "Play"
+              }
+            }
+          ],
+          "check": {
+            "op": "==",
+            "trigger": 1,
+            "value": "SLAM",
+            "variable": "type"
+          }
+        },
+        {
+          "changes": [
+            {
+              "property": "sound",
+              "value": {
+                "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\Knock.ogg",
+                "sound_channel": "Dialog",
+                "sound_type": "Play"
+              }
+            }
+          ],
+          "check": {
+            "op": "==",
+            "trigger": 1,
+            "value": "KNOCKBACK",
+            "variable": "type"
+          }
+        },
+        {
+          "changes": [
+            {
+              "property": "sound",
+              "value": {
+                "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\Dispell.ogg",
+                "sound_channel": "Dialog",
+                "sound_type": "Play"
+              }
+            }
+          ],
+          "check": {
+            "op": "==",
+            "trigger": 1,
+            "value": "PURGE",
+            "variable": "type"
+          }
+        },
+        {
+          "changes": [
+            {
+              "property": "sound",
+              "value": {
+                "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\Dispell.ogg",
+                "sound_channel": "Dialog",
+                "sound_type": "Play"
+              }
+            }
+          ],
+          "check": {
+            "op": "==",
+            "trigger": 1,
+            "value": "SOOTHE",
+            "variable": "type"
+          }
+        },
+        {
+          "changes": [
+            {
+              "property": "sound",
+              "value": {
+                "sound": "Interface\\Addons\\SharedMedia_Causese\\sound\\Dispell.ogg",
+                "sound_channel": "Dialog",
+                "sound_type": "Play"
+              }
+            }
+          ],
+          "check": {
+            "op": "==",
+            "trigger": 1,
+            "value": "SOOTHE_SPELL",
+            "variable": "type"
+          }
+        },
+        {
+          "changes": [
+            {
+              "property": "chat",
+              "value": {
+                "message": "%n",
+                "message_format_n_format": "none",
+                "message_type": "SAY"
+              }
+            }
+          ],
+          "check": {
+            "checks": [
+              {
+                "trigger": 1,
+                "value": 1,
+                "variable": "isTarget"
+              },
+              {
+                "checks": [
+                  {
+                    "trigger": 1,
+                    "value": 1,
+                    "variable": "ignoreTarget"
+                  },
+                  {
+                    "trigger": 1,
+                    "value": 1,
+                    "variable": "isTank"
+                  }
+                ],
+                "op": "==",
+                "trigger": -2,
+                "variable": "AND"
+              }
+            ],
+            "trigger": -2,
+            "variable": "OR"
+          }
+        }
+      ],
+      "config": {
+        "frontal": ">> FRONTAL ON ME <<",
+        "knockback": ">> KNOCKBACK ON ME <<",
+        "purge": ">> PURGE %s <<",
+        "shockwave": ">> SHOCKWAVE ON ME <<",
+        "slam": ">> SLAM ON ME <<",
+        "soothe": ">> SOOTHE %s <<",
+        "sootheSpell": ">> SOOTHE %2$s! <<",
+        "spell164357": true,
+        "spell169179": true,
+        "spell169714": true,
+        "spell169929": true,
+        "spell191326": true,
+        "spell197974": true,
+        "spell200261": true,
+        "spell200768": true,
+        "spell201226": true,
+        "spell204667": true,
+        "spell225732": true,
+        "spell255567": true,
+        "spell255579": true,
+        "spell265368": true,
+        "spell265372": true,
+        "spell271174": true,
+        "spell400641": true,
+        "spell401248": true,
+        "spell404916": true,
+        "spell407159": true,
+        "spell408141": true,
+        "spell412129": true,
+        "spell412505": true,
+        "spell413529": true,
+        "spell416139": true,
+        "spell418056": true,
+        "spell419351": true,
+        "spell426618": true,
+        "spell426645": false,
+        "spell427510": true,
+        "spell428293": true,
+        "spell428329": true,
+        "spell428530": true,
+        "stack": ">> STACK FOR %2$s <<"
+      },
+      "customTextUpdate": "event",
+      "displayText": "",
+      "displayText_format_n_format": "none",
+      "displayText_format_p_format": "timed",
+      "displayText_format_p_time_dynamic_threshold": 60,
+      "displayText_format_p_time_format": 0,
+      "displayText_format_p_time_precision": 1,
+      "fixedWidth": 200,
+      "font": "Friz Quadrata TT",
+      "fontSize": 12,
+      "frameStrata": 1,
+      "id": "Tank calls",
+      "information": {
+        "forceEvents": true
+      },
+      "internalVersion": 70,
+      "justify": "LEFT",
+      "load": {
+        "class": {
+          "multi": []
+        },
+        "class_and_spec": [],
+        "difficulty": [],
+        "ingroup": [],
+        "instance_type": {
+          "multi": []
+        },
+        "role": {
+          "multi": {
+            "TANK": true
+          },
+          "single": "TANK"
+        },
+        "size": {
+          "multi": []
+        },
+        "spec": {
+          "multi": []
+        },
+        "talent": {
+          "multi": []
+        },
+        "use_never": false,
+        "use_petbattle": false,
+        "use_spellknown": false,
+        "use_vehicle": false,
+        "use_vehicleUi": false,
+        "use_zoneIds": true,
+        "zoneIds": "g182,g236,g245,g275,g279,g440,733"
+      },
+      "outline": "OUTLINE",
+      "regionType": "text",
+      "selfPoint": "BOTTOM",
+      "semver": "10.2.2",
+      "shadowColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "shadowXOffset": 1,
+      "shadowYOffset": -1,
+      "source": "import",
+      "subRegions": [
+        {
+          "type": "subbackground"
+        }
+      ],
+      "tocversion": 100200,
+      "triggers": {
+        "1": {
+          "trigger": {
+            "check": "event",
+            "custom": "function(states, event, sourceUnit, sourceGuid, spellID)\n    \n    -- When we leave combat, clear states\n    if event == \"PLAYER_REGEN_ENABLED\" then\n        for _,state in pairs(states) do\n            state.show = false\n            state.changed = true\n        end\n        return true\n    end\n    \n    local spells = aura_env.spells\n    \n    if spells[event] then\n        \n        local spellInfo = spells[event][spellID]\n        if spellInfo then\n            \n            -- Ignored spells\n            if spellInfo.enabled == false then return true end\n            \n            -- Ignore \"target\" as we'll get an event for the nameplate unit anyway\n            if sourceUnit == \"target\" then return true end\n            \n            -- If we're not in combat, ignore\n            if not UnitAffectingCombat(\"player\") then return true end\n            \n            -- We're not interested in units that don't exist, or we're not in combat with\n            if not sourceUnit or not UnitExists(sourceUnit) or not UnitAffectingCombat(sourceUnit) then\n                DebugPrint(\"Not in combat with \"..sourceUnit)\n                return true\n            else\n                DebugPrint(\"UnitAffectingCombat(\"..sourceUnit..\"=\"..tostring(UnitAffectingCombat(sourceUnit)))\n            end\n            \n            -- Only units hostile to us\n            if not UnitIsEnemy(sourceUnit, \"player\") then\n                DebugPrint(\"Not hostile to \"..sourceUnit)\n                return true\n            end\n            \n            local ignoreTarget = spellInfo.ignoreTarget == true or type == \"PURGE\" or type == \"SOOTHE\" or type == \"SOOTHE_SPELL\" or type == \"PURGE_SPELL\";\n            local isTarget = UnitIsUnit(\"player\", sourceUnit..\"target\");\n            local isTank = select(5, GetSpecializationInfo(GetSpecialization())) == \"TANK\";\n            local type = spellInfo.type or \"FRONTAL\"\n            local sourceName = GetUnitName(sourceUnit)\n            local destinationName = GetUnitName(sourceUnit..\"target\")\n            \n            local caption = aura_env.captions[type]:format(sourceName, spellInfo.name, destinationName)\n            \n            states[spellID] = {\n                show = true,\n                name = caption,\n                changed = true,\n                autoHide = true,\n                progressType = \"timed\",\n                duration = spellInfo.duration,\n                expirationTime = GetTime() + spellInfo.duration,\n                icon = GetSpellTexture(spellID),\n                type = type,\n                isTarget = isTarget,\n                isTank = isTank,\n                ignoreTarget = ignoreTarget\n            }\n        end\n    end\n    \n    return true\nend",
+            "customVariables": "{\n    type = \"string\",\n    isTarget = \"bool\",\n    isTank = \"bool\",\n    ignoreTarget = \"bool\"\n}",
+            "custom_type": "stateupdate",
+            "debuffType": "HELPFUL",
+            "event": "Health",
+            "events": "UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED",
+            "names": [],
+            "spellIds": [],
+            "subeventPrefix": "SPELL",
+            "subeventSuffix": "_CAST_START",
+            "type": "custom",
+            "unit": "player"
+          },
+          "untrigger": []
+        },
+        "activeTriggerMode": -10
+      },
+      "uid": "uGUYlCT6sB5",
+      "url": "https://wago.io/ltENrybhU/35",
+      "version": 35,
+      "wagoID": "ltENrybhU",
+      "wordWrap": "WordWrap",
+      "xOffset": 0,
+      "yOffset": 0
+    }
+  ],
+  "d": {
+    "actions": {
+      "finish": [],
+      "init": [],
+      "start": []
+    },
+    "anchorFrameType": "SCREEN",
+    "anchorPoint": "CENTER",
+    "animation": {
+      "finish": {
+        "duration_type": "seconds",
+        "easeStrength": 3,
+        "easeType": "none",
+        "type": "none"
+      },
+      "main": {
+        "duration_type": "seconds",
+        "easeStrength": 3,
+        "easeType": "none",
+        "type": "none"
+      },
+      "start": {
+        "duration_type": "seconds",
+        "easeStrength": 3,
+        "easeType": "none",
+        "type": "none"
+      }
+    },
+    "authorOptions": [],
+    "backdropColor": [
+      1,
+      1,
+      1,
+      0.5
+    ],
+    "border": false,
+    "borderBackdrop": "Blizzard Tooltip",
+    "borderColor": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "borderEdge": "Square Full White",
+    "borderInset": 1,
+    "borderOffset": 4,
+    "borderSize": 2,
+    "conditions": [],
+    "config": [],
+    "desc": "Announces in /say for tank frontals that the group must look out for, as well as important dispels / purges / soothes.\n\nThis helps group members avoid damage and potential deaths when it may be unclear where the tank is standing and pointing the mobs, amongst nameplates, visual effects and markers.",
+    "frameStrata": 1,
+    "groupIcon": 132358,
+    "id": "Tank Frontals",
+    "information": {
+      "debugLog": false,
+      "forceEvents": true
+    },
+    "internalVersion": 70,
+    "load": {
+      "class": {
+        "multi": []
+      },
+      "size": {
+        "multi": []
+      },
+      "spec": {
+        "multi": []
+      },
+      "talent": {
+        "multi": []
+      },
+      "zoneIds": ""
+    },
+    "regionType": "group",
+    "scale": 1,
+    "selfPoint": "CENTER",
+    "semver": "10.2.2",
+    "source": "import",
+    "subRegions": [],
+    "tocversion": 100200,
+    "triggers": [
+      {
+        "trigger": {
+          "debuffType": "HELPFUL",
+          "event": "Health",
+          "names": [],
+          "spellIds": [],
+          "subeventPrefix": "SPELL",
+          "subeventSuffix": "_CAST_START",
+          "type": "aura2",
+          "unit": "player"
+        },
+        "untrigger": []
+      }
+    ],
+    "uid": "nMh0p7NmFPo",
+    "url": "https://wago.io/ltENrybhU/35",
+    "version": 35,
+    "wagoID": "ltENrybhU",
+    "xOffset": 0,
+    "yOffset": 0
+  },
+  "m": "d",
+  "s": "5.8.7",
+  "v": 1421,
+  "wagoID": "ltENrybhU"
+}
