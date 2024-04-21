@@ -4,7 +4,7 @@
       "actions": {
         "finish": [],
         "init": {
-          "custom": "--Events: UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED\n-- Zone filters: g182,g236,g245,g275,g279,g440,733\nlocal o = aura_env.config\n\naura_env.captions = {\n    [\"FRONTAL\"] = o.frontal or \">> FRONTAL ON ME <<\",\n    [\"SLAM\"] = o.slam or \">> SLAM ON ME <<\",\n    [\"SHOCKWAVE\"] = o.shockwave or \">> SHOCKWAVE ON ME <<\",\n    [\"KNOCKBACK\"] = o.knockback or \">> KNOCKBACK ON ME <<\",\n    [\"PURGE\"] = o.purge or \">> PURGE %s! <<\",\n    [\"SOOTHE\"] = o.soothe or \">> SOOTHE %s! <<\",\n    [\"SOOTHE_SPELL\"] = o.sootheSpell or \">> SOOTHE %2$s! <<\",\n    [\"PURGE_SPELL\"] = o.purgeSpell or \">> PURGE %2$s! <<\",\n    [\"SPELL_TARGET\"] = o.spellTarget or \">> %2$s on %3$s <<\",\n    [\"STACK\"] = o.stack or \">> STACK FOR %2$s <<\",\n}\n\nlocal function Defaults(id, type, ignoreTarget)\n    \n    local options = o[\"spell\"..id]\n    \n    local enabled = options == nil or options == true;\n    \n    local name = GetSpellInfo(id)\n    \n    return {\n        id = id,\n        duration = 2,\n        type = type,\n        enabled = enabled,\n        name = name,\n        ignoreTarget = ignoreTarget\n    }\nend\n\naura_env.spells = {\n    [\"UNIT_SPELLCAST_START\"] =\n    {\n        -- SEASON THREE\n        \n        -- g182,g236,g245,g275,g279,g440,733\n        \n        -- Atal'Dazar (Battle for Azeroth) g275 Icon: 2011105\n        [255567] = Defaults(255567), -- -- T'lonja 128455 Frenzied Charge\n        \n        -- Black Rook Hold (Legion) g245 Icon: 1417423\n        [200261] = Defaults(200261, \"SHOCKWAVE\"), -- Soul-Torn Champion 98243, Commander Shemdah'sohn 98706: Bonebreaking Strike\n        [197974] = Defaults(197974, \"SHOCKWAVE\"), -- Soul-torn Vanguard 100485: 197974 Bonecrushing Strike\n        [225732] = Defaults(225732, \"FRONTAL\"), -- Lady Velandras Ravencrest 98538: 225732 Strike Down\n        -- Risen Archer 98275\n        -- Wyrmtongue Scavenger 98792\n        \n        -- Darkheart Thicket (Legion) 733, Icon: 1417425\n        [200768] = Defaults(200768, \"SHOCKWAVE\"), -- Crazed Razorbeak 95766: Propelling Charge\n        [201226] = Defaults(201226, \"SHOCKWAVE\"), -- Bloodtainted Fury 100531: Blood Assault\n        [204667] = Defaults(204667), -- Oakheart 103344: Nightmare Breath\n        [191326] = Defaults(191326, \"SHOCKWAVE\"), -- Dresaron 99200: Breath of Corruption\n        \n        -- Dawn of the Infinites g440, Icon: 5247561\n        [413529] = Defaults(413529), -- Timestream Anomaly 199749: Untwist\n        [407159] = Defaults(407159), -- Blight of Galakrond 198997 Blight Reclamation 407159\n        [412129] = Defaults(412129, \"SHOCKWAVE\"), -- Lerai, Timesworn Maiden 205152 Orb of Contemplation\n        [408141] = Defaults(408141), -- Dazhak 201788 Incinerating Blightbreath\n        --[401482] = Defaults(401482), -- Tyr, the Infinite Keeper 198998: Infinite Annihilation\n        [401248] = Defaults(401248, \"KNOCKBACK\"), -- Tyr, the Infinite Keeper 198998 Titanic Blow 401248\n        [400641] = Defaults(400641, \"STACK\"), -- Tyr, the Infinite Keeper 198998 Dividing Strike 400641\n        [404916] = Defaults(404916), -- Morchie: Sand Blast\n        [412505] = Defaults(412505), -- Tyr's Vanguard 205151 Rending Cleave 412505\n        [419351] = Defaults(419351), -- Infinite Saboteur 208438: Bronze Exhalation 419351\n        [416139] = Defaults(416139), -- Chrono-Lord Deios 199000: Temporal Breath 416139\n        [418056] = Defaults(418056, \"SHOCKWAVE\"), -- Anduin Lothar 203679 Shockwave 418056\n        \n        -- Everbloom (Warlords of Draenor) g236, Icon: 967517\n        [169714] = Defaults(169714), -- Gnarlroot 81984: Gasp 169714\n        [164357] = Defaults(164357), -- Witherbark 81522: Parched Gasp 164357\n        [427510] = Defaults(427510, \"SLAM\"), -- Dulhu 83894: Noxious Charge 427510\n        [427512] = Defaults(427512, \"SLAM\"), -- Dulhu 83894: Noxious Charge 427512\n        [169179] = Defaults(169179, \"SHOCKWAVE\"), -- Yalnu: Colossal Blow 169179\n        [169929] = Defaults(169929, \"SHOCKWAVE\"), -- Gnarled Ancient 84400: Lumbering Swipe 169929\n        \n        -- Throne of the Tides (Cataclysm) g182, Icon: 409600\n        [426645] = Defaults(426645), -- Naz'jar Ravager 212673: Acid Barrage 426645\n        [428293] = Defaults(428293, \"SHOCKWAVE\"), -- Naz'jar Honor Guard 40633: Trident Flurry 428293\n        [428530] = Defaults(428530), -- Ink of Ozumat 213770: Murk Spew 428530\n        \n        -- Waycrest Manor (Battle for Azeroth) g279, Icon: 2011154\n        [271174] = Defaults(271174, \"SHOCKWAVE\"), -- Pallid Gorger 137830: Retch\n        [265372] = Defaults(265372, \"SHOCKWAVE\"), -- Bewitched Captain 131587: Shadow Cleave\n    },\n    \n    [\"UNIT_SPELLCAST_SUCCEEDED\"] = {\n        \n        -- Atal'Dazar\n        [255579] = Defaults(255579, \"PURGE\", true),  -- Priestess Alun'za 122967: Gilded Claws\n        \n        -- Throne of the Tides\n        [426618] = Defaults(426618, \"SOOTHE\", true), -- Naz'jar Invader 40584: Slithering Assault\n        [428329] = Defaults(428329, \"PURGE\", true),  -- Naz'jar Frost Witch 44404: Icy Veins\n        \n        -- Waycrest Manor\n        [265368] = Defaults(265368, \"PURGE\", true), -- Bewitched Captain 131587: Spirited Defense 265368\n    },\n}",
+          "custom": "--Events: UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED\n-- Zone filters: g182,g236,g245,g275,g279,g440,733\n-- Zone filters: g429,g430,g431,g432,g433,g434,428,2093,g252,g240,g223,g201,g437,731,g245,936,g438,g282,325\nlocal o = aura_env.config\n\naura_env.captions = {\n    [\"FRONTAL\"] = o.frontal or \">> FRONTAL ON ME <<\",\n    [\"SLAM\"] = o.slam or \">> SLAM ON ME <<\",\n    [\"SHOCKWAVE\"] = o.shockwave or \">> SHOCKWAVE ON ME <<\",\n    [\"KNOCKBACK\"] = o.knockback or \">> KNOCKBACK ON ME <<\",\n    [\"PURGE\"] = o.purge or \">> PURGE %s! <<\",\n    [\"SOOTHE\"] = o.soothe or \">> SOOTHE %s! <<\",\n    [\"SOOTHE_SPELL\"] = o.sootheSpell or \">> SOOTHE %2$s! <<\",\n    [\"PURGE_SPELL\"] = o.purgeSpell or \">> PURGE %2$s! <<\",\n    [\"SPELL_TARGET\"] = o.spellTarget or \">> %2$s on %3$s <<\",\n    [\"STACK\"] = o.stack or \">> STACK FOR %2$s <<\",\n}\n\nlocal function Defaults(id, type, ignoreTarget)\n    \n    local options = o[\"spell\"..id]\n    \n    local enabled = options == nil or options == true;\n    \n    local name = GetSpellInfo(id)\n    \n    return {\n        id = id,\n        duration = 2,\n        type = type,\n        enabled = enabled,\n        name = name,\n        ignoreTarget = ignoreTarget\n    }\nend\n\naura_env.spells = {\n    [\"UNIT_SPELLCAST_START\"] =\n    {\n        -- SEASON FOUR\n        \n        -- Brackenhide Hollow g432\n        --[382712] = Defaults(382712),              -- Wilted Oak: Necrotic Breath\n        [376231] = Defaults(376231, \"SHOCKWAVE\"), -- Treemouth: Decay Spray\n        [377559] = Defaults(377559, \"KNOCKBACK\"), -- Treemouth: Vine Whip\n        [376170] = Defaults(376170, \"SHOCKWAVE\"), -- Decatriarch Wratheye: Choking Rotcloud\n        \n        -- Gutshot: Gutshot - Not a frontal knockback\n        \n        -- Halls of Infusion g434\n        [384524] = Defaults(384524, \"SHOCKWAVE\"), -- Watcher Irideus: Titanic Fist\n        [374563] = Defaults(374563, \"SHOCKWAVE\"), -- Dazzling Dragonfly: Dazzle\n        [375351] = Defaults(375348), -- Gusting Proto-Dragon: Gusting Breath - can out-range 10yd\n        [375351] = Defaults(375351), -- Glacial Proto-Dragon: Oceanic Breath\n        [375327] = Defaults(375327), -- Subterranean Proto-Dragon: Tectonic Breath\n        [393432] = Defaults(393432), -- Refti Defender: Spear Flurry\n        \n        -- Not a frontal knockback\n        -- Primal Tsunami / 189729 Spell Name / ID: Squall Buffet / 387504 \n        \n        -- Neltharus g431\n        [397010] = Defaults(397010, \"SHOCKWAVE\"), --  Qalashi Warden: Volcanic Guard\n        [382708] = Defaults(382708, \"SHOCKWAVE\"), --  Qalashi Warden: Volcanic Guard\n        [372311] = Defaults(372311), -- Qalashi Trainee: Magma Fist\n        [395184] = Defaults(395184), -- Qalashi Irontorch: Scorching Breath\n        -- Blazing Slash (re-casts) and Brutal Strike: out-range 10yd\n        \n        -- Uldaman g429\n        [369409] = Defaults(369409), -- Earthen Custodian: Cleave\n        [369563] = Defaults(369563), -- Baelog: Wild Cleave\n        [369061] = Defaults(369061), -- Emberon: Searing Clap\n        [375727] = Defaults(375727), -- Chrono-Lord Deios: Sand Breath\n        -- Lizard tank-busters, can be back-stepped but they re-cast\n        \n        -- Algeth'ar Academy g433\n        [388976] = Defaults(388976, \"SHOCKWAVE\", true), -- Arcane Ravager: Riftbreath\n        [385958] = Defaults(385958),                    -- Vexamus: Arcane Explusion\n        --[377383] = Defaults(377383, \"SHOCKWAVE\"),     -- Alpha Eagle: Gust; Random\n        --[377034] = Defaults(377034, \"SHOCKWAVE\"),     -- Crawth: Overpowering Gust; Random\n        --[374361] = Defaults(374361, \"SHOCKWAVE\"),     -- Echo of Doragosa: Astral Breath; Random\n        \n        -- The Azure Vault g428\n        [386660] = Defaults(386660, \"SHOCKWAVE\"),  -- Leymor: Erupting Fissure\n        [370764] = Defaults(370764),               -- Crystal Fury: Piercing Shards\n        [387067] = Defaults(387067, \"KNOCKBACK\"),  -- Arcane Construct: Arcane Bash\n        [391118] = Defaults(391118),               -- Scalebane Lieutenant: Spellfrost Breath\n        [372222] = Defaults(372222),               -- Azureblade: Arcane Cleave\n        --[384699] = Defaults( 384699),            -- Umbrelskul: Crystalline Roar\n        \n        -- The Nokhud Offensive 2093\n        [387135] = Defaults(387135),               -- Primalist Arcblade: Arcing Strike\n        [387629] = Defaults(387629, \"SHOCKWAVE\"),  -- Desecrated Ohuna: Rotting Wind\n        [382233] = Defaults(382233, \"SHOCKWAVE\"),  -- Batak: Broad Stomp\n        \n        -- Ruby Life Pools g430\n        [392395] = Defaults(392395, \"KNOCKBACK\"),  -- Thunderhead: Thunder Jaw\n        \n        -- SEASON THREE\n        \n        -- g182,g236,g245,g275,g279,g440,733\n        \n        -- Atal'Dazar (Battle for Azeroth) g275 Icon: 2011105\n        [255567] = Defaults(255567), -- -- T'lonja 128455 Frenzied Charge\n        \n        -- Black Rook Hold (Legion) g245 Icon: 1417423\n        [200261] = Defaults(200261, \"SHOCKWAVE\"), -- Soul-Torn Champion 98243, Commander Shemdah'sohn 98706: Bonebreaking Strike\n        [197974] = Defaults(197974, \"SHOCKWAVE\"), -- Soul-torn Vanguard 100485: 197974 Bonecrushing Strike\n        [225732] = Defaults(225732, \"FRONTAL\"), -- Lady Velandras Ravencrest 98538: 225732 Strike Down\n        -- Risen Archer 98275\n        -- Wyrmtongue Scavenger 98792\n        \n        -- Darkheart Thicket (Legion) 733, Icon: 1417425\n        [200768] = Defaults(200768, \"SHOCKWAVE\"), -- Crazed Razorbeak 95766: Propelling Charge\n        [201226] = Defaults(201226, \"SHOCKWAVE\"), -- Bloodtainted Fury 100531: Blood Assault\n        [204667] = Defaults(204667), -- Oakheart 103344: Nightmare Breath\n        [191326] = Defaults(191326, \"SHOCKWAVE\"), -- Dresaron 99200: Breath of Corruption\n        \n        -- Dawn of the Infinites g440, Icon: 5247561\n        [413529] = Defaults(413529), -- Timestream Anomaly 199749: Untwist\n        [407159] = Defaults(407159), -- Blight of Galakrond 198997 Blight Reclamation 407159\n        [412129] = Defaults(412129, \"SHOCKWAVE\"), -- Lerai, Timesworn Maiden 205152 Orb of Contemplation\n        [408141] = Defaults(408141), -- Dazhak 201788 Incinerating Blightbreath\n        --[401482] = Defaults(401482), -- Tyr, the Infinite Keeper 198998: Infinite Annihilation\n        [401248] = Defaults(401248, \"KNOCKBACK\"), -- Tyr, the Infinite Keeper 198998 Titanic Blow 401248\n        [400641] = Defaults(400641, \"STACK\"), -- Tyr, the Infinite Keeper 198998 Dividing Strike 400641\n        [404916] = Defaults(404916), -- Morchie: Sand Blast\n        [412505] = Defaults(412505), -- Tyr's Vanguard 205151 Rending Cleave 412505\n        [419351] = Defaults(419351), -- Infinite Saboteur 208438: Bronze Exhalation 419351\n        [416139] = Defaults(416139), -- Chrono-Lord Deios 199000: Temporal Breath 416139\n        [418056] = Defaults(418056, \"SHOCKWAVE\"), -- Anduin Lothar 203679 Shockwave 418056\n        \n        -- Everbloom (Warlords of Draenor) g236, Icon: 967517\n        [169714] = Defaults(169714), -- Gnarlroot 81984: Gasp 169714\n        [164357] = Defaults(164357), -- Witherbark 81522: Parched Gasp 164357\n        [427510] = Defaults(427510, \"SLAM\"), -- Dulhu 83894: Noxious Charge 427510\n        [427512] = Defaults(427512, \"SLAM\"), -- Dulhu 83894: Noxious Charge 427512\n        [169179] = Defaults(169179, \"SHOCKWAVE\"), -- Yalnu: Colossal Blow 169179\n        [169929] = Defaults(169929, \"SHOCKWAVE\"), -- Gnarled Ancient 84400: Lumbering Swipe 169929\n        \n        -- Throne of the Tides (Cataclysm) g182, Icon: 409600\n        [426645] = Defaults(426645), -- Naz'jar Ravager 212673: Acid Barrage 426645\n        [428293] = Defaults(428293, \"SHOCKWAVE\"), -- Naz'jar Honor Guard 40633: Trident Flurry 428293\n        [428530] = Defaults(428530), -- Ink of Ozumat 213770: Murk Spew 428530\n        \n        -- Waycrest Manor (Battle for Azeroth) g279, Icon: 2011154\n        [271174] = Defaults(271174, \"SHOCKWAVE\"), -- Pallid Gorger 137830: Retch\n        [265372] = Defaults(265372, \"SHOCKWAVE\"), -- Bewitched Captain 131587: Shadow Cleave\n        \n        -- RAIDS\n        \n        -- Aberrus g438\n        [406783] = Defaults(406783),              -- Amalgamation Chamber: Shadowflame Burst\n        [401258] = Defaults(401258),              -- Assault of the Zaqali: Heavy Cudgel\n        [410351] = Defaults(410351),              -- Assault of the Zaqali: Flaming Cudgel\n        [401022] = Defaults(401022, \"KNOCKBACK\"), -- Echo of Neltharion: Calamitous Strike\n        [408422] = Defaults(408422),              -- Scalecommader Sarkareth: Void Slash\n        [408425] = Defaults(408425),              -- Scalecommader Sarkareth: Void Slash\n        \n        -- Vault of the Incarnates g437\n        \n        --[370615] = Defaults(370615) -- Eranog: Molten Cleave; Random\n        [376279] = Defaults(376279), -- Terros: Concussive Slam\n        [374112] = Defaults(374112), -- Sennarth's Frostbreath Arachnid: Freezing Breath\n        [390548] = Defaults(390548), -- Kurog Grimtotem: Sundering Strike\n        [386410] = Defaults(386410), -- Raszageth: Thunderous Blast\n        \n        -- Amirdrassil g279, Icon: 2011154\n        [417431] = Defaults(417431), -- Fyrakk 137830: Fyr'alath's Bite\n    },\n    \n    [\"UNIT_SPELLCAST_SUCCEEDED\"] = {\n        \n        -- SEASON 4\n        \n        -- Brackenhide Hollow\n        [382555] = Defaults(382555, \"SOOTHE\"), -- Bracken Warscourge: Ragestorm\n        \n        -- Algethar Academy\n        [390938] = Defaults(390938, \"SOOTHE\", true), -- Aggravated Skitterfly: Agitation\n        [387955] = Defaults(387955, \"PURGE\", true), -- Ethereal Restorer: Celestial Shield\n        [377389] = Defaults(377389, \"SOOTHE_SPELL\", true), -- Alpha Eagle: Call of the Flock\n        \n        -- Azure Vault\n        [389686] = Defaults(389686, \"SOOTHE\", true), -- Crystal Fury: Arcane Fury\n        \n        -- Nokhud Offensive\n        [386223] = Defaults(386223, \"PURGE\", true), -- Primal Stormshield: Stormshield\n        \n        -- Ruby Life Pools\n        [372749] = Defaults(372749, \"PURGE\", true), -- Flashfrost Chillweaver: Ice Shield\n        [373972] = Defaults(373972, \"PURGE\", true), -- Primalist Flamedancer: Blaze of Glory\n        [392454] = Defaults(392454, \"PURGE\", true), -- Flame Channeler: Burning Veins; might not want to purge as it damages themselves\n        [385063] = Defaults(385063, \"PURGE\", true), -- Primalist Cinderweaver: Burning Ambition; increases damage taken so don't purge\n        \n        -- Atal'Dazar\n        [255579] = Defaults(255579, \"PURGE\", true),  -- Priestess Alun'za 122967: Gilded Claws\n        \n        -- Throne of the Tides\n        [426618] = Defaults(426618, \"SOOTHE\", true), -- Naz'jar Invader 40584: Slithering Assault\n        [428329] = Defaults(428329, \"PURGE\", true),  -- Naz'jar Frost Witch 44404: Icy Veins\n        \n        -- Waycrest Manor\n        [265368] = Defaults(265368, \"PURGE\", true), -- Bewitched Captain 131587: Spirited Defense 265368\n    },\n}",
           "do_custom": true
         },
         "start": {
@@ -148,6 +148,412 @@
           "text": "",
           "type": "header",
           "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "large",
+          "text": "|T4622499:32:32:0|t |cFFFFCC00Dragonflight Season Four|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578412:32:32:0|t |cFFFFCC00Brackenhide Hollow|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell382712",
+          "name": "Wilted Oak: Necrotic Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell382555",
+          "name": "Bracken Warscourge: Ragestorm",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell376231",
+          "name": "Treemouth: Decay Spray",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell377559",
+          "name": "Treemouth: Vine Whip",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell376170",
+          "name": "Decatriarch Wratheye: Choking Rotcloud",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578415:32:32:0|t |cFFFFCC00Halls of Infusion|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell384524",
+          "name": "Watcher Irideus: Titanic Fist",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell393432",
+          "name": "Refti Defender: Spear Flurry",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell374563",
+          "name": "Dazzling Dragonfly: Dazzle",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell375348",
+          "name": "Gusting Proto-Dragon: Gusting Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell375351",
+          "name": "Glacial Proto-Dragon: Oceanic Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell375327",
+          "name": "Subterranean Proto-Dragon: Tectonic Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578417:32:32:0|t |cFFFFCC00Neltharus|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell397010",
+          "name": "Qalashi Warden: Volcanic Guard",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell372311",
+          "name": "Qalashi Trainee: Magma Fist",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell395184",
+          "name": "Qalashi Irontorch: Scorching Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578418:32:32:0|t |cFFFFCC00Uldaman: Legacy of Tyr|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell369409",
+          "name": "Earthen Custodian: Cleave",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell369563",
+          "name": "Baelog: Wild Cleave",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell369061",
+          "name": "Emberon: Searing Clap",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell375727",
+          "name": "Chrono-Lord Deios: Sand Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578414:32:32:0|t |cFFFFCC00Algeth'ar Academy|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell388976",
+          "name": "Arcane Ravager: Riftbreath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell385958",
+          "name": "Vexamus: Arcane Explusion",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell390938",
+          "name": "Aggravated Skitterfly: Agitation",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell387955",
+          "name": "Ethereal Restorer: Celestial Shield",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell377389",
+          "name": "Alpha Eagle: Call of the Flock",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578411:32:32:0|t |cFFFFCC00Azure Vault|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell386660",
+          "name": "Leymor: Erupting Fissure",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell370764",
+          "name": "Crystal Fury: Piercing Shards",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell389686",
+          "name": "Crystal Fury: Arcane Fury",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell387067",
+          "name": "Arcane Construct: Arcane Bash",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell391118",
+          "name": "Scalebane Lieutenant: Spellfrost Breath",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell372222",
+          "name": "Azureblade: Arcane Cleave",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578413:32:32:0|t |cFFFFCC00Nokhud Offensive|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell387135",
+          "name": "Primalist Arcblade: Arcing Strike",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell387629",
+          "name": "Desecreated Ohuna: Rotting Wind",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell386223",
+          "name": "Primal Stormshield: Stormshield",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell382233",
+          "name": "Batak: Broad Stomp",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "noMerge": false,
+          "text": "",
+          "type": "header",
+          "useName": false,
+          "width": 1
+        },
+        {
+          "fontSize": "medium",
+          "text": "|T4578416:32:32:0|t |cFFFFCC00Ruby Life Pools|r",
+          "type": "description",
+          "width": 2
+        },
+        {
+          "default": true,
+          "key": "spell392395",
+          "name": "Thunderhead: Thunder Jaw",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell372749",
+          "name": "Flashfrost Chillweaver: Ice Shield",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": true,
+          "key": "spell373972",
+          "name": "Primalist Flamedancer: Blaze of Glory",
+          "type": "toggle",
+          "useDesc": false,
+          "width": 1
+        },
+        {
+          "default": false,
+          "key": "spell392454",
+          "name": "Flame Channeler: Burning Veins",
+          "type": "toggle",
+          "useDesc": false,
           "width": 1
         },
         {
@@ -695,39 +1101,6 @@
         "slam": ">> SLAM ON ME <<",
         "soothe": ">> SOOTHE %s <<",
         "sootheSpell": ">> SOOTHE %2$s! <<",
-        "spell164357": true,
-        "spell169179": true,
-        "spell169714": true,
-        "spell169929": true,
-        "spell191326": true,
-        "spell197974": true,
-        "spell200261": true,
-        "spell200768": true,
-        "spell201226": true,
-        "spell204667": true,
-        "spell225732": true,
-        "spell255567": true,
-        "spell255579": true,
-        "spell265368": true,
-        "spell265372": true,
-        "spell271174": true,
-        "spell400641": true,
-        "spell401248": true,
-        "spell404916": true,
-        "spell407159": true,
-        "spell408141": true,
-        "spell412129": true,
-        "spell412505": true,
-        "spell413529": true,
-        "spell416139": true,
-        "spell418056": true,
-        "spell419351": true,
-        "spell426618": true,
-        "spell426645": false,
-        "spell427510": true,
-        "spell428293": true,
-        "spell428329": true,
-        "spell428530": true,
         "stack": ">> STACK FOR %2$s <<"
       },
       "customTextUpdate": "event",
@@ -745,7 +1118,7 @@
       "information": {
         "forceEvents": true
       },
-      "internalVersion": 70,
+      "internalVersion": 74,
       "justify": "LEFT",
       "load": {
         "class": {
@@ -783,7 +1156,7 @@
       "outline": "OUTLINE",
       "regionType": "text",
       "selfPoint": "BOTTOM",
-      "semver": "10.2.2",
+      "semver": "10.2.6",
       "shadowColor": [
         0,
         0,
@@ -798,12 +1171,12 @@
           "type": "subbackground"
         }
       ],
-      "tocversion": 100200,
+      "tocversion": 100206,
       "triggers": {
         "1": {
           "trigger": {
             "check": "event",
-            "custom": "function(states, event, sourceUnit, sourceGuid, spellID)\n    \n    -- When we leave combat, clear states\n    if event == \"PLAYER_REGEN_ENABLED\" then\n        for _,state in pairs(states) do\n            state.show = false\n            state.changed = true\n        end\n        return true\n    end\n    \n    local spells = aura_env.spells\n    \n    if spells[event] then\n        \n        local spellInfo = spells[event][spellID]\n        if spellInfo then\n            \n            -- Ignored spells\n            if spellInfo.enabled == false then return true end\n            \n            -- Ignore \"target\" as we'll get an event for the nameplate unit anyway\n            if sourceUnit == \"target\" then return true end\n            \n            -- If we're not in combat, ignore\n            if not UnitAffectingCombat(\"player\") then return true end\n            \n            -- We're not interested in units that don't exist, or we're not in combat with\n            if not sourceUnit or not UnitExists(sourceUnit) or not UnitAffectingCombat(sourceUnit) then\n                DebugPrint(\"Not in combat with \"..sourceUnit)\n                return true\n            else\n                DebugPrint(\"UnitAffectingCombat(\"..sourceUnit..\"=\"..tostring(UnitAffectingCombat(sourceUnit)))\n            end\n            \n            -- Only units hostile to us\n            if not UnitIsEnemy(sourceUnit, \"player\") then\n                DebugPrint(\"Not hostile to \"..sourceUnit)\n                return true\n            end\n            \n            local ignoreTarget = spellInfo.ignoreTarget == true or type == \"PURGE\" or type == \"SOOTHE\" or type == \"SOOTHE_SPELL\" or type == \"PURGE_SPELL\";\n            local isTarget = UnitIsUnit(\"player\", sourceUnit..\"target\");\n            local isTank = select(5, GetSpecializationInfo(GetSpecialization())) == \"TANK\";\n            local type = spellInfo.type or \"FRONTAL\"\n            local sourceName = GetUnitName(sourceUnit)\n            local destinationName = GetUnitName(sourceUnit..\"target\")\n            \n            local caption = aura_env.captions[type]:format(sourceName, spellInfo.name, destinationName)\n            \n            states[spellID] = {\n                show = true,\n                name = caption,\n                changed = true,\n                autoHide = true,\n                progressType = \"timed\",\n                duration = spellInfo.duration,\n                expirationTime = GetTime() + spellInfo.duration,\n                icon = GetSpellTexture(spellID),\n                type = type,\n                isTarget = isTarget,\n                isTank = isTank,\n                ignoreTarget = ignoreTarget\n            }\n        end\n    end\n    \n    return true\nend",
+            "custom": "function(states, event, sourceUnit, sourceGuid, spellID)\n    \n    -- When we leave combat, clear states\n    if event == \"PLAYER_REGEN_ENABLED\" then\n        for _,state in pairs(states) do\n            state.show = false\n            state.changed = true\n        end\n        return true\n    end\n    \n    local spells = aura_env.spells\n    \n    if spells[event] then\n        \n        local spellInfo = spells[event][spellID]\n        if spellInfo then\n            \n            -- Ignored spells\n            if spellInfo.enabled == false then return true end\n            \n            -- Ignore \"target\" as we'll get an event for the nameplate unit anyway\n            if sourceUnit == \"target\" then return true end\n            \n            -- If we're not in combat, ignore\n            if not UnitAffectingCombat(\"player\") then return true end\n            \n            -- We're not interested in units that don't exist, or we're not in combat with\n            if not sourceUnit or not UnitExists(sourceUnit) or not UnitAffectingCombat(sourceUnit) then\n                DebugPrint(\"Not in combat with \"..sourceUnit)\n                return true\n            end\n            \n            -- Only units hostile to us\n            if not UnitIsEnemy(sourceUnit, \"player\") then\n                DebugPrint(\"Not hostile to \"..sourceUnit)\n                return true\n            end\n            \n            local ignoreTarget = spellInfo.ignoreTarget == true or type == \"PURGE\" or type == \"SOOTHE\" or type == \"SOOTHE_SPELL\" or type == \"PURGE_SPELL\";\n            local isTarget = UnitIsUnit(\"player\", sourceUnit..\"target\");\n            local isTank = select(5, GetSpecializationInfo(GetSpecialization())) == \"TANK\";\n            local type = spellInfo.type or \"FRONTAL\"\n            local sourceName = GetUnitName(sourceUnit)\n            local destinationName = GetUnitName(sourceUnit..\"target\")\n            \n            local caption = aura_env.captions[type]:format(sourceName, spellInfo.name, destinationName)\n            \n            states[spellID] = {\n                show = true,\n                name = caption,\n                changed = true,\n                autoHide = true,\n                progressType = \"timed\",\n                duration = spellInfo.duration,\n                expirationTime = GetTime() + spellInfo.duration,\n                icon = GetSpellTexture(spellID),\n                type = type,\n                isTarget = isTarget,\n                isTank = isTank,\n                ignoreTarget = ignoreTarget\n            }\n        end\n    end\n    \n    return true\nend",
             "customVariables": "{\n    type = \"string\",\n    isTarget = \"bool\",\n    isTank = \"bool\",\n    ignoreTarget = \"bool\"\n}",
             "custom_type": "stateupdate",
             "debuffType": "HELPFUL",
@@ -821,9 +1194,9 @@
         "activeTriggerMode": -10
       },
       "uid": "uGUYlCT6sB5",
-      "url": "https://wago.io/ltENrybhU/35",
-      "version": 35,
-      "wagoID": "ltENrybhU",
+      "url": "https://wago.io/b3L-jjEC9/1",
+      "version": 36,
+      "wagoID": "b3L-jjEC9",
       "wordWrap": "WordWrap",
       "xOffset": 0,
       "yOffset": 0
@@ -835,6 +1208,7 @@
       "init": [],
       "start": []
     },
+    "alpha": 1,
     "anchorFrameType": "SCREEN",
     "anchorPoint": "CENTER",
     "animation": {
@@ -886,7 +1260,7 @@
       "debugLog": false,
       "forceEvents": true
     },
-    "internalVersion": 70,
+    "internalVersion": 73,
     "load": {
       "class": {
         "multi": []
@@ -905,10 +1279,10 @@
     "regionType": "group",
     "scale": 1,
     "selfPoint": "CENTER",
-    "semver": "10.2.2",
+    "semver": "10.2.6",
     "source": "import",
     "subRegions": [],
-    "tocversion": 100200,
+    "tocversion": 100206,
     "triggers": [
       {
         "trigger": {
@@ -925,14 +1299,14 @@
       }
     ],
     "uid": "nMh0p7NmFPo",
-    "url": "https://wago.io/ltENrybhU/35",
-    "version": 35,
-    "wagoID": "ltENrybhU",
+    "url": "https://wago.io/b3L-jjEC9/1",
+    "version": 36,
+    "wagoID": "b3L-jjEC9",
     "xOffset": 0,
     "yOffset": 0
   },
   "m": "d",
-  "s": "5.8.7",
+  "s": "5.12.8",
   "v": 1421,
-  "wagoID": "ltENrybhU"
+  "wagoID": "b3L-jjEC9"
 }
