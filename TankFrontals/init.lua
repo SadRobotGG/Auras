@@ -1,4 +1,5 @@
 --Events: UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED
+-- Zone filters: g182,g236,g245,g275,g279,g440,733
 -- Zone filters: g429,g430,g431,g432,g433,g434,428,2093,g252,g240,g223,g201,g437,731,g245,936,g438,g282,325
 local o = aura_env.config
 
@@ -11,7 +12,8 @@ aura_env.captions = {
     ["SOOTHE"] = o.soothe or ">> SOOTHE %s! <<",
     ["SOOTHE_SPELL"] = o.sootheSpell or ">> SOOTHE %2$s! <<",
     ["PURGE_SPELL"] = o.purgeSpell or ">> PURGE %2$s! <<",
-    ["SPELL_TARGET"] = o.spellTarget or ">> %2$s on %3$s <<"
+    ["SPELL_TARGET"] = o.spellTarget or ">> %2$s on %3$s <<",
+    ["STACK"] = o.stack or ">> STACK FOR %2$s <<",
 }
 
 local function Defaults(id, type, ignoreTarget)
@@ -19,7 +21,7 @@ local function Defaults(id, type, ignoreTarget)
     local options = o["spell"..id]
 
     local enabled = options == nil or options == true;
-    
+
     local name = GetSpellInfo(id)
 
     return {
@@ -35,47 +37,7 @@ end
 aura_env.spells = {
     ["UNIT_SPELLCAST_START"] =
     {
-        -- SEASON TWO
-
-        -- Brackenhide Hollow g432
-        [382712] = Defaults(382712),              -- Wilted Oak: Necrotic Breath
-        [376231] = Defaults(376231, "SHOCKWAVE"), -- Treemouth: Decay Spray
-        [377559] = Defaults(377559, "KNOCKBACK"), -- Treemouth: Vine Whip
-        [376170] = Defaults(376170, "SHOCKWAVE"), -- Decatriarch Wratheye: Choking Rotcloud
-
-        -- Freehold 936
-        [257426] = Defaults(257426, "SHOCKWAVE"), -- Irontide Enforcer: Brutal Backhand
-
-        -- Halls of Infusion g434
-        [384524] = Defaults(384524, "SHOCKWAVE"), -- Watcher Irideus: Titanic Fist
-        [374563] = Defaults(374563, "SHOCKWAVE"), -- Dazzling Dragonfly: Dazzle
-        [375351] = Defaults(375348), -- Gusting Proto-Dragon: Gusting Breath
-        [375351] = Defaults(375351), -- Glacial Proto-Dragon: Oceanic Breath
-        [375327] = Defaults(375327), -- Subterranean Proto-Dragon: Tectonic Breath
-        [393432] = Defaults(393432), -- Refti Defender: Spear Flurry
-
-        -- Neltharion's Lair 731
-        [188169] = Defaults(188169), -- Rokmora: Razor Shards
-        [226296] = Defaults(226296), -- Vileshard Hulk: Razor Shards
-
-        -- Neltharus g431
-        [397010] = Defaults(397010, "SHOCKWAVE"), --  Qalashi Warden: Volcanic Guard
-        [372311] = Defaults(372311), -- Qalashi Trainee: Magma Fist
-        [395184] = Defaults(395184), -- Qalashi Irontorch: Scorching Breath
-
-        -- Uldaman g429
-        [369409] = Defaults(369409), -- Earthen Custodian: Cleave
-        [369563] = Defaults(369563), -- Baelog: Wild Cleave
-        [369061] = Defaults(369061), -- Emberon: Searing Clap
-        [375727] = Defaults(375727), -- Chrono-Lord Deios: Sand Breath
-
-        -- The Underrot g282
-        [260793] = Defaults(260793, "SHOCKWAVE"), -- Cragmaw the Infested: Indigestion
-
-        -- The Vortex Pinnacle 325
-        [88308] = Defaults(88308), -- Altairus: Chilling Breath
-        
-        -- SEASON ONE
+        -- SEASON FOUR
 
         -- Algeth'ar Academy g433
         [388976] = Defaults(388976, "SHOCKWAVE", true), -- Arcane Ravager: Riftbreath
@@ -92,16 +54,25 @@ aura_env.spells = {
         [372222] = Defaults(372222),               -- Azureblade: Arcane Cleave
         --[384699] = Defaults( 384699),            -- Umbrelskul: Crystalline Roar
 
-        -- Court of Stars g252
-        [209027] = Defaults(209027, "SHOCKWAVE"), -- Duskwatch Guard: Quelling Strike
-        [209495] = Defaults(209495, "SLAM"),      -- Guardian Construct: Charged Smash
-        [207979] = Defaults(207979, "SHOCKWAVE"), -- Jazshariu: Shockwave
+        -- Brackenhide Hollow g432
+        --[382712] = Defaults(382712),              -- Wilted Oak: Necrotic Breath
+        [376231] = Defaults(376231, "SHOCKWAVE"), -- Treemouth: Decay Spray
+        [377559] = Defaults(377559, "KNOCKBACK"), -- Treemouth: Vine Whip
+        [376170] = Defaults(376170, "SHOCKWAVE"), -- Decatriarch Wratheye: Choking Rotcloud
 
-        -- Halls of Valor g240
-        [198888] = Defaults(198888),                    -- Storm Drake: Lightning Breath
-        [199050] = Defaults(199050),                    -- Valarjar Shieldmaiden: Mortal Hew
-        [191508] = Defaults(191508, "SHOCKWAVE", true), -- Valarjar Aspirant: Blast of Light
-        [192018] = Defaults(192018, "FRONTAL", true),   -- Hyrja: Shield of Light
+        -- Halls of Infusion g434
+        [384524] = Defaults(384524, "SHOCKWAVE"), -- Watcher Irideus: Titanic Fist
+        [374563] = Defaults(374563, "SHOCKWAVE"), -- Dazzling Dragonfly: Dazzle
+        [375351] = Defaults(375348), -- Gusting Proto-Dragon: Gusting Breath - can out-range 10yd
+        [375351] = Defaults(375351), -- Glacial Proto-Dragon: Oceanic Breath
+        [375327] = Defaults(375327), -- Subterranean Proto-Dragon: Tectonic Breath
+        [393432] = Defaults(393432), -- Refti Defender: Spear Flurry
+
+        -- Neltharus g431
+        [397010] = Defaults(397010, "SHOCKWAVE"), --  Qalashi Warden: Volcanic Guard
+        [382708] = Defaults(382708, "SHOCKWAVE"), --  Qalashi Warden: Volcanic Guard
+        [372311] = Defaults(372311), -- Qalashi Trainee: Magma Fist
+        [395184] = Defaults(395184), -- Qalashi Irontorch: Scorching Breath
 
         -- The Nokhud Offensive 2093
         [387135] = Defaults(387135),               -- Primalist Arcblade: Arcing Strike
@@ -111,25 +82,72 @@ aura_env.spells = {
         -- Ruby Life Pools g430
         [392395] = Defaults(392395, "KNOCKBACK"),  -- Thunderhead: Thunder Jaw
 
-        -- Shadowmoon Burial Grounds g223
-        [153395] = Defaults(153395, "SHOCKWAVE"),  -- Carrion Worm: Body Slam
-        --[153686] = Defaults(153395),             -- Bonemaw: Body Slam
-        [154175] = Defaults(154175, "SHOCKWAVE"),  -- Bonemaw: Body Slam
-        --[154442] = Defaults(154442),               -- Ner'zhul: Malevolence
-        [152792] = Defaults(152792),               -- Nhallish: Void Blast
+        -- Uldaman g429
+        [369409] = Defaults(369409), -- Earthen Custodian: Cleave
+        [369563] = Defaults(369563), -- Baelog: Wild Cleave
+        [369061] = Defaults(369061), -- Emberon: Searing Clap
+        [375727] = Defaults(375727), -- Chrono-Lord Deios: Sand Breath
 
-        -- Temple of the Jade Serpent g201
-        [114646] = Defaults(114646),               -- Haunting Sha: Haunting Gaze
-        [396907] = Defaults(396907, "SHOCKWAVE"),  -- Yu'lon: Jade Fire Breath
+        -- SEASON THREE
 
-        -- Aberrus g438
+        -- g182,g236,g245,g275,g279,g440,733
 
-        -- TIMEWALKING
+        -- Atal'Dazar (Battle for Azeroth) g275 Icon: 2011105
+        [255567] = Defaults(255567), -- -- T'lonja 128455 Frenzied Charge
 
-        -- Black Rook Hold g245
-        [200261] = Defaults(200261, "SHOCKWAVE"), -- Soul-Torn Champion: Bonebreaking Strike
+        -- Black Rook Hold (Legion) g245 Icon: 1417423
+        [200261] = Defaults(200261, "SHOCKWAVE"), -- Soul-Torn Champion 98243, Commander Shemdah'sohn 98706: Bonebreaking Strike
+        [197974] = Defaults(197974, "SHOCKWAVE"), -- Soul-torn Vanguard 100485: 197974 Bonecrushing Strike
+        [225732] = Defaults(225732, "FRONTAL"), -- Lady Velandras Ravencrest 98538: 225732 Strike Down
+        -- Risen Archer 98275
+        -- Wyrmtongue Scavenger 98792
+
+        -- Darkheart Thicket (Legion) 733, Icon: 1417425
+        [200768] = Defaults(200768, "SHOCKWAVE"), -- Crazed Razorbeak 95766: Propelling Charge
+        [201226] = Defaults(201226, "SHOCKWAVE"), -- Bloodtainted Fury 100531: Blood Assault
+        [204667] = Defaults(204667), -- Oakheart 103344: Nightmare Breath
+        [191326] = Defaults(191326, "SHOCKWAVE"), -- Dresaron 99200: Breath of Corruption
+
+        -- Dawn of the Infinites g440, Icon: 5247561
+        [413529] = Defaults(413529), -- Timestream Anomaly 199749: Untwist
+        [407159] = Defaults(407159), -- Blight of Galakrond 198997 Blight Reclamation 407159
+        [412129] = Defaults(412129, "SHOCKWAVE"), -- Lerai, Timesworn Maiden 205152 Orb of Contemplation
+        [408141] = Defaults(408141), -- Dazhak 201788 Incinerating Blightbreath
+        --[401482] = Defaults(401482), -- Tyr, the Infinite Keeper 198998: Infinite Annihilation
+        [401248] = Defaults(401248, "KNOCKBACK"), -- Tyr, the Infinite Keeper 198998 Titanic Blow 401248
+        [400641] = Defaults(400641, "STACK"), -- Tyr, the Infinite Keeper 198998 Dividing Strike 400641
+        [404916] = Defaults(404916), -- Morchie: Sand Blast
+        [412505] = Defaults(412505), -- Tyr's Vanguard 205151 Rending Cleave 412505
+        [419351] = Defaults(419351), -- Infinite Saboteur 208438: Bronze Exhalation 419351
+        [416139] = Defaults(416139), -- Chrono-Lord Deios 199000: Temporal Breath 416139
+        [418056] = Defaults(418056, "SHOCKWAVE"), -- Anduin Lothar 203679 Shockwave 418056
+        
+        -- Everbloom (Warlords of Draenor) g236, Icon: 967517
+        [169714] = Defaults(169714), -- Gnarlroot 81984: Gasp 169714
+        [164357] = Defaults(164357), -- Witherbark 81522: Parched Gasp 164357
+        [427510] = Defaults(427510, "SLAM"), -- Dulhu 83894: Noxious Charge 427510
+        [427512] = Defaults(427512, "SLAM"), -- Dulhu 83894: Noxious Charge 427512
+        [169179] = Defaults(169179, "SHOCKWAVE"), -- Yalnu: Colossal Blow 169179
+        [169929] = Defaults(169929, "SHOCKWAVE"), -- Gnarled Ancient 84400: Lumbering Swipe 169929
+
+        -- Throne of the Tides (Cataclysm) g182, Icon: 409600
+        [426645] = Defaults(426645), -- Naz'jar Ravager 212673: Acid Barrage 426645
+        [428293] = Defaults(428293, "SHOCKWAVE"), -- Naz'jar Honor Guard 40633: Trident Flurry 428293
+        [428530] = Defaults(428530), -- Ink of Ozumat 213770: Murk Spew 428530
+
+        -- Waycrest Manor (Battle for Azeroth) g279, Icon: 2011154
+        [271174] = Defaults(271174, "SHOCKWAVE"), -- Pallid Gorger 137830: Retch
+        [265372] = Defaults(265372, "SHOCKWAVE"), -- Bewitched Captain 131587: Shadow Cleave
 
         -- RAIDS
+
+        -- Aberrus g438
+        [406783] = Defaults(406783),              -- Amalgamation Chamber: Shadowflame Burst
+        [401258] = Defaults(401258),              -- Assault of the Zaqali: Heavy Cudgel
+        [410351] = Defaults(410351),              -- Assault of the Zaqali: Flaming Cudgel
+        [401022] = Defaults(401022, "KNOCKBACK"), -- Echo of Neltharion: Calamitous Strike
+        [408422] = Defaults(408422),              -- Scalecommader Sarkareth: Void Slash
+        [408425] = Defaults(408425),              -- Scalecommader Sarkareth: Void Slash
 
         -- Vault of the Incarnates g437
 
@@ -138,20 +156,14 @@ aura_env.spells = {
         [374112] = Defaults(374112), -- Sennarth's Frostbreath Arachnid: Freezing Breath
         [390548] = Defaults(390548), -- Kurog Grimtotem: Sundering Strike
         [386410] = Defaults(386410), -- Raszageth: Thunderous Blast
+
+        -- Amirdrassil g279, Icon: 2011154
+        [417431] = Defaults(417431), -- Fyrakk 137830: Fyr'alath's Bite
     },
 
     ["UNIT_SPELLCAST_SUCCEEDED"] = {
 
-        -- SEASON TWO
-
-        -- Neltharion's Lair
-        
-
-        -- Freehold
-        [257397] = Defaults(257397, "PURGE_SPELL", true), -- Healing Balm
-        [257899] = Defaults(257899, "SOOTHE_SPELL", true), -- Irontide Ravager: Painful Motivation
-
-        -- SEASON ONE
+        -- SEASON 4
 
         -- Algethar Academy
         [390938] = Defaults(390938, "SOOTHE", true), -- Aggravated Skitterfly: Agitation
@@ -160,14 +172,10 @@ aura_env.spells = {
 
         -- Azure Vault
         [389686] = Defaults(389686, "SOOTHE", true), -- Crystal Fury: Arcane Fury
+
+        -- Brackenhide Hollow
+        [382555] = Defaults(382555, "SOOTHE"), -- Bracken Warscourge: Ragestorm
         
-        -- Court of Stars
-        [209033] = Defaults(209033, "PURGE", true), -- Duskwatch Guard: Fortification
-        --[225100] = Defaults(225100, "PURGE", true), -- Guardian Construct: Charging Station; Can't be dispelled?
-
-        -- Halls of Valor
-        [198745] = Defaults(198745, "PURGE", true), -- Stormforged Sentinel: Protective Light
-
         -- Nokhud Offensive
         [386223] = Defaults(386223, "PURGE", true), -- Primal Stormshield: Stormshield
 
@@ -177,10 +185,16 @@ aura_env.spells = {
         [392454] = Defaults(392454, "PURGE", true), -- Flame Channeler: Burning Veins; might not want to purge as it damages themselves
         [385063] = Defaults(385063, "PURGE", true), -- Primalist Cinderweaver: Burning Ambition; increases damage taken so don't purge
 
-        -- Shadowmoon Burial Grounds
-        [398151] = Defaults(398151, "PURGE", true), -- Shadowmoon Loyalist: Sinister Focus
+        -- SEASON 3
 
-        -- Temple of the Jade Serpent
-        [396018] = Defaults(396018, "SOOTHE", true), --The Crybaby Hozen: Fit of Rage
+        -- Atal'Dazar
+        [255579] = Defaults(255579, "PURGE", true),  -- Priestess Alun'za 122967: Gilded Claws
+
+        -- Throne of the Tides
+        [426618] = Defaults(426618, "SOOTHE", true), -- Naz'jar Invader 40584: Slithering Assault
+        [428329] = Defaults(428329, "PURGE", true),  -- Naz'jar Frost Witch 44404: Icy Veins
+
+        -- Waycrest Manor
+        [265368] = Defaults(265368, "PURGE", true), -- Bewitched Captain 131587: Spirited Defense 265368
     },
 }
