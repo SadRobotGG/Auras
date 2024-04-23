@@ -22,6 +22,9 @@ function(states, event, sourceUnit, sourceGuid, spellID)
             -- Ignore "target" as we'll get an event for the nameplate unit anyway
             if sourceUnit == "target" then return true end
 
+            -- If we're not in combat, ignore
+            if not UnitAffectingCombat("player") then return true end
+
             -- We're not interested in units that don't exist, or we're not in combat with
             if not sourceUnit or not UnitExists(sourceUnit) or not UnitAffectingCombat(sourceUnit) then
                 DebugPrint("Not in combat with "..sourceUnit)
