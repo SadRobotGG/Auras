@@ -1,5 +1,6 @@
 --Events: UNIT_SPELLCAST_START UNIT_SPELLCAST_SUCCEEDED PLAYER_REGEN_ENABLED
--- Zone filters: g182,g236,g245,g275,g279,g440,733
+-- Zone filters Season 4: g428,g429,g430,g431,g432,g433,g434,2093
+-- Zone filters Season 3: g182,g236,g245,g275,g279,g440,733
 -- Zone filters: g429,g430,g431,g432,g433,g434,428,2093,g252,g240,g223,g201,g437,731,g245,936,g438,g282,325
 local o = aura_env.config
 
@@ -38,6 +39,7 @@ aura_env.spells = {
     ["UNIT_SPELLCAST_START"] =
     {
         -- SEASON FOUR
+        -- g428 g429 g430 g431 g432 g433 g434 2093
 
         -- Algeth'ar Academy g433
         [388976] = Defaults(388976, "SHOCKWAVE", true), -- Arcane Ravager: Riftbreath
