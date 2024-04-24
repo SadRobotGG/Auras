@@ -94,6 +94,10 @@ aura_env.blacklist = {
     [113942] = Defaults(), -- Demonic: Gateway
     [89140]  = Defaults(), -- Demonic Rebirth: Cooldown
     [287825] = Defaults(), -- Lethargy debuff (fight or flight)
+    [325101] = Defaults(), -- Flattered (Kyrian steward thinks yoo-hoo are the best!)
+    [306474] = Defaults(), -- Recharging (Mechagon ring Logic Loop proc)
+    [206151] = Defaults(), -- Challenger's Burden (Mythic+)
+    [396184] = Defaults(), -- Full Ruby Feasted
 };
 
 
@@ -124,8 +128,10 @@ _log("Forbearance=",aura_env.blacklist[25771].enable);
 local enableLust = not c or c.enableLust < 3;
 aura_env.blacklist[57724]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Sated (lust debuff)
 aura_env.blacklist[57723]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Exhaustion (heroism debuff)
+aura_env.blacklist[390435]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Exhaustion (Fury of the Aspects debuff)
 aura_env.blacklist[80354]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Temporal Displacement (timewarp debuff)
 aura_env.blacklist[95809]  = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Insanity debuff (hunter pet heroism: ancient hysteria)
+aura_env.blacklist[264689] = { enable = not enableLust, priority = 0, stackThreshold = 0}; -- Fatigued (Primal Rage)
 
 aura_env.refreshAuras = function(states, spellID)
 
@@ -144,8 +150,8 @@ aura_env.refreshAuras = function(states, spellID)
     -- Manually find the debuff so we can get access to all properties
     local i = 1;
     while true do
-        local spellName, icon, stacks, auraType, duration, expirationTime, _, _, _, id = UnitAura("player", i, "HARMFUL")
-        
+        local spellName, icon, stacks, auraType, duration, expirationTime, castBy, _, _, id = UnitAura("player", i, "HARMFUL")
+                
         if not spellName then break; end
 
         currentAuras[id] = true;
@@ -162,7 +168,8 @@ aura_env.refreshAuras = function(states, spellID)
                 states[id..WeakAuras.myGUID] = {
                     changed = true,
                     show = true,
-                    name = WA_ClassColorName("player"),
+                    castBy = WA_ClassColorName(castBy),
+                    name = spellName,
                     icon = icon,
                     stacks = stacks,
                     progressType = "timed",
@@ -203,3 +210,124 @@ aura_env.refreshAuras = function(states, spellID)
         end
     end
 end
+
+do
+
+local function ProcessAllAuras(states)
+    
+    local batchCount = nil;
+    local usePackedAura = true;
+
+    local function HandleAura(aura)
+
+        local displayOnlyDispellableDebuffs = false;
+        local ignoreBuffs = true;
+        local ignoreDebuffs = false;
+        local ignoreDispelDebuffs = false;
+
+        local type = AuraUtil.ProcessAura(aura, displayOnlyDispellableDebuffs, ignoreBuffs, ignoreDebuffs, ignoreDispelDebuffs);
+
+        if type == AuraUtil.AuraUpdateChangedType.Debuff or type == AuraUtil.AuraUpdateChangedType.Dispel then
+            UpsertAura(states, aura, type);
+        end
+    end
+    AuraUtil.ForEachAura("player", AuraUtil.CreateFilterString(AuraUtil.AuraFilters.Harmful), batchCount, HandleAura, usePackedAura);
+    AuraUtil.ForEachAura("player", AuraUtil.CreateFilterString(AuraUtil.AuraFilters.Harmful, AuraUtil.AuraFilters.Raid), batchCount, HandleAura, usePackedAura);
+end
+
+local function ShouldShowBuff(aura, showAll)
+    if aura.isBossAura then
+        return true;
+    end
+
+    if aura.isStealable then
+        return true;
+    end
+
+    if aura.isFromPlayerOrPlayerPet then
+        return true;
+    end
+
+    if showAll then
+        return true;
+    end
+
+    return false;
+end
+
+local function UpdateAuras(states, unitAuraUpdateInfo)
+    
+    local aurasChanged = false;
+
+    if unitAuraUpdateInfo == nil or unitAuraUpdateInfo.isFullUpdate then
+		ProcessAllAuras(states);
+		aurasChanged = true;
+	else
+		if unitAuraUpdateInfo.addedAuras ~= nil then
+			for _, aura in ipairs(unitAuraUpdateInfo.addedAuras) do
+				if ShouldShowBuff(aura, auraSettings.showAll) and not C_UnitAuras.IsAuraFilteredOutByInstanceID(unit, aura.auraInstanceID, filterString) then
+                    UpsertAura(states, aura, AuraUtil.AuraFilters.Harmful, nil);
+					self.auras[aura.auraInstanceID] = aura;
+					aurasChanged = true;
+				end
+			end
+		end
+
+		if unitAuraUpdateInfo.updatedAuraInstanceIDs ~= nil then
+			for _, auraInstanceID in ipairs(unitAuraUpdateInfo.updatedAuraInstanceIDs) do
+				if self.auras[auraInstanceID] ~= nil then
+					local newAura = C_UnitAuras.GetAuraDataByAuraInstanceID(self.unit, auraInstanceID);
+					self.auras[auraInstanceID] = newAura;
+					aurasChanged = true;
+				end
+			end
+		end
+
+		if unitAuraUpdateInfo.removedAuraInstanceIDs ~= nil then
+			for _, auraInstanceID in ipairs(unitAuraUpdateInfo.removedAuraInstanceIDs) do
+				if self.auras[auraInstanceID] ~= nil then
+					self.auras[auraInstanceID] = nil;
+					aurasChanged = true;
+				end
+			end
+		end
+	end
+
+    return aurasChanged;
+end
+
+
+local function UpsertAura(states, aura, type, index)
+
+    states[aura.auraInstanceID] = {
+        changed = true,
+        show = true,
+        progressType = "timed",
+        unit = "player",
+        autoHide = true,
+        unitDebuffIndex = index,
+        debuffType = type,
+
+        isDispellable = aura_env.canDispel(type),
+
+        name = aura.name,
+        icon = aura.icon,
+        applications = aura.applications,
+        stacks = aura.stacks,
+        dispelName = aura.dispelName,
+        duration = aura.duration,
+        expirationTime= aura.expirationTime,
+        sourceUnit= WA_ClassColorName(aura.sourceUnit),
+        isStealable= aura.isStealable,
+        nameplateShowPersonal= aura.nameplateShowPersonal,
+        spellId= aura.spellId,
+        canApplyAura= aura.canApplyAura,
+        isBossAura= aura.isBossAura,
+        isFromPlayerOrPlayerPet= aura.isFromPlayerOrPlayerPet,
+
+        -- nameplateShowAll=aura.nameplateShowAll,
+        -- timeMod = aura.timeMod        
+    }
+end
+
+end -- do
