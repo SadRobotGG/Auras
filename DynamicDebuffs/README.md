@@ -4,12 +4,12 @@ https://wago.io/QyN-tmh2w
 
 Shows your debuffs front and center.
 
-Source code and Issue tracking @ GitHub: 
+Source code and Issue tracking @ GitHub: https://github.com/SadRobotGG/Auras/tree/main/DynamicDebuffs
 
 ## Features
 
 * Debuffs have a border to identify their spell school (magic: blue, disease: brown, poison: green, curse: purple)
-* If your spec can dispel the debuff, the border will be animated
+* If your spec and talents can dispel the debuff, the border will be animated
 * Custom Options for filtering out some common debuffs you don't want to see
 * Enable or disable tooltips for the debuffs
 * ElvUI Integration: Control what debuffs you want to show or hide using ElvUI's Blacklist filter
@@ -35,6 +35,11 @@ Source code and Issue tracking @ GitHub:
 
 ## Changelog
 
+### 10.2.6 Dragonflight Season 4
+
+- Added support for Evoker dispels
+- Better support for detecting if you can dispel a debuff by checking your spec and talents
+- Complete rewrite for much-improved performance
 
 ## Roadmap
 

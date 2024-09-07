@@ -1,8 +1,8 @@
 -- If we're not using ElvUI, we can use their default blacklist instead
 
-local function Defaults(priorityOverride)
+local function Defaults(priorityOverride, enabled)
     return {
-        enable = true,
+        enable = enabled or true,
         priority = priorityOverride or 0,
         stackThreshold = 0
     }
@@ -33,16 +33,48 @@ aura_env.blacklist = {
     [113942] = Defaults(), -- Demonic: Gateway
     [89140]  = Defaults(), -- Demonic Rebirth: Cooldown
     [287825] = Defaults(), -- Lethargy debuff (fight or flight)
-    [325101] = Defaults(), -- Flattered (Kyrian steward thinks yoo-hoo are the best!)
+    [306474] = Defaults(), -- Recharging (Mechagon ring Logic Loop proc)
+
+    [209388] = Defaults(), -- Bulwark of Order
+    --[386652] = Defaults(), -- Bulwark of Righteous Fury
+    [132403] = Defaults(), -- Shield of the Righteous
+    [393038] = Defaults(), -- Strength in Adversity
+    [387678] = Defaults(), -- Dragonrider's Hunt
+
 };
 
 aura_env.whitelist = {
     [332514] = { enable = true, priority = 0, stackThreshold = 65}, -- Bron (show at 65 stacks)
+    [333961] = Defaults(), -- Bron's Call to Action (Bron active)
     [228050] = Defaults(), -- Guardian of the Forgotten Queen
     [215652] = Defaults(), -- Shield of Virtue
-    [974] = Defaults(), -- Earth Shield
+    [974]    = Defaults(), -- Earth Shield
     [327510] = Defaults(), -- Shining Light proc
     [182104] = Defaults(), -- Shining Light stacks
+    [221886] = Defaults(), -- Divine Steed
+    [276111] = Defaults(), -- Divine Steed
+    [424616] = Defaults(), -- Sanctification
+    [291937] = Defaults(), -- Hiding Behind Junk (safe against K.U.J.O. in Mechagon Workshop)
+
+    [385724] = Defaults(), -- Barricade of Faith
+    [210294] = Defaults(), -- Divine Favor
+    [388007] = Defaults(), -- Blessing of Summer
+    [388010] = Defaults(), -- Blessing of Autumn
+    [388011] = Defaults(), -- Blessing of Winter
+    [388013] = Defaults(), -- Blessing of Spring
+    [414916] = Defaults(), -- Awakening
+
+    --424616 Sanctification
+    --424622 Empowered Consecration
+
+    -- Trinkets
+    [271105] = Defaults(), -- Butcher's Eye (Gore-Crusted Butcher's Block)
+    [429226] = Defaults(), -- Alacritous Spores ()
+    [417139] = Defaults(), -- Prophetic Stonescale haste buff
+    [417290] = Defaults(), -- Prophetic Stonescale heal buff
+    [421994] = Defaults(), -- Gift of Ursine Vengeance
+
+    [54861] = Defaults(), -- Nitro Boosts
 }
 
 aura_env.lust = {
@@ -141,12 +173,23 @@ aura_env.defense = {
     [216857] = Defaults(), -- Guarded by the Light
     [228050] = Defaults(), -- Guardian of the Forgotten Queen
     [31850]  = Defaults(), -- Ardent Defender
+    [31884]  = Defaults(), -- Avenging Wrath
     [86659]  = Defaults(), -- Guardian of Ancient Kings
     [212641] = Defaults(), -- Guardian of Ancient Kings (Glyph of the Queen)
     [209388] = Defaults(), -- Bulwark of Order
     [204335] = Defaults(), -- Aegis of Light
     [152262] = Defaults(), -- Seraphim
     [132403] = Defaults(), -- Shield of the Righteous
+    [355455] = Defaults(), -- Divine Resonance
+    [389539] = Defaults(), -- Sentinel
+    [424622] = Defaults(), -- Sanctified Consecration
+    [431536] = Defaults(), -- Shake the Heavens
+
+    -- Holy Paladin
+    [210294] = Defaults(), -- Sanctification
+    --[385126] = Defaults(), -- Blessing of Dusk
+    --[385127] = Defaults(), -- Blessing of Dawn
+
     --Priest
     [81782]  = Defaults(), -- Power Word: Barrier
     [47585]  = Defaults(), -- Dispersion
@@ -194,7 +237,24 @@ aura_env.defense = {
     [203524] = Defaults(), -- Neltharion's Fury
     [190456] = Defaults(), -- Ignore Pain
     [132404] = Defaults(), -- Shield Block
+
+    -- Trinkets
+    [358712] = Defaults(), -- Annhlyde's Aegis
+    [329849] = Defaults(), -- Blood-Spattered Scale
+
+    -- Racial
+    [65116] = Defaults(), -- Stoneform (Dwarf)
 }
+
+
+-- for index,value in pairs(aura_env.whitelist) do
+--     print("aura_env.whitelist["..tostring(index).."]={")
+--     for i,v in pairs(value) do 
+--         print("  "..tostring(i).."="..tostring(v));
+--     end
+--     print("}")
+-- end
+
 
 -- If we don't use ElvUI, then just stick to the defaults.
 if not ElvUI then return true end
@@ -202,4 +262,3 @@ if not ElvUI then return true end
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 aura_env.blacklist = {} -- ElvDB.global.unitframe.aurafilters.Blacklist.spells;
-

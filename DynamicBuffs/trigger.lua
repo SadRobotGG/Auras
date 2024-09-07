@@ -1,145 +1,211 @@
---UNIT_AURA CLEU:SPELL_AURA_APPLIED:SPELL_AURA_REFRESH:SPELL_AURA_APPLIED_DOSE:SPELL_AURA_REMOVED_DOSE:SPELL_AURA_REMOVED
+--UNIT_AURA:player
 function(allstates, event, ...)
 
-    if event == "UNIT_AURA" then
-        if allstates == nil then return false end
-        local unit = ...
-        if not unit or not unit == "player" then return false end
-        if not WeakAuras.myGUID then return false end
+    if allstates == nill then return false end
+    if event ~= "UNIT_AURA" then return false end
+    
+    local unit, updateInfo = ...
+    
+    if not unit or unit ~= "player" then return false end
+    
+    local displayOnlyDispellableDebuffs = false;
 
-        -- Update auras
-        local auraIndex = 1
-        while true do
-            local _, _, stacks, _, duration, expirationTime, _, _, _, spellId = UnitAura(unit, auraIndex, "HELPFUL")
-            if not spellId then break end
-
-            if allstates[spellId..WeakAuras.myGUID] then
-                allstates[spellId..WeakAuras.myGUID].stacks = stacks;
-                allstates[spellId..WeakAuras.myGUID].expirationTime = expirationTime;
-                allstates[spellId..WeakAuras.myGUID].duration = duration;
-                allstates[spellId..WeakAuras.myGUID].unitBuffIndex = auraIndex;
-                allstates[spellId..WeakAuras.myGUID].changed = true;
-            end
-
-            auraIndex = auraIndex + 1
-        end
+    local function Debug(...)
+        --print(...);
     end
 
-    if event == "COMBAT_LOG_EVENT_UNFILTERED" then
-        local _, subEvent, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellId, spellName, _, auraType = ...
+    local function AuraFilter(aura)
+        local spellId = aura.spellId;
+        local spellName = aura.name;
+        local whitelist = aura_env.whitelist[spellId];
 
-        if not UnitExists(sourceName) then return true; end
+        -- Ignore blacklisted auras
+        if aura_env.blacklist[spellId] and aura_env.blacklist[spellId].enable == true then
+            
+            -- Whitelist can override blacklist
+            if not whitelist or whitelist.enable == false then
+                return false
+            end
+        end
 
-        if subEvent == "SPELL_AURA_APPLIED" or subEvent == "SPELL_AURA_APPLIED_DOSE" or subEvent == "SPELL_AURA_REFRESH" or subEvent == "SPELL_AURA_REMOVED_DOSE" then
-            if UnitIsPlayer(destName) and UnitIsUnit(destName, "player") then
-                if auraType == "HELPFUL" or auraType == "BUFF" then
+        local isSelfCast = aura.isFromPlayerOrPlayerPet == true
+        local isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true
+        local isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true
+        local isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true
+        local isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true
 
-                    local whitelist = aura_env.whitelist[spellId]
-
-                    -- Ignore blacklisted auras
-                    if aura_env.blacklist[spellId] and aura_env.blacklist[spellId].enable == true then
-
-                        -- Whitelist can override blacklist
-                        if not whitelist or whitelist.enable == false then
-                            return true
-                        end
-                    end
-
-                    local isSelfCast = WeakAuras.myGUID == sourceGUID
-                    local isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true
-                    local isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true
-                    local isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true
-                    local isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true
-
-                    -- Ignore any non-personal auras unless they're externals / lust / raid CDs
-                    if not isSelfCast then
-                        if not isLust and not isExternal and not isRaidCd then
-                            if not whitelist or whitelist.enable == false then
-                                --print("Skipping non-self cast:"..spellName)
-                                return true
-                            end
-                        end
-                    else
-                        --print("Self cast:"..spellName)
-                        
-                        if not isDefensive and not isRaidCd then
-                            if not whitelist or whitelist.enable == false then
-                                -- print("Skipping self cast that is not defensive: "..spellId)
-                                return true
-                            end
-                        end
-                    end
-
-                    -- Manually find the aura so we can get access to all properties
-                    local i = 1;
-                    while true do
-                        local spellName, icon, stacks, auraType, duration, expirationTime, _, _, _, id, _, _, castByPlayer = UnitAura(destName, i, "HELPFUL")
-
-                        if not spellName then return true end
-
-                        -- Found our matching aura?
-                        if id == spellId then
-
-                            -- Whitelisted auras are excluded from duration logic
-                            if not whitelist or whitelist.enable == false then
-                                
-                                -- We ignore permanent auras that don't have  duration e.g. Timewalking buff
-                                if not duration or duration == 0 or duration < 1 then return true; end
-                                
-                                -- Ignore any particularly long buffs, over 2mins
-                                if duration and duration > 120 then return true; end
-                            end
-
-                            allstates[spellId..destGUID] = {
-                                changed = true,
-                                show = true,
-                                casterName = WA_ClassColorName(sourceName),
-                                icon = icon,
-                                stacks = stacks,
-                                progressType = "timed",
-                                expirationTime = expirationTime,
-                                duration = duration,
-                                spellId = spellId,
-                                autoHide = true,
-                                unit = "player",
-                                unitBuffIndex = i,
-                                auraType = auraType,
-                                isSelfCast = isSelfCast,
-                                isLust = isLust,
-                                isExternal = isExternal,
-                                isDefensive = isDefensive,
-                                isRaidCd = isRaidCd,
-                            }
-
-                            -- If we're at 0 doses then we can remove
-                            if subEvent == "SPELL_AURA_DOSE_REMOVED" and stacks < 1 then
-                                allstates[spellId..destGUID].show = false
-                                return true;
-                            end
-
-                            -- If this aura has a stack threshold, then hide if it doesn't meet that threshold
-                            if whitelist and whitelist.stackThreshold > 0 and stacks < whitelist.stackThreshold then
-                                allstates[spellId..destGUID].show = false
-                                return true;
-                            end
-
-                            return true
-                        end
-
-                        i = i + 1;
-                    end
+        -- Ignore any non-personal auras unless they're externals / lust / raid CDs
+        if not isSelfCast then
+            if not isLust and not isExternal and not isRaidCd then
+                if not whitelist or whitelist.enable == false then
+                    --print("Skipping non-self cast:"..spellName)
+                    return false
+                end
+            end
+        else
+            --print("Self cast:"..spellName)
+            
+            if not isDefensive and not isRaidCd then
+                if not whitelist or whitelist.enable == false then
+                    --print("Skipping self cast that is not defensive: "..spellId)
+                    return false
                 end
             end
         end
 
-        if subEvent == "SPELL_AURA_REMOVED" then
-            if allstates[spellId..destGUID] then
-                allstates[spellId..destGUID].changed = true
-                allstates[spellId..destGUID].show = false
-                return true
+        -- Whitelisted auras are excluded from duration logic
+        if not whitelist or whitelist.enable == false then
+                                
+            -- We ignore permanent auras that don't have  duration e.g. Timewalking buff
+            if not aura.duration or aura.duration == 0 or aura.duration < 1 then return false; end
+            
+            -- Ignore any particularly long buffs, over 2mins
+            if aura.duration and aura.duration > 120 then return false; end
+        end
+
+		return true;
+    end
+
+    local function ProcessAura(aura, allstates)
+        -- for i,v in pairs(aura) do 
+        --     Debug("    "..tostring(i).."="..tostring(v));
+        -- end
+
+        if(not AuraFilter(aura)) then return; end
+
+        -- Get the buff index
+        local index = 1;
+        while true do
+            local match = C_UnitAuras.GetAuraDataByIndex(unit, index, "HELPFUL")
+            if not match then break end
+            if match.auraInstanceID == aura.auraInstanceID then break end
+            index = index + 1
+        end
+
+        local spellId = aura.spellId;
+
+        local isSelfCast = aura.isFromPlayerOrPlayerPet;
+        local isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true;
+        local isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true;
+        local isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true;
+        local isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true;
+        
+        allstates[aura.auraInstanceID] = {
+            changed = true,
+            show = true,
+            progressType = "timed",
+            unit = "player",
+            autoHide = false,
+            auraInstanceID = aura.auraInstanceID,
+            unitBuffIndex = index,
+            buffType = aura.dispelName,
+            filter = "HELPFUL",
+
+            -- Custom variables
+            isSelfCast = isSelfCast,
+            isLust = isLust,
+            isExternal = isExternal,
+            isDefensive = isDefensive,
+            isRaidCd = isRaidCd,
+    
+            --spellId= aura.spellId,
+            name = aura.name,
+            icon = aura.icon,
+            applications = aura.applications,
+            stacks = aura.applications,
+            dispelName = aura.dispelName,
+            duration = aura.duration,
+            expirationTime= aura.expirationTime,
+            sourceUnit= WA_ClassColorName(aura.sourceUnit),
+            isStealable= aura.isStealable,
+            nameplateShowPersonal= aura.nameplateShowPersonal,
+            nameplateShowAll=aura.nameplateShowAll,
+            
+            isHarmful = aura.isHarmful,
+            isHelpful = aura.isHelpful,
+            canApplyAura= aura.canApplyAura,
+            isBossAura= aura.isBossAura,
+            isFromPlayerOrPlayerPet= aura.isFromPlayerOrPlayerPet,    
+            timeMod = aura.timeMod        
+        }
+    end
+
+    local function ProcessAllAuras(allstates)
+        local batchCount = nil;
+        local usePackedAura = true;
+    
+        local function HandleAura(aura)
+            local displayOnlyDispellableDebuffs = false;
+            local ignoreBuffs = false;
+            local ignoreDebuffs = true;
+            local ignoreDispelDebuffs = true;
+    
+            local type = AuraUtil.ProcessAura(aura, displayOnlyDispellableDebuffs, ignoreBuffs, ignoreDebuffs, ignoreDispelDebuffs);
+            
+            if type == AuraUtil.AuraUpdateChangedType.Buff then
+                ProcessAura(aura, allstates);
             end
         end
+
+        Debug("ProcessAllAuras");
+        AuraUtil.ForEachAura(unit, AuraUtil.CreateFilterString(AuraUtil.AuraFilters.Helpful), batchCount, HandleAura, usePackedAura);
+    end
+
+    local function UpdateAuras(unitAuraUpdateInfo, allstates)
         
+        local aurasChanged = false;
+    
+        if unitAuraUpdateInfo == nil or unitAuraUpdateInfo.isFullUpdate then
+            Debug("FULL UPDATE")
+            for _,state in pairs(allstates) do
+                state.show = false
+                state.changed = true
+            end
+            ProcessAllAuras(allstates);
+            aurasChanged = true;
+        else
+            -- Added auras
+            if unitAuraUpdateInfo.addedAuras ~= nil then
+                for _, aura in ipairs(unitAuraUpdateInfo.addedAuras) do
+                    if aura.isHelpful then
+                        Debug("Added Aura:"..aura.name)
+                        ProcessAura(aura, allstates)
+                        aurasChanged = true;
+                    end
+                end
+            end
+        
+            -- Updated auras
+            if unitAuraUpdateInfo.updatedAuraInstanceIDs ~= nil then
+                for _, auraInstanceID in ipairs(unitAuraUpdateInfo.updatedAuraInstanceIDs) do
+                    local aura = C_UnitAuras.GetAuraDataByAuraInstanceID(unit, auraInstanceID)
+                    if aura and aura.isHelpful then
+                        Debug("Updated Aura:"..aura.name)
+                        ProcessAura(aura, allstates)
+                        aurasChanged = true;
+                    end
+                end
+            end
+        
+            -- Removed auras
+            if unitAuraUpdateInfo.removedAuraInstanceIDs ~= nil then
+                for _, auraInstanceID in ipairs(unitAuraUpdateInfo.removedAuraInstanceIDs) do
+                    if allstates[auraInstanceID] ~= nil then
+                        Debug("Removed Aura:"..auraInstanceID)
+                        allstates[auraInstanceID].changed = true
+                        allstates[auraInstanceID].show = false
+                        aurasChanged = true;
+                    end
+                end
+            end
+        end
+    
+        return aurasChanged;
+    end
+    
+    -- EVENT HANDLER
+    if event == "UNIT_AURA" then
+        local aurasChanged = UpdateAuras(updateInfo, allstates);
+        return aurasChanged;
     end
 end
-

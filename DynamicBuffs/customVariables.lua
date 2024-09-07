@@ -2,6 +2,7 @@
     spellId = "number",
     stacks = true,
     name = "string",
+    castBy = "string",
     expirationTime = true,
     auraType = "string",
     isSelfCast = "bool",

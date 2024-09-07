@@ -2,7 +2,7 @@
     spellID = "number",
     stacks = true,
     name = "string",
-    castBy = "string",
+    casterName = "string",
     expirationTime = true,
     debuffType = "string",
     isDispellable = "bool"
