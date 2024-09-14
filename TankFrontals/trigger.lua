@@ -54,7 +54,7 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 progressType = "timed",
                 duration = spellInfo.duration,
                 expirationTime = GetTime() + spellInfo.duration,
-                icon = GetSpellTexture(spellID),
+                icon = C_Spell.GetSpellTexture(spellID),
                 type = type,
                 isTarget = isTarget,
                 isTank = isTank,

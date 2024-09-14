@@ -14,17 +14,33 @@ In the Actions tab, you can toggle enabling or disabling the chat message, and c
 - **SLAM** - This is an AoE targeted on the tank, even if they're moving away.
 - **SOOTHE** - An enrage effect that should be dispelled by a soothe / purge ability.
 - **PURGE** - Another beneficial magic effect that should be purged.
+- **STACK** - Multiple players need to stack on the tank to split damage.
 
 ## Supported encounters
 
-- Dragonflight Season 1 dungeons
-- Timewalking Mythic+ dungeons
+- The War Within Season 1
 
 ## Known Issues / FAQ
 
 - You'll get announcements for SOOTHE and PURGE even if there might be people in your group that can do none of these things. I might look into fixing this, but not at the cost of performance.
 
 ## Changelog
+
+### Patch 11.0.2
+
+- The War Within Season 1
+
+### Patch 10.2.6
+
+- Dragonflight Season 4
+
+### Patch 10.2.0
+
+- Dragonflight Season 3
+
+### Patch 10.1.0
+
+- Dragonflight Season 2
 
 ### Patch 10.0.2
 
