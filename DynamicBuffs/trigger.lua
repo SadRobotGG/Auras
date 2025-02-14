@@ -28,7 +28,7 @@ function(allstates, event, ...)
             end
         end
 
-        local isSelfCast = aura.isFromPlayerOrPlayerPet == true
+        local isSelfCast = aura.sourceUnit == "player" or aura.sourceUnit == "pet"
         local isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true
         local isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true
         local isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true
@@ -66,30 +66,27 @@ function(allstates, event, ...)
 		return true;
     end
 
-    local function ProcessAura(aura, allstates)
+    local function ProcessAura(aura, allstates, added)
         -- for i,v in pairs(aura) do 
         --     Debug("    "..tostring(i).."="..tostring(v));
         -- end
 
         if(not AuraFilter(aura)) then return; end
 
-        -- Get the buff index
-        local index = 1;
-        while true do
-            local match = C_UnitAuras.GetAuraDataByIndex(unit, index, "HELPFUL")
-            if not match then break end
-            if match.auraInstanceID == aura.auraInstanceID then break end
-            index = index + 1
-        end
-
         local spellId = aura.spellId;
 
-        local isSelfCast = aura.isFromPlayerOrPlayerPet;
-        local isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true;
-        local isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true;
-        local isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true;
-        local isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true;
+        local isSelfCast = aura.sourceUnit == "player" or aura.sourceUnit == "pet"
+        local isLust = aura_env.lust[spellId] and aura_env.lust[spellId].enable == true
+        local isExternal = aura_env.external[spellId] and aura_env.external[spellId].enable == true
+        local isDefensive = aura_env.defense[spellId] and aura_env.defense[spellId].enable == true
+        local isRaidCd = aura_env.raidcd[spellId] and aura_env.raidcd[spellId].enable == true
         
+        if not isSelfCast and added then
+            -- Only play sound when the aura is first applied, so we don't get spammed
+            local volume = C_CVar.GetCVar("Sound_DialogVolume") * C_CVar.GetCVar("Sound_MasterVolume") * 100
+            C_VoiceChat.SpeakText(0, aura.name, Enum.VoiceTtsDestination.LocalPlayback, 0, volume)
+        end
+
         allstates[aura.auraInstanceID] = {
             changed = true,
             show = true,
@@ -97,6 +94,8 @@ function(allstates, event, ...)
             unit = "player",
             autoHide = false,
             auraInstanceID = aura.auraInstanceID,
+            unitAuraInstanceID = aura.auraInstanceID,
+            unitAuraFilter = "HELPFUL",
             unitBuffIndex = index,
             buffType = aura.dispelName,
             filter = "HELPFUL",
@@ -169,7 +168,7 @@ function(allstates, event, ...)
                 for _, aura in ipairs(unitAuraUpdateInfo.addedAuras) do
                     if aura.isHelpful then
                         Debug("Added Aura:"..aura.name)
-                        ProcessAura(aura, allstates)
+                        ProcessAura(aura, allstates, true)
                         aurasChanged = true;
                     end
                 end

@@ -34,13 +34,13 @@ aura_env.blacklist = {
     [89140]  = Defaults(), -- Demonic Rebirth: Cooldown
     [287825] = Defaults(), -- Lethargy debuff (fight or flight)
     [306474] = Defaults(), -- Recharging (Mechagon ring Logic Loop proc)
-
+    
     [209388] = Defaults(), -- Bulwark of Order
     --[386652] = Defaults(), -- Bulwark of Righteous Fury
     [132403] = Defaults(), -- Shield of the Righteous
     [393038] = Defaults(), -- Strength in Adversity
     [387678] = Defaults(), -- Dragonrider's Hunt
-
+    
 };
 
 aura_env.whitelist = {
@@ -50,38 +50,37 @@ aura_env.whitelist = {
     [215652] = Defaults(), -- Shield of Virtue
     [974]    = Defaults(), -- Earth Shield
     [327510] = Defaults(), -- Shining Light proc
-    [182104] = Defaults(), -- Shining Light stacks
     [221886] = Defaults(), -- Divine Steed
     [276111] = Defaults(), -- Divine Steed
-    [424616] = Defaults(), -- Sanctification
+    [1044]   = Defaults(), -- Blessing of Freedom
+
+    -- Dungeons
     [291937] = Defaults(), -- Hiding Behind Junk (safe against K.U.J.O. in Mechagon Workshop)
-
-    [385724] = Defaults(), -- Barricade of Faith
-    [210294] = Defaults(), -- Divine Favor
-    [388007] = Defaults(), -- Blessing of Summer
-    [388010] = Defaults(), -- Blessing of Autumn
-    [388011] = Defaults(), -- Blessing of Winter
-    [388013] = Defaults(), -- Blessing of Spring
-    [414916] = Defaults(), -- Awakening
-
-    --424616 Sanctification
-    --424622 Empowered Consecration
-
+    
     -- Trinkets
-    [271105] = Defaults(), -- Butcher's Eye (Gore-Crusted Butcher's Block)
-    [429226] = Defaults(), -- Alacritous Spores ()
-    [417139] = Defaults(), -- Prophetic Stonescale haste buff
-    [417290] = Defaults(), -- Prophetic Stonescale heal buff
-    [421994] = Defaults(), -- Gift of Ursine Vengeance
-
+    [345228] = Defaults(), -- Gladiator's Badge
+    
+    -- Professions
     [54861] = Defaults(), -- Nitro Boosts
+    
+    [424956] = Defaults(), -- Candle
+    [434696] = Defaults(), -- Stormrook's Favor
+    [91374] = Defaults(),  -- Mark of Khadros
+
+    -- World / Quest Buffs
+    [1216785] = Defaults(),  -- Glittering Vault Shard
+    
 }
 
 aura_env.lust = {
-    [2825]   = Defaults(), -- Bloodlust
-    [32182]  = Defaults(), -- Heroism
-    [80353]  = Defaults(), -- Time Warp
-    [90355]  = Defaults(), -- Ancient Hysteria
+    [2825]   = Defaults(),  -- Bloodlust (Shaman Horde)
+    [32182]  = Defaults(),  -- Heroism (Shaman Alliance)
+    [429485]  = Defaults(),  -- Bloodlust (Shaman Horde)
+    [428941]  = Defaults(),  -- Time Warp (Mage)
+    [80353]  = Defaults(),  -- Time Warp (Mage)
+    [90355]  = Defaults(),  -- Ancient Hysteria (Hunter)
+    [264667]  = Defaults(), -- Primal Rage (Hunter)
+    [390386]  = Defaults(), -- Fury of the Aspects (Evoker)
 }
 
 aura_env.external = {
@@ -91,33 +90,44 @@ aura_env.external = {
     [22812]  = Defaults(), -- Barkskin
     [6940]   = Defaults(), -- Blessing of Sacrifice
     [147833] = Defaults(), -- Intervene
+    [357170] = Defaults(), -- Time Dilation
+    [360827] = Defaults(), -- Blistering Scales
+    [1022]   = Defaults(), -- Blessing of Protection
+    [204018] = Defaults(), -- Blessing of Spellwarding
+    [1044]   = Defaults(), -- Blessing of Freedom
+    [228049] = Defaults(), -- Guardian of the Forgotten Queen
+    [10060]  = Defaults(), -- Power Infusion
 }
 
 aura_env.raidcd = {
     [31821]  = Defaults(), -- Aura Mastery
     [145629] = Defaults(), -- Anti-Magic Zone
     [209426] = Defaults(), -- Darkness
-    [1022]   = Defaults(), -- Blessing of Protection
-    [204018] = Defaults(), -- Blessing of Spellwarding
-    [228049] = Defaults(), -- Guardian of the Forgotten Queen
     [81782]  = Defaults(), -- Power Word: Barrier
+    [62618]  = Defaults(), -- Barrier
     [204293] = Defaults(), -- Spirit Link    
+    [325174] = Defaults(), -- Spirit Link    
     [97462] = Defaults(),  -- Rallying Cry
+    [97463] = Defaults(),  -- Rallying Cry
+    [374227] = Defaults(),  -- Zephyr
 }
 
 aura_env.defense = {
     
     --Death Knight
     [48707]  = Defaults(), -- Anti-Magic Shell
+    [195181] = Defaults(), -- Bone Shield
     [81256]  = Defaults(), -- Dancing Rune Weapon
+    [383269] = Defaults(), -- Abomination Limb
+    [49039]  = Defaults(), -- Lichborne
     [55233]  = Defaults(), -- Vampiric Blood
     [193320] = Defaults(), -- Umbilicus Eternus
     [219809] = Defaults(), -- Tombstone
     [48792]  = Defaults(), -- Icebound Fortitude
     [207319] = Defaults(), -- Corpse Shield
     [194844] = Defaults(), -- BoneStorm
-    [145629] = Defaults(), -- Anti-Magic Zone
     [194679] = Defaults(), -- Rune Tap
+
     --Demon Hunter
     [207811] = Defaults(), -- Nether Bond (DH)
     [207810] = Defaults(), -- Nether Bond (Target)
@@ -161,6 +171,7 @@ aura_env.defense = {
     [116849] = Defaults(), -- Life Cocoon
     [202162] = Defaults(), -- Guard
     [215479] = Defaults(), -- Ironskin Brew
+    
     --Paladin
     [642]    = Defaults(), -- Divine Shield
     [498]    = Defaults(), -- Divine Protection
@@ -182,14 +193,13 @@ aura_env.defense = {
     [132403] = Defaults(), -- Shield of the Righteous
     [355455] = Defaults(), -- Divine Resonance
     [389539] = Defaults(), -- Sentinel
-    [424622] = Defaults(), -- Sanctified Consecration
+    [223819] = Defaults(), -- Divine Purpose
+    -- Paladin Hero Talents
     [431536] = Defaults(), -- Shake the Heavens
-
-    -- Holy Paladin
-    [210294] = Defaults(), -- Sanctification
-    --[385126] = Defaults(), -- Blessing of Dusk
-    --[385127] = Defaults(), -- Blessing of Dawn
-
+    [387792] = Defaults(), -- Empyrael Ward
+    [432607] = Defaults(), -- Holy Armaments (Holy Bulwark)
+    [432502] = Defaults(), -- Holy Armaments (Sacred Weapon)
+    
     --Priest
     [81782]  = Defaults(), -- Power Word: Barrier
     [47585]  = Defaults(), -- Dispersion
@@ -237,11 +247,13 @@ aura_env.defense = {
     [203524] = Defaults(), -- Neltharion's Fury
     [190456] = Defaults(), -- Ignore Pain
     [132404] = Defaults(), -- Shield Block
-
+    
     -- Trinkets
     [358712] = Defaults(), -- Annhlyde's Aegis
     [329849] = Defaults(), -- Blood-Spattered Scale
-
+    [435482] = Defaults(), -- Spymaster's Web
+    [431932] = Defaults(), -- Tempered Potion
+    
     -- Racial
     [65116] = Defaults(), -- Stoneform (Dwarf)
 }
@@ -262,3 +274,4 @@ if not ElvUI then return true end
 local E, L, V, P, G = unpack(ElvUI); --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 
 aura_env.blacklist = {} -- ElvDB.global.unitframe.aurafilters.Blacklist.spells;
+
