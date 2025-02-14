@@ -1,4 +1,12 @@
-{
+{    
+    name = "string",
+    type = "string",
+    isTarget = "bool",
+    isTank = "bool",
+    spellId = "number",
+    sourceUnit = "string",
+    sourceName = "string",
+    destinationName = "string",
     frontalType = {
         display = "Frontal Type",
         type = "select",
@@ -9,5 +17,5 @@
             ["SOOTHE"] = "SOOTHE", 
             ["PURGE"] = "PURGE"
         }
-    }    
+    }
 }

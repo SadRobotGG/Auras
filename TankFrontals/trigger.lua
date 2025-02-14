@@ -1,4 +1,4 @@
-function(states, event, sourceUnit, sourceGuid, spellID)
+function(states, event, ...)
 
     -- When we leave combat, clear states
     if event == "PLAYER_REGEN_ENABLED" then
@@ -6,21 +6,25 @@ function(states, event, sourceUnit, sourceGuid, spellID)
             state.show = false
             state.changed = true
         end
+        unitTargetScans = {}
         return true
     end
 
     local spells = aura_env.spells
 
-    if spells[event] then
+    if event == "UNIT_SPELLCAST_START" then
 
-        local spellInfo = spells[event][spellID]
+        local sourceUnit, castGuid, spellId = ...
+
+        local spellInfo = aura_env.spells[spellId]
+
         if spellInfo then
 
             -- Ignored spells
-            if spellInfo.enabled == false then return true end
+            if spellInfo.disabled == true then return true end
 
             -- Ignore "target" as we'll get an event for the nameplate unit anyway
-            if sourceUnit == "target" then return true end
+            if sourceUnit == "target" or sourceUnit == "softtarget" then return true end
 
             -- If we're not in combat, ignore
             if not UnitAffectingCombat("player") then return true end
@@ -37,29 +41,97 @@ function(states, event, sourceUnit, sourceGuid, spellID)
                 return true
             end
 
-            local ignoreTarget = spellInfo.ignoreTarget == true or type == "PURGE" or type == "SOOTHE" or type == "SOOTHE_SPELL" or type == "PURGE_SPELL";
-            local isTarget = UnitIsUnit("player", sourceUnit.."target");
-            local isTank = select(5, GetSpecializationInfo(GetSpecialization())) == "TANK";
-            local type = spellInfo.type or "FRONTAL"
-            local sourceName = GetUnitName(sourceUnit)
-            local destinationName = GetUnitName(sourceUnit.."target")
-
-            local caption = aura_env.captions[type]:format(sourceName, spellInfo.name, destinationName)
-
-            states[spellID] = {
-                show = true,
-                name = caption,
-                changed = true,
-                autoHide = true,
-                progressType = "timed",
-                duration = spellInfo.duration,
-                expirationTime = GetTime() + spellInfo.duration,
-                icon = C_Spell.GetSpellTexture(spellID),
-                type = type,
-                isTarget = isTarget,
-                isTank = isTank,
-                ignoreTarget = ignoreTarget
+            local payload = {
+                guid = castGuid,
+                info = spellInfo,
+                type = aura_env.types[spellInfo.type],
+                spellId = spellId,
+                isTarget = UnitIsUnit("player", sourceUnit.."target"),
+                isTank = aura_env.isTank,
+                sourceUnit = sourceUnit,
+                sourceName = GetUnitName(sourceUnit),
+                destinationName = GetUnitName(sourceUnit.."target"),
+                startTime = GetTime(),
+                name = spellInfo.name
             }
+
+            local config = aura_env.isTank and aura_env.config.tankDefaults or aura_env.config.otherDefaults
+
+            function DisplayFrontal(payload)
+
+                if( config[3] and payload.type and payload.type.textToSpeech ) then
+                    local volume = C_CVar.GetCVar("Sound_DialogVolume") * C_CVar.GetCVar("Sound_MasterVolume") * 100
+                    C_VoiceChat.SpeakText(0, payload.type.textToSpeech, Enum.VoiceTtsDestination.LocalPlayback, 0, volume)
+                end
+
+                if( config[2] and payload and payload.type and payload.type.sound ) then
+                    local willPlay, soundHandle = PlaySoundFile(payload.type.sound, "Dialog")
+                end
+
+                local cachedInfo = C_Spell.GetSpellInfo(payload.spellId)
+                print("Actual castTime: "..cachedInfo.castTime)
+
+                states[payload.guid] = {
+                    show = true,
+                    name = payload.name,
+                    changed = true,
+                    autoHide = true,
+                    progressType = "timed",
+                    duration = payload.info.duration,
+                    expirationTime = payload.startTime + payload.info.duration,
+                    icon = payload.info.icon,
+                    type = payload.info.type,
+                    isTarget = payload.isTarget,
+                    isTank = payload.isTank,
+                    spellId = payload.spellId,
+                    sourceUnit = payload.sourceUnit,
+                    sourceName = payload.sourceName,
+                    destinationName = payload.destinationName,
+                }
+
+                -- Hide the progress bar unless it's enabled for our current role
+                if not config[4] then
+                    states[payload.guid].show = false
+                end
+
+                return true
+            end
+
+            function SayFrontal(payload)
+
+                if not config[1] then
+                    return false
+                end
+
+                -- Check we're the target
+                if payload.isTarget then
+                    local message = payload.info.message or payload.type.message or (">> "..toupper(payload.type.name).." ON ME <<")
+                    local caption =  message:format(payload.sourceName, payload.info.name, payload.destinationName)
+                    SendChatMessage(caption, "SAY")
+                else
+                    DebugPrint(payload.type.name.." ON "..(payload.destinationName or "Unknown"))
+                end
+
+                return true
+            end
+
+            DisplayFrontal(payload)
+
+            -- Do we need to scan for the target?
+            if spellInfo.target == aura_env.TargetDetection.Scan then
+                DebugPrint("Checking target: "..spellInfo.target.." for "..(spellInfo.targetTimer or 0.2))
+                -- local spec, role, pos = WeakAuras.SpecRolePositionForUnit("player")
+                
+                local FireTrigger = function(payload, elapsed)
+                    --DebugPrint("Targetted: "..payload.destinationName.." "..payload.destinationUnit.." "..elapsed)
+                    SayFrontal(payload)
+                end
+
+                aura_env.GetUnitTarget(FireTrigger, payload)
+            else
+                SayFrontal(payload)
+            end
+            
         end
     end
 
