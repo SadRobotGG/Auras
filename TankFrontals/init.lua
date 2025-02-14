@@ -131,10 +131,10 @@ local spellList = {
           -- Ara-Kara, City of Echoes g450
           { desc= "Anubzekt: Impale", duration= 3.3, spellId= 435012, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
           { desc= "Hulking Bloodguard: Impale", duration= 2.5, spellId= 453161, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Atik: Web Spray", duration= 3.3, spellId= 434824, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+          --{ desc= "Atik: Web Spray", duration= 3.3, spellId= 434824, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
 
           -- City of Threads g448
-          --{ desc= "Nx: Shade Slash", duration= 2.5, spellId= 439621, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+          { desc= "Nx: Shade Slash", duration= 2.5, spellId= 439621, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
           { desc= "Vx: Freezing Blood", duration= 2, spellId= 440468, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Stack },
           { desc= "Orator Krix'vizk: Terrorize", duration= 2.5, spellId= 434779, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
           { desc= "Eye Of The Queen: Null Slam", duration= 2.5, spellId= 451543, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
@@ -157,7 +157,7 @@ local spellList = {
           { desc= "Tirnenn Villager: Bewildering Pollen", spellId= 321968, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
           { desc= "Droman Oulfarran: Bewildering Pollen", duration= 2.9, spellId= 323137, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
           { desc= "Mistveil Gorgegullet: Tongue Lashing", duration= 1.7, spellId= 340300, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Mistveil Gorgegullet: Tongue Lashing", duration= 1.7, spellId= 340300, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+          { desc= "Mistveil Matriarch: Radiant Breath", duration= 2.4, spellId= 340160, target= aura_env.TargetDetection.Scan, targetTimer=0.2, type= aura_env.SpellType.Shockwave },
 
           -- Necrotic Wake g410
           { desc= "Skeletal Marauder: Gruesome Cleave", duration= 0.83, spellId= 324323, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
