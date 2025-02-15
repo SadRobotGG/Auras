@@ -6,11 +6,9 @@ function(states, event, ...)
             state.show = false
             state.changed = true
         end
-        unitTargetScans = {}
+        aura_enva.unitTargetScans = {}
         return true
     end
-
-    local spells = aura_env.spells
 
     if event == "UNIT_SPELLCAST_START" then
 
@@ -57,7 +55,7 @@ function(states, event, ...)
 
             local config = aura_env.isTank and aura_env.config.tankDefaults or aura_env.config.otherDefaults
 
-            function DisplayFrontal(payload)
+            local function DisplayFrontal(payload)
 
                 if( config[3] and payload.type and payload.type.textToSpeech ) then
                     local volume = C_CVar.GetCVar("Sound_DialogVolume") * C_CVar.GetCVar("Sound_MasterVolume") * 100
@@ -97,7 +95,7 @@ function(states, event, ...)
                 return true
             end
 
-            function SayFrontal(payload)
+            local function SayFrontal(payload)
 
                 if not config[1] then
                     return false
@@ -109,7 +107,7 @@ function(states, event, ...)
                     local caption =  message:format(payload.sourceName, payload.info.name, payload.destinationName)
                     SendChatMessage(caption, "SAY")
                 else
-                    DebugPrint(payload.type.name.." ON "..(payload.destinationName or "Unknown"))
+                    --DebugPrint(payload.type.name.." ON "..(payload.destinationName or "Unknown"))
                 end
 
                 return true

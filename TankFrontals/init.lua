@@ -204,7 +204,7 @@ local spellList = {
 
 -- Initialize the spells
 aura_env.spells = {}
-for i, v in ipairs(spellList) do
+for _, v in ipairs(spellList) do
     if type(v) == "table" then
 
         -- Get the spell details
@@ -253,11 +253,6 @@ local function GetUnitName(unit)
         name = name .."-".. server
     end
     return name
-end
-
-local function IsTanking(targetUnit, sourceUnit)
-    local isTanking, status = UnitDetailedThreatSituation(sourceUnit or "player", targetUnit)
-    return isTanking or status == 2 or status == 3
 end
 
 local unitTable = {
