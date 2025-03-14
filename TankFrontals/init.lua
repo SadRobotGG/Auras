@@ -128,78 +128,124 @@ for i = 1, 7 do
 end
 
 local spellList = {
-          -- Ara-Kara, City of Echoes g450
-          { desc= "Anubzekt: Impale", duration= 3.3, spellId= 435012, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Hulking Bloodguard: Impale", duration= 2.5, spellId= 453161, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          --{ desc= "Atik: Web Spray", duration= 3.3, spellId= 434824, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
 
-          -- City of Threads g448
-          { desc= "Nx: Shade Slash", duration= 2.5, spellId= 439621, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Vx: Freezing Blood", duration= 2, spellId= 440468, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Stack },
-          { desc= "Orator Krix'vizk: Terrorize", duration= 2.5, spellId= 434779, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Eye Of The Queen: Null Slam", duration= 2.5, spellId= 451543, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Royal Swarmguard: Earthshatter", duration= 3, spellId= 443500, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Izo The Grand Splicer: Process of Elimination", duration= 2.9, spellId= 439646, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+-- Season 2
 
-          -- The Dawnbreaker 2359
-          { desc= "Anubikkaj: Terrifying Slam", duration= 2.5, spellId= 427001, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
-          --{ desc= "Anub'ikkaj: Dark Orb", duration= 3.3, spellId= 426860, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Ixkreten The Unbreakable: Terrifying Slam", duration= 2.5, spellId= 451117, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
-          --{ desc= "Deathscreamer Iken'tak: Dark Orb", duration= 3.3, spellId= 450854, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Nightfall Tactician: Black Edge", duration= 2.5, spellId= 431494, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+-- Cinderbrew Meadery 2335
+{ desc= "Goldie Baronbottom: Cash Cannon", duration= 2.5, spellId= 436592, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Knockback },
+{ desc= "Careless Hopgoblin: Reckless Delivery", duration=3.2, spellId= 449090, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Bee Wrangler: Bee-Zooka", duration= 2.5, spellId= 441119, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "Brew Master Aldryr: Blazing Belch", duration= 2.4, spellId= 432198, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "I'pa: Bottoms Uppercut", duration=2.4, spellId=439031, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
 
-          -- Grim Batol 293
-          { desc= "Valiona: Devouring Flame", duration= 3.3, spellId= 448105, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Twilight Flamerender: Blazing Shadowflame", duration= 2.5, spellId= 462216, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Forgemaster Throngus: Fiery Cleave", duration= 2.5, spellId= 447395, target= aura_env.TargetDetection.Scan, targetTimer=0.2, type= aura_env.SpellType.Shockwave },
+-- Darkflame Cleft 2303, Icon: 5899329
+{ desc= "Shuffling Horror: Shadowsmash", duration= 2.5, spellId= 422414, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+{ desc= "The Darkness: Umbral Slash", duration= 4, spellId= 427025, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "Sootsnout: Ceaseless Flame", duration= 2.5, spellId= 426261, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "The Candle King: Darkflame Pickaxe", duration=6, spellId=421277, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
+{ desc= "Torchsnarl: Pyro Pummel", duration= 2.5, spellId=426260, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "Ol' Waxbeard: Reckless Charge", duration= 2.5, spellId=421686, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Blazikon: Extinguishing Gust", duration= 2.5, spellId=421910, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
 
-          -- Mists of Tirna Scithe 1669
-          { desc= "Tirnenn Villager: Bewildering Pollen", spellId= 321968, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Droman Oulfarran: Bewildering Pollen", duration= 2.9, spellId= 323137, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Mistveil Gorgegullet: Tongue Lashing", duration= 1.7, spellId= 340300, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Mistveil Matriarch: Radiant Breath", duration= 2.4, spellId= 340160, target= aura_env.TargetDetection.Scan, targetTimer=0.2, type= aura_env.SpellType.Shockwave },
+-- Operation: Floodgate g459, Icon: 6392629
+{ desc= "Shreddinator 3000: Flamethrower", duration= 2.4, spellId=465754, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "Darkfuse Inspector: Surprise Inspection", duration= 2, spellId=465682, target= aura_env.TargetDetection.Auto, targetTimer= 0, type=aura_env.SpellType.Shockwave },
+{ desc= "Bubbles: Splish Splash", duration= 2.8, spellId=1217496, target= aura_env.TargetDetection.Auto, targetTimer= 0, type=aura_env.SpellType.Shockwave },
+{ desc= "Big M.O.M.M.A.: Sonic Boom", duration= 2.8, spellId=473220, target= aura_env.TargetDetection.Scan, targetTimer=0, type=aura_env.SpellType.Shockwave },
+{ desc= "Bront: Barreling Charge", duration= 2.8, spellId=459779, target= aura_env.TargetDetection.Auto, targetTimer=0, type=aura_env.SpellType.Knockback },
+{ desc= "Keeza Quickfuse: B.B.B.F.G.", duration=2.8, spellId=1217653, target= aura_env.TargetDetection.Auto, targetTimer=0, type=aura_env.SpellType.Shockwave },
+{ desc= "Swampface: Mudslide", duration=2.4, spellId=473114, target= aura_env.TargetDetection.Scan, targetTimer=0, type=aura_env.SpellType.Shockwave },
+{ desc= "Geezle Gigazap: Thunder Punch", duration=2, spellId=466190, target= aura_env.TargetDetection.Auto, targetTimer=0, type=aura_env.SpellType.Knockback },
+{ desc= "Darkfuse Mechadron: Doom Storm", duration=2, spellId=472452, target= aura_env.TargetDetection.Auto, targetTimer=0, type=aura_env.SpellType.Shockwave },
 
-          -- Necrotic Wake g410
-          { desc= "Skeletal Marauder: Gruesome Cleave", duration= 0.83, spellId= 324323, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
-          --{ desc= "Goregrind: Gut Slice", duration= 1.7, spellId= 333477, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Frontal },
-          { desc= "Amarth: Necrotic Breath", duration= 1.3, spellId= 333488, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Frontal },
-          { desc= "Flesh Crafter: Throw Cleaver", duration= 3.3, spellId= 323496, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Zolramus Sorcerer: Shadow Well", duration= 0.5, spellId= 320464, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+-- The MOTHERLODE!! 1010, Icon: 2011121
+{ desc= "Coin-Operated Crowd Pummeler: Shocking Claw", duration= 2.4, spellId=267551, target=aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Azerokk: Tectonic Smash", duration= 2.8, spellId=275907, target=aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Weapons Tester: Echo Blade", duration= 2.4, spellId=268846, target=aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+{ desc= "Rixxa Fluxflame: Propellant Blast", duration= 2.8, spellId=259940, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
+{ desc= "Venture Co. Skyscorcher: Azerite Heartseeker", duration=4, spellId=262515, target=aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "Mogul Razdunk: Drill Smash", duration=4, spellId=271456, target=aura_env.TargetDetection.Scan, targetTimer=0.5, type= aura_env.SpellType.Slam },
+{ desc= "Mogul Razdunk: Gatling Gun", duration=4, spellId=260280, target=aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
 
-          -- Siege of Boralus 1162
-          { desc= "Scrimshaw Enforcer: Slobber Knocker", duration= 1.7, spellId= 256627, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
-          { desc= "Irontide Cleaver: Heavy Slash", duration= 2.3, spellId= 257292, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Ashvane Deckhand: Crimson Swipe", duration= 0.96, spellId= 268230, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
-          { desc= "Ashvane Cannoneer: Broadside", duration= 2.5, spellId= 268260, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Dread Captain Lockwood: Clear The Deck", duration= 2.5, spellId= 269029, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Hadal Darkfathom: Crashing Tide", duration= 2.5, spellId= 257862, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+-- Operation: Mechagon Workshop g399, Icon: 3024540
+{ desc= "Spider Tank: Sonic Pulse", duration=2.4, spellId=293986, target=aura_env.TargetDetection.Scan, targetTimer=0, type=aura_env.SpellType.Shockwave },
+{ desc= "Aerial Unit R-21/X: Mega-Zap", duration=2.4, spellId=291928, target=aura_env.TargetDetection.Scan, targetTimer=0, type= aura_env.SpellType.Frontal },
+{ desc= "Omega Buster: Mega-Zap", duration=2.4, spellId=292264, target=aura_env.TargetDetection.Scan, targetTimer=0, type= aura_env.SpellType.Frontal },
+{ desc= "Gnomercy 4.U.: Maximum Thrust", duration=2.4, spellId=283422, target=aura_env.TargetDetection.Scan, targetTimer=0, type= aura_env.SpellType.Shockwave },
+{ desc= "Gnomercy 4.U.: Foe Flipper", duration=2, spellId=285152, target=aura_env.TargetDetection.Scan, targetTimer=0, type= aura_env.SpellType.Knockback },
 
-          -- The Stonevault 2341
-          { desc= "Earth Infused Golem: Seismic Wave", duration= 2.5, spellId= 425027, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Forge Loader: Lava Cannon", duration= 2.5, spellId= 449130, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Cursedforge Honor Guard: Shield Stampede", duration= 4.2, spellId= 448640, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          { desc= "Void Speaker Eirich: Unbridled Void", duration= 3.8, spellId= 427869, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
-          
-          -- The Rookery g447
-          { desc= "Quartermaster Quaratite: Bounding Void", spellId= 426893, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
-          { desc= "Voidstone Monstrosity: Oblivion Wave", duration= 2.5, spellId= 445537, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Frontal },
-          { desc= "Voidrider: Charge Bombardment", duration= 2.5, spellId= 427323, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Slam },
-          { desc= "Unruly Stormrook: Energized Barrage", duration= 2.5, spellId= 427616, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Slam },
+-- Priory of the Sacred Flame g446
+{ desc= "Guard Captain Suleyman: Shield Slam", duration=1.2, spellId= 448485, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
+{ desc= "Captain Dailcry: Hurl Spear", duration=2, spellId=447270, target= aura_env.TargetDetection.Auto, targetTimer=0.2, type= aura_env.SpellType.Shockwave },
 
-          -- Cinderbrew Meadery 2335
-          { desc= "Goldie Baronbottom: Cash Cannon", duration= 2.5, spellId= 436592, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
-          { desc= "Careless Hopgoblin: Reckless Delivery", duration= 2.5, spellId= 448619, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
-          { desc= "Careless Hopgoblin: Reckless Delivery", duration= 2.5, spellId= 449090, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
-          { desc= "Bee Wrangler: Bee-Zooka", duration= 2.5, spellId= 441119, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
-          { desc= "Brew Master Aldryr: Blazing Belch", duration= 2.5, spellId= 432198, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Frontal },
+-- The Rookery g447
+{ desc= "Quartermaster Quaratite: Bounding Void", spellId= 426893, target= aura_env.TargetDetection.Scan, targetTimer=0, type= aura_env.SpellType.Shockwave },
+{ desc= "Voidstone Monstrosity: Oblivion Wave", duration= 2.5, spellId= 445457, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "Voidrider: Wild Lightning", duration= 2.5, spellId=474018, target= aura_env.TargetDetection.Scan, targetTimer=0, type= aura_env.SpellType.Shockwave },
+{ desc= "Stormguard Gorren: Crush Reality", duration= 1.6, spellId= 424958, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Slam },
+{ desc= "Void-Cursed Crusher: Void Crush", duration= 1.6, spellId=474031, target= aura_env.TargetDetection.Auto, targetTimer=0, type= aura_env.SpellType.Slam },
 
-          -- Priory of the Sacred Flame g446
+-- Theatre of Pain g414, Icon: 3601550
+{ desc= "Paceran the Virulent: Decaying Breath", duration= 3.2, spellId=1215738, target=aura_env.TargetDetection.Auto, targetTimer=0, type= aura_env.SpellType.Shockwave },
+{ desc= "Mordretha: Dark Devastation", duration=2, spellId=323608, target=aura_env.TargetDetection.Auto, targetTimer=0, type= aura_env.SpellType.Frontal },
+{ desc= "Xav: Crushing Slam", duration=2, spellId=317231, target=aura_env.TargetDetection.Scan, targetTimer=0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Rancid Gasbag: Vile Eruption", duration=2.4, spellId=330614, target=aura_env.TargetDetection.Auto, targetTimer=0, type= aura_env.SpellType.Shockwave },
+{ desc= "Nefarious Darkspeaker: Death Winds", duration=2.8, spellId=333294, target=aura_env.TargetDetection.Auto, targetTimer=0, type= aura_env.SpellType.Knockback },
+{ desc= "Kul'tharok: Necrotic Eruption", duration=2.4, spellId=474087, target=aura_env.TargetDetection.Auto, targetTimer=0, type= aura_env.SpellType.Frontal },
 
-          -- Darkflame Cleft 2303
-          { desc= "Shuffling Horror: Shadowsmash", duration= 2.5, spellId= 422414, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
-          { desc= "The Darkness: Umbral Slash", duration= 2.5, spellId= 427025, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
-          { desc= "Sootsnout: Ceaseless Flame", duration= 2.5, spellId= 426261, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+-- Season 1
 
+-- Ara-Kara, City of Echoes g450
+{ desc= "Anubzekt: Impale", duration= 3.3, spellId= 435012, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Hulking Bloodguard: Impale", duration= 2.5, spellId= 453161, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+--{ desc= "Atik: Web Spray", duration= 3.3, spellId= 434824, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+
+-- City of Threads g448
+{ desc= "Nx: Shade Slash", duration= 2.5, spellId= 439621, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Vx: Freezing Blood", duration= 2, spellId= 440468, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Stack },
+{ desc= "Orator Krix'vizk: Terrorize", duration= 2.5, spellId= 434779, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Eye Of The Queen: Null Slam", duration= 2.5, spellId= 451543, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Royal Swarmguard: Earthshatter", duration= 3, spellId= 443500, target= aura_env.TargetDetection.Scan, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Izo The Grand Splicer: Process of Elimination", duration= 2.9, spellId= 439646, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+
+-- The Dawnbreaker 2359
+{ desc= "Anubikkaj: Terrifying Slam", duration= 2.5, spellId= 427001, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+--{ desc= "Anub'ikkaj: Dark Orb", duration= 3.3, spellId= 426860, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Ixkreten The Unbreakable: Terrifying Slam", duration= 2.5, spellId= 451117, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+--{ desc= "Deathscreamer Iken'tak: Dark Orb", duration= 3.3, spellId= 450854, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Nightfall Tactician: Black Edge", duration= 2.5, spellId= 431494, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+
+-- The Stonevault 2341
+{ desc= "Earth Infused Golem: Seismic Wave", duration= 2.5, spellId= 425027, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Forge Loader: Lava Cannon", duration= 2.5, spellId= 449130, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Cursedforge Honor Guard: Shield Stampede", duration= 4.2, spellId= 448640, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Void Speaker Eirich: Unbridled Void", duration= 3.8, spellId= 427869, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+
+-- Grim Batol 293
+{ desc= "Valiona: Devouring Flame", duration= 3.3, spellId= 448105, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Twilight Flamerender: Blazing Shadowflame", duration= 2.5, spellId= 462216, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Forgemaster Throngus: Fiery Cleave", duration= 2.5, spellId= 447395, target= aura_env.TargetDetection.Scan, targetTimer=0.2, type= aura_env.SpellType.Shockwave },
+
+-- Mists of Tirna Scithe 1669
+{ desc= "Tirnenn Villager: Bewildering Pollen", spellId= 321968, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Droman Oulfarran: Bewildering Pollen", duration= 2.9, spellId= 323137, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Mistveil Gorgegullet: Tongue Lashing", duration= 1.7, spellId= 340300, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Mistveil Matriarch: Radiant Breath", duration= 2.4, spellId= 340160, target= aura_env.TargetDetection.Scan, targetTimer=0.2, type= aura_env.SpellType.Shockwave },
+
+-- Necrotic Wake g410
+{ desc= "Skeletal Marauder: Gruesome Cleave", duration= 0.83, spellId= 324323, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
+--{ desc= "Goregrind: Gut Slice", duration= 1.7, spellId= 333477, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Frontal },
+{ desc= "Amarth: Necrotic Breath", duration= 1.3, spellId= 333488, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Frontal },
+{ desc= "Flesh Crafter: Throw Cleaver", duration= 3.3, spellId= 323496, target= aura_env.TargetDetection.Scan, targetTimer= 0.2, type= aura_env.SpellType.Shockwave },
+{ desc= "Zolramus Sorcerer: Shadow Well", duration= 0.5, spellId= 320464, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Slam },
+
+-- Siege of Boralus 1162
+{ desc= "Scrimshaw Enforcer: Slobber Knocker", duration= 1.7, spellId= 256627, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Knockback },
+{ desc= "Irontide Cleaver: Heavy Slash", duration= 2.3, spellId= 257292, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Ashvane Deckhand: Crimson Swipe", duration= 0.96, spellId= 268230, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Frontal },
+{ desc= "Ashvane Cannoneer: Broadside", duration= 2.5, spellId= 268260, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Dread Captain Lockwood: Clear The Deck", duration= 2.5, spellId= 269029, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave },
+{ desc= "Hadal Darkfathom: Crashing Tide", duration= 2.5, spellId= 257862, target= aura_env.TargetDetection.Auto, targetTimer= 0, type= aura_env.SpellType.Shockwave }
 };
 
 -- Initialize the spells
