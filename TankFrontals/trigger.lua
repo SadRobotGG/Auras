@@ -6,7 +6,7 @@ function(states, event, ...)
             state.show = false
             state.changed = true
         end
-        aura_enva.unitTargetScans = {}
+        aura_env.unitTargetScans = {}
         return true
     end
 
@@ -39,6 +39,11 @@ function(states, event, ...)
                 return true
             end
 
+            local targetTimer = (spellInfo.targetTimer or 0.2)
+            if targetTimer < 0.2 then
+                targetTimer = 0.2
+            end
+
             local payload = {
                 guid = castGuid,
                 info = spellInfo,
@@ -50,12 +55,13 @@ function(states, event, ...)
                 sourceName = GetUnitName(sourceUnit),
                 destinationName = GetUnitName(sourceUnit.."target"),
                 startTime = GetTime(),
-                name = spellInfo.name
+                name = spellInfo.name,
+                targetTimer = targetTimer
             }
 
             local config = aura_env.isTank and aura_env.config.tankDefaults or aura_env.config.otherDefaults
 
-            local function DisplayFrontal(payload)
+            local function DisplayFrontal(states, payload)
 
                 if( config[3] and payload.type and payload.type.textToSpeech ) then
                     local volume = C_CVar.GetCVar("Sound_DialogVolume") * C_CVar.GetCVar("Sound_MasterVolume") * 100
@@ -67,7 +73,11 @@ function(states, event, ...)
                 end
 
                 local cachedInfo = C_Spell.GetSpellInfo(payload.spellId)
-                print("Actual castTime: "..cachedInfo.castTime)
+                local castTime = payload.info.duration
+                if cachedInfo.castTime then
+                    castTime = cachedInfo.castTime / 1000
+                end
+                --print("Actual castTime: "..cachedInfo.castTime)
 
                 states[payload.guid] = {
                     show = true,
@@ -75,8 +85,8 @@ function(states, event, ...)
                     changed = true,
                     autoHide = true,
                     progressType = "timed",
-                    duration = payload.info.duration,
-                    expirationTime = payload.startTime + payload.info.duration,
+                    duration = castTime,
+                    expirationTime = payload.startTime + castTime,
                     icon = payload.info.icon,
                     type = payload.info.type,
                     isTarget = payload.isTarget,
@@ -107,21 +117,21 @@ function(states, event, ...)
                     local caption =  message:format(payload.sourceName, payload.info.name, payload.destinationName)
                     SendChatMessage(caption, "SAY")
                 else
-                    --DebugPrint(payload.type.name.." ON "..(payload.destinationName or "Unknown"))
+                    DebugPrint(payload.type.name.." ON "..(payload.destinationName or "Unknown"))
                 end
 
                 return true
             end
 
-            DisplayFrontal(payload)
+            DisplayFrontal(states, payload)
 
             -- Do we need to scan for the target?
             if spellInfo.target == aura_env.TargetDetection.Scan then
-                DebugPrint("Checking target: "..spellInfo.target.." for "..(spellInfo.targetTimer or 0.2))
+                DebugPrint("Checking target: "..spellInfo.target.." for "..tostring(targetTimer))
                 -- local spec, role, pos = WeakAuras.SpecRolePositionForUnit("player")
                 
                 local FireTrigger = function(payload, elapsed)
-                    --DebugPrint("Targetted: "..payload.destinationName.." "..payload.destinationUnit.." "..elapsed)
+                    DebugPrint("Targetted: "..(payload.destinationName or "Unknown").." ".. (payload.destinationUnit or "Unknown").." "..elapsed)
                     SayFrontal(payload)
                 end
 
